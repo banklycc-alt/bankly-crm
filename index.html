@@ -257,12 +257,7 @@
             document.getElementById(name).classList.add('active');
         }
 
-        async function fetchAPI(endpoint) {
-            try {
-                const res = await fetch(`${API_BASE}${endpoint}`, { headers: { 'Authorization': `Bearer ${API_KEY}` } });
-                return await res.json();
-            } catch (e) { console.error('API:', e); return null; }
-        }
+        // API fetch removed - using data.json only (CORS issue with external API)
 
         async function fetchData() {
             try {
@@ -270,22 +265,20 @@
                 if (res.ok) data = await res.json();
             } catch (e) { console.log('Data fetch error'); }
 
-            const status = await fetchAPI('/status');
-            const funnel = await fetchAPI('/funnel');
-            
-            if (status?.success) updateOverview(status, funnel);
             if (data) {
+                updateOverviewFromData();
                 updateLeads(); updateGroups(); updateAlerts(); updateProviders();
                 updateCompetitors(); updateHNWI(); updateIdeas();
+                if (data.funnel?.stages) updateFunnel(data.funnel.stages);
             }
-            if (funnel?.success) updateFunnel(funnel.stages);
             document.getElementById('lastUpdate').textContent = 'Updated ' + new Date().toLocaleTimeString();
         }
-
-        function updateOverview(status, funnel) {
-            const db = status.database;
-            const day = Math.ceil((Date.now() - new Date('2026-02-01').getTime()) / (1000*60*60*24));
-            const users = db.users.total;
+        
+        function updateOverviewFromData() {
+            if (!data?.kpis) return;
+            const k = data.kpis;
+            const day = k.dayOfGoal || 16;
+            const users = k.totalUsers || 0;
             const requiredPace = ((1000 - users) / (90 - day)).toFixed(1);
             const actualPace = (users / day).toFixed(1);
             const velocity = (actualPace / requiredPace).toFixed(2);
@@ -297,22 +290,21 @@
             document.getElementById('velocity').style.color = velocity < 0.5 ? 'var(--red)' : velocity < 1 ? 'var(--yellow)' : 'var(--green)';
             document.getElementById('actualPace').textContent = actualPace;
             document.getElementById('requiredPace').textContent = requiredPace;
-            document.getElementById('cards').textContent = db.cards.active;
-            document.getElementById('frozen').textContent = db.cards.frozen;
-            document.getElementById('volume').textContent = Math.round(db.deposits.totalVolume/1000) + 'K';
-            document.getElementById('txns').textContent = db.transactions.total;
-            document.getElementById('deposits').textContent = Math.round(db.deposits.confirmedVolume/1000) + 'K';
-            
-            if (data) {
-                document.getElementById('hotLeads').textContent = data.leads?.hot || '-';
-                document.getElementById('warmLeads').textContent = data.leads?.warm || '-';
-                document.getElementById('converted').textContent = data.leads?.converted || '0';
-                document.getElementById('hnwi').textContent = data.hnwi?.total || '-';
-                document.getElementById('hnwiProgress').style.width = ((data.hnwi?.total || 0) / 5) + '%';
-                document.getElementById('activeGroups').textContent = data.groups?.active || '-';
-                document.getElementById('forbiddenGroups').textContent = data.groups?.forbidden || '-';
-            }
+            document.getElementById('cards').textContent = k.activeCards || 0;
+            document.getElementById('frozen').textContent = k.frozenCards || 0;
+            document.getElementById('volume').textContent = Math.round((k.totalVolume || 0)/1000) + 'K';
+            document.getElementById('txns').textContent = k.transactions || 0;
+            document.getElementById('deposits').textContent = Math.round((k.totalDeposits || 0)/1000) + 'K';
+            document.getElementById('hotLeads').textContent = data.leads?.hot || '-';
+            document.getElementById('warmLeads').textContent = data.leads?.warm || '-';
+            document.getElementById('converted').textContent = data.leads?.converted || '0';
+            document.getElementById('hnwi').textContent = data.hnwi?.total || '-';
+            document.getElementById('hnwiProgress').style.width = ((data.hnwi?.total || 0) / 5) + '%';
+            document.getElementById('activeGroups').textContent = data.groups?.active || '-';
+            document.getElementById('forbiddenGroups').textContent = data.groups?.forbidden || '-';
         }
+
+        // Old API-based updateOverview removed - now using updateOverviewFromData
 
         function updateLeads() {
             if (!data?.leads?.list) return;
