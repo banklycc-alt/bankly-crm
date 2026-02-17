@@ -221,14 +221,11 @@
 
     <!-- IDEAS -->
     <div id="ideas" class="tab-content">
-        <div class="card">
-            <div class="card-title">Top 3 Startup Ideas</div>
-            <div id="topIdeas"></div>
+        <div class="card" style="margin-bottom:1rem">
+            <div class="card-title">📊 10 Startup Ideas — Full Analysis</div>
+            <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem">Sorted by score. Click to expand details.</p>
         </div>
-        <div class="card" style="margin-top:1rem">
-            <div class="card-title">Full Report</div>
-            <p style="color:var(--text2);font-size:0.85rem">See <code>memory/BUSINESS_IDEAS.md</code> for detailed analysis (74KB)</p>
-        </div>
+        <div id="allIdeas"></div>
     </div>
 
     <!-- ALERTS -->
@@ -396,11 +393,54 @@
         }
 
         function updateIdeas() {
-            if (!data?.businessIdeas) return;
-            document.getElementById('topIdeas').innerHTML = data.businessIdeas.top3.map((idea, i) => `
-                <div class="provider-card">
-                    <div class="provider-name">#${i+1} ${idea.name} <span class="badge badge-ok">${idea.score}</span></div>
-                    <div class="provider-meta">TAM: ${idea.tam} · ${idea.notes}</div>
+            if (!data?.businessIdeas || !Array.isArray(data.businessIdeas)) return;
+            document.getElementById('allIdeas').innerHTML = data.businessIdeas.map(idea => `
+                <div class="card" style="margin-bottom:1rem">
+                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem">
+                        <div>
+                            <div style="font-size:1.1rem;font-weight:700;margin-bottom:0.25rem">#${idea.id} ${idea.name}</div>
+                            <div style="color:var(--text2);font-size:0.8rem">${idea.codename}</div>
+                        </div>
+                        <div style="text-align:right">
+                            <span class="badge ${idea.score.startsWith('9') ? 'badge-hot' : idea.score.startsWith('8') ? 'badge-ok' : 'badge-warm'}" style="font-size:0.9rem;padding:0.3rem 0.6rem">${idea.score}</span>
+                            <div style="color:var(--accent);font-size:0.7rem;margin-top:0.25rem">${idea.verdict}</div>
+                        </div>
+                    </div>
+                    <div style="background:var(--bg);padding:0.75rem;border-radius:8px;margin-bottom:0.75rem">
+                        <div style="font-weight:600;margin-bottom:0.5rem">💡 ${idea.what}</div>
+                        <div style="color:var(--text2);font-size:0.85rem">🎯 ${idea.problem}</div>
+                    </div>
+                    <div class="grid" style="gap:0.75rem">
+                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
+                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">MARKET</div>
+                            <div style="font-weight:600">${idea.market.tam}</div>
+                            <div style="font-size:0.8rem;color:var(--text2)">SAM: ${idea.market.sam}</div>
+                            <div style="font-size:0.8rem;color:var(--green)">CAGR: ${idea.market.cagr}</div>
+                        </div>
+                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
+                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">UNIT ECONOMICS</div>
+                            <div style="font-size:0.85rem">CAC: ${idea.economics.cac} · LTV: ${idea.economics.ltv}</div>
+                            <div style="font-size:0.85rem;color:var(--green)">LTV/CAC: ${idea.economics.ltvCac}</div>
+                            <div style="font-size:0.85rem">Margin: ${idea.economics.margin}</div>
+                        </div>
+                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
+                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">PRICING</div>
+                            ${Object.entries(idea.pricing).map(([k,v]) => `<div style="font-size:0.8rem">${k}: ${v}</div>`).join('')}
+                        </div>
+                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
+                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">MVP</div>
+                            <div style="font-size:0.85rem">${idea.mvp}</div>
+                            <div style="font-size:0.8rem;color:var(--text2)">${idea.tech}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border)">
+                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Audience:</span> ${idea.audience}</div>
+                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Competitors:</span> ${idea.competitors}</div>
+                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Moat:</span> ${idea.moat}</div>
+                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Why Now:</span> ${idea.whyNow}</div>
+                        <div style="font-size:0.8rem"><span style="color:var(--red)">Risks:</span> ${idea.risks}</div>
+                        <div style="font-size:0.8rem;margin-top:0.5rem;color:var(--accent)">👤 ${idea.suitableFor}</div>
+                    </div>
                 </div>
             `).join('');
         }

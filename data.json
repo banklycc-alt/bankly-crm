@@ -1,6 +1,6 @@
 {
-  "version": "3.0.0",
-  "lastUpdated": "2026-02-17T03:50:00.000Z",
+  "version": "4.0.0",
+  "lastUpdated": "2026-02-17T04:00:00.000Z",
   "updatedBy": "atlas",
   
   "kpis": {
@@ -91,53 +91,63 @@
   
   "providers": {
     "verified": [
-      { "name": "Rain", "type": "Full-Stack Issuer", "region": "Global", "funding": "$338M+", "notes": "Visa principal member" },
-      { "name": "Reap", "type": "Full-Stack Issuer", "region": "Asia/ME/US", "funding": "$60M", "notes": "Visa principal, $6B volume" },
-      { "name": "Kulipa", "type": "B2B API", "region": "Global", "funding": "$3M", "notes": "Self-custodial card API" },
-      { "name": "Baanx", "type": "Issuer", "region": "UK/EU", "funding": "$175M acq", "notes": "EMI licensed" },
-      { "name": "Striga", "type": "Issuer", "region": "Europe", "funding": "-", "notes": "Powers Bitrefill" },
-      { "name": "Gnosis Pay", "type": "Non-Custodial", "region": "EU/UK", "funding": "-", "notes": "2% cashback, white-label" },
-      { "name": "Immersve", "type": "BIN Sponsor", "region": "Global", "funding": "-", "notes": "MC principal, 70M merchants" },
-      { "name": "Zero Hash", "type": "Infrastructure", "region": "Global", "funding": "$65B vol", "notes": "MC acquisition talks" }
+      { "name": "Rain", "type": "Full-Stack Issuer", "region": "Global (150+ countries)", "funding": "$338M+", "notes": "Visa principal member, $1.95B valuation" },
+      { "name": "Reap", "type": "Full-Stack Issuer", "region": "Asia/ME/US", "funding": "$60M", "notes": "Visa principal, $6B+ volume, YC backed" },
+      { "name": "Kulipa", "type": "B2B API", "region": "Global", "funding": "$3M seed", "notes": "Self-custodial card API, ex-Mastercard VP team" },
+      { "name": "Baanx", "type": "Issuer", "region": "UK/EU", "funding": "$175M acq", "notes": "EMI licensed, powers MetaMask card" },
+      { "name": "Striga", "type": "Issuer", "region": "Europe", "funding": "-", "notes": "Powers Bitrefill, joined Lightspark" },
+      { "name": "Gnosis Pay", "type": "Non-Custodial", "region": "EU/UK", "funding": "-", "notes": "Self-custody Safe wallet, 2% cashback, white-label" },
+      { "name": "Immersve", "type": "BIN Sponsor", "region": "Global", "funding": "-", "notes": "MC principal member, 70M+ merchants, Web3 native" },
+      { "name": "Zero Hash", "type": "Infrastructure", "region": "Global (200+ jur)", "funding": "$65B vol", "notes": "MC acquisition talks $1.5-2B" }
     ],
     "redFlags": [
-      { "name": "Vault.ist", "reason": "Crypterium/Choise связь — FinTelegram warning" },
-      { "name": "LBM Solutions", "reason": "Dev shop, not issuer, scam reviews" },
-      { "name": "KazePay", "reason": "Zero company registration" }
+      { "name": "Vault.ist", "reason": "Crypterium/Choise связь — FinTelegram Nov 2025 warning, in liquidation" },
+      { "name": "LBM Solutions", "reason": "Dev shop NOT card issuer, 'They do scam' reviews" },
+      { "name": "KazePay", "reason": "Zero company registration, no accountability" },
+      { "name": "Simplify Labs", "reason": "Main client Kyrrex in $10B ICIJ money laundering investigation" }
     ],
     "whiteLabel": [
-      { "name": "ChainUp", "service": "Full PaaS", "pricing": "Custom" },
-      { "name": "Zypto", "service": "Cards + Wallets", "pricing": "Custom" },
-      { "name": "Kripicard", "service": "USDT Virtual Cards", "pricing": "Custom" },
-      { "name": "Buvei", "service": "Virtual Card API", "pricing": "Custom" },
-      { "name": "FinLego", "service": "Card Issuing + Core Banking", "pricing": "License" },
-      { "name": "Unlimit", "service": "90-day Launch", "pricing": "Custom" }
+      { "name": "ChainUp", "service": "Full PaaS — cards, custody, exchange", "pricing": "Custom", "notes": "Enterprise-grade" },
+      { "name": "Zypto", "service": "Cards + Wallets + Gateway", "pricing": "Custom", "notes": "Fast launch (weeks)" },
+      { "name": "Kripicard", "service": "USDT Virtual Cards", "pricing": "Custom", "notes": "Instant issuance, Q1 2026 mobile apps" },
+      { "name": "Buvei", "service": "Virtual Card API", "pricing": "Custom", "notes": "PCI-compliant, startup-focused" },
+      { "name": "FinLego", "service": "Card Issuing + Core Banking", "pricing": "License", "notes": "Web3 wallet integration" },
+      { "name": "Unlimit", "service": "90-day White-Label Launch", "pricing": "Custom", "notes": "EU licensed, 200+ locations" },
+      { "name": "Mercuryo Spend", "service": "Branded Payment Cards", "pricing": "Custom", "notes": "70+ cryptos, plug-and-play" }
     ],
     "binSponsors": [
-      { "name": "Moorwand", "region": "UK/EEA", "cards": "Mastercard" },
-      { "name": "Treezor", "region": "France/EU", "cards": "Visa/MC" },
-      { "name": "Enfuce", "region": "EU/UK", "cards": "Visa/MC" },
-      { "name": "Transact Payments", "region": "UK/EEA", "cards": "All" }
-    ]
+      { "name": "Moorwand", "region": "UK/EEA", "cards": "Mastercard", "notes": "FCA EMI, fast path" },
+      { "name": "Treezor", "region": "France/EU", "cards": "Visa/MC", "notes": "SocGen-backed, principal member" },
+      { "name": "Enfuce", "region": "EU/UK", "cards": "Visa/MC", "notes": "EMI licensed" },
+      { "name": "Transact Payments", "region": "UK/EEA", "cards": "All", "notes": "Debit/credit/prepaid" }
+    ],
+    "pricing": {
+      "setup": "BaaS: $500-5K | Enterprise: $10-50K | White-label crypto: $15-100K+",
+      "perCard": "Virtual: $0.50-2 | Physical: $3-15 | Tokenization: $0.10-0.50",
+      "transaction": "Consumer EU: ~0.2% | Commercial: 1.5-2.95% | FX spread: 0.5-2%"
+    }
   },
   
   "competitors": {
     "list": [
-      { "name": "Kolo.xyz", "tg": "1M+", "ig": "100", "twitter": "-", "strength": "TG mini-app" },
-      { "name": "KAST", "tg": "Active", "ig": "1K", "twitter": "47.2K", "strength": "CT native" },
-      { "name": "Wirex", "tg": "Active", "ig": "44K", "twitter": "25K", "strength": "IG + TikTok" },
-      { "name": "Trustee Plus", "tg": "21.3K", "ig": "12K", "twitter": "-", "strength": "YouTube UA" },
-      { "name": "MaxSwap", "tg": "2.3K", "ig": "2.2K", "twitter": "1.4K", "strength": "30-50% referral" },
-      { "name": "Cryptopay", "tg": "Active", "ig": "2K", "twitter": "Suspended", "strength": "EU focus" }
+      { "name": "Kolo.xyz", "tg": "1M+", "ig": "~100", "twitter": "-", "yt": "-", "strength": "TG mini-app + gamification" },
+      { "name": "KAST", "tg": "Active", "ig": "~1K", "twitter": "47.2K", "yt": "5+ reviews", "strength": "CT native, $10M funding" },
+      { "name": "Wirex", "tg": "Active", "ig": "44K", "twitter": "~25K", "yt": "Own channel", "strength": "IG + TikTok 10.7K" },
+      { "name": "Trustee Plus", "tg": "21.3K", "ig": "12K", "twitter": "-", "yt": "8K", "strength": "YouTube UA tutorials" },
+      { "name": "MaxSwap", "tg": "2.3K", "ig": "2.2K", "twitter": "1.4K", "yt": "Blogger reviews", "strength": "30-50% lifetime referral" },
+      { "name": "Cryptopay", "tg": "Active", "ig": "2K", "twitter": "Suspended", "yt": "Present", "strength": "EU focus" }
     ],
     "insights": [
-      "Kolo = TG king — mini-app + gamification = 1M subs",
-      "KAST = Twitter king — CT native, $10M funding",
-      "Wirex = IG + TikTok leader — 44K + 10.7K",
-      "MaxSwap = Referral machine — 30-50% lifetime",
-      "TikTok underutilized across all competitors",
-      "No bilingual EN/RU content leader"
-    ]
+      "Kolo = TG king — mini-app + gamification = 1M+ subscribers",
+      "KAST = Twitter king — CT native, user testimonials strategy",
+      "Wirex = IG + TikTok leader — 44K IG, 10.7K TikTok",
+      "MaxSwap = Referral machine — 30-50% lifetime commission aggressive",
+      "TikTok UNDERUTILIZED across ALL competitors (only Wirex at 10K)",
+      "No bilingual EN/RU content leader exists — OPPORTUNITY",
+      "Travel/lifestyle content weak everywhere",
+      "Reddit presence weak across all competitors"
+    ],
+    "contentStrategy": "Telegram-first → Twitter CT → TikTok → Instagram → YouTube"
   },
   
   "outreach": {
@@ -149,12 +159,346 @@
     "followUpsDue": 6
   },
   
-  "businessIdeas": {
-    "top3": [
-      { "name": "AI Voice Agent для SMB", "score": "9/10", "tam": "$47.5B", "notes": "CAGR 34.8%" },
-      { "name": "AI Compliance Autopilot", "score": "8/10", "tam": "-", "notes": "Vanta validated" },
-      { "name": "AI-Native Design Agency", "score": "8/10", "tam": "-", "notes": "YC RFS, fast cash" }
-    ],
-    "fullReportPath": "memory/BUSINESS_IDEAS.md"
-  }
+  "businessIdeas": [
+    {
+      "id": 1,
+      "name": "AI Voice Agent для SMB",
+      "codename": "VoiceFlow Pro",
+      "score": "9/10",
+      "verdict": "BEST OPPORTUNITY 2026",
+      "what": "Платформа AI голосовых агентов для SMB — отвечают на звонки 24/7, записывают на приём, принимают заказы",
+      "problem": "SMB теряют 30% звонков вне рабочего времени. Каждый пропущенный = $50-500 потерь",
+      "market": {
+        "tam": "$47.5B к 2034",
+        "sam": "$4.8B — SMB США/EU",
+        "som": "$120M за 3 года",
+        "cagr": "34.8%"
+      },
+      "audience": "Рестораны, клиники, автосервисы, салоны — 15M бизнесов в США",
+      "pricing": {
+        "starter": "$99/мес — 500 минут",
+        "growth": "$299/мес — 2000 минут, CRM",
+        "pro": "$799/мес — безлимит, кастом голос"
+      },
+      "economics": {
+        "cac": "$150",
+        "ltv": "$3600",
+        "ltvCac": "24:1",
+        "margin": "75%"
+      },
+      "competitors": "Vapi ($20M Series A), Bland.ai ($22M), Synthflow",
+      "moat": "Vertical templates, SMB pricing, local-first integrations",
+      "mvp": "4 недели, $5K",
+      "tech": "Twilio + OpenAI/Anthropic + ElevenLabs",
+      "whyNow": "OpenAI Realtime API, ElevenLabs low latency, post-COVID SMB automation demand",
+      "risks": "Big tech, AI quality issues",
+      "suitableFor": "Technical founder с SaaS опытом"
+    },
+    {
+      "id": 2,
+      "name": "AI Compliance Autopilot",
+      "codename": "ComplianceOS",
+      "score": "8/10",
+      "verdict": "VALIDATED MARKET",
+      "what": "Автоматизация SOC 2, ISO 27001, HIPAA сертификаций для стартапов — 2-4 недели вместо 6 месяцев",
+      "problem": "Enterprise требуют SOC 2. Без сертификации стартап теряет deals $500K+. Vanta стоит $25K+/год",
+      "market": {
+        "tam": "$15B — GRC software",
+        "sam": "$2.5B — compliance automation SMB",
+        "som": "$50M за 3 года",
+        "cagr": "14%"
+      },
+      "audience": "Seed/Series A SaaS стартапы (5-50 человек)",
+      "pricing": {
+        "bootstrap": "$199/мес — 1 framework",
+        "startup": "$499/мес — multi-framework",
+        "scale": "$999/мес — unlimited"
+      },
+      "economics": {
+        "cac": "$800",
+        "ltv": "$9000",
+        "ltvCac": "11:1",
+        "margin": "85%"
+      },
+      "competitors": "Vanta ($2.45B), Drata ($2B), Secureframe",
+      "moat": "AI-first docs (10x faster), startup pricing ($199 vs $2K+), auditor marketplace",
+      "mvp": "6 недель, $8K",
+      "tech": "GPT-4 для document generation, AWS/GitHub/Slack integrations",
+      "whyNow": "AI может генерировать policies quality, enterprise sales стали стандартом раньше",
+      "risks": "Vanta снизит цены, regulatory complexity",
+      "suitableFor": "Founders с security/compliance background"
+    },
+    {
+      "id": 3,
+      "name": "Cursor для Product Managers",
+      "codename": "ProductMind",
+      "score": "8/10",
+      "verdict": "YC RFS",
+      "what": "AI-native инструмент: анализ customer feedback + usage data → готовые PRDs за минуты",
+      "problem": "PM тратят 60% времени на сбор данных вместо product decisions. Feedback разбросан по 10+ tools",
+      "market": {
+        "tam": "$25B — product management software",
+        "sam": "$5B — PM tools для tech companies",
+        "som": "$50M за 3 года",
+        "cagr": "12%"
+      },
+      "audience": "Product teams в tech companies (Series A+)",
+      "pricing": {
+        "team": "$49/user/мес",
+        "business": "$99/user/мес",
+        "enterprise": "custom"
+      },
+      "economics": {
+        "cac": "$500",
+        "ltv": "$6000",
+        "ltvCac": "12:1",
+        "margin": "80%"
+      },
+      "competitors": "Productboard, Amplitude, Pendo",
+      "moat": "AI-native (не feature), unified data layer",
+      "mvp": "8 недель, $10K",
+      "tech": "Intercom/Zendesk/Amplitude integrations, LLM analysis",
+      "whyNow": "YC RFS прямо назвал это, AI достаточно хорош для analysis",
+      "risks": "Incumbents add AI, long sales cycle",
+      "suitableFor": "Founders с PM background"
+    },
+    {
+      "id": 4,
+      "name": "AI Legal Contract Review",
+      "codename": "ContractPilot",
+      "score": "7.5/10",
+      "verdict": "HIGH POTENTIAL, WATCH LIABILITY",
+      "what": "AI review бизнес-контрактов: загружаешь NDA/MSA → анализ рисков + redlines за секунды",
+      "problem": "Юристы $300-800/час. SMB подписывают контракты не читая → судебные издержки",
+      "market": {
+        "tam": "$30B — legal tech",
+        "sam": "$8B — contract management",
+        "som": "$80M за 3 года",
+        "cagr": "12%"
+      },
+      "audience": "Startups и SMB без legal team (5-200 человек)",
+      "pricing": {
+        "starter": "$99/мес — 10 contracts",
+        "growth": "$299/мес — 50 contracts",
+        "pro": "$799/мес — unlimited"
+      },
+      "economics": {
+        "cac": "$300",
+        "ltv": "$4500",
+        "ltvCac": "15:1",
+        "margin": "80%"
+      },
+      "competitors": "Harvey ($1.5B), Ironclad ($3.2B), SpotDraft",
+      "moat": "Self-serve instant, SMB pricing, review focus (not full CLM)",
+      "mvp": "6 недель, $7K",
+      "tech": "Claude for legal analysis, PDF/Word parsing, custom NER",
+      "whyNow": "Claude 3.5/4 понимает legal nuance",
+      "risks": "AI ошибка → liability, Harvey goes SMB",
+      "suitableFor": "Legal background или strong NLP skills"
+    },
+    {
+      "id": 5,
+      "name": "Creator Analytics Hub",
+      "codename": "CreatorOS",
+      "score": "7/10",
+      "verdict": "LARGE MARKET, CROWDED",
+      "what": "Unified dashboard для creators: аналитика всех платформ + AI recommendations + brand deal matching",
+      "problem": "Creators жонглируют 5+ платформ, monetization хаотична, не знают свой rate",
+      "market": {
+        "tam": "$205B — creator economy 2026",
+        "sam": "$14B — creator tools",
+        "som": "$70M за 3 года",
+        "cagr": "20%"
+      },
+      "audience": "Mid-tier creators (10K-1M followers)",
+      "pricing": {
+        "free": "Basic analytics",
+        "pro": "$19/мес — AI insights",
+        "business": "$49/мес — brand matching"
+      },
+      "economics": {
+        "cac": "$30",
+        "ltv": "$400",
+        "ltvCac": "13:1",
+        "margin": "70%"
+      },
+      "competitors": "Sprout Social, Later, brand deal platforms",
+      "moat": "Multi-platform unified view + AI recommendations + marketplace",
+      "mvp": "6 недель, $6K",
+      "tech": "Platform APIs (YT, TikTok, IG, Twitter), analytics engine",
+      "whyNow": "Creator economy взрывается, platforms открывают APIs",
+      "risks": "Platform API changes, crowded market",
+      "suitableFor": "Founders who understand creator economy"
+    },
+    {
+      "id": 6,
+      "name": "AI-Native Design Agency",
+      "codename": "DesignOS",
+      "score": "8/10",
+      "verdict": "FAST CASH, YC RFS",
+      "what": "Productized design service: AI делает 80% работы, humans polish. 10x дешевле традиционных агентств",
+      "problem": "Дизайн agencies дорого ($150-300/час), медленно (недели), inconsistent quality",
+      "market": {
+        "tam": "$50B — design services",
+        "sam": "$10B — SMB design needs",
+        "som": "$20M за 3 года",
+        "cagr": "15%"
+      },
+      "audience": "Startups, SMB нужен дизайн без найма designer",
+      "pricing": {
+        "starter": "$2K/мес — unlimited requests",
+        "growth": "$4K/мес — priority + brand guidelines",
+        "scale": "$8K/мес — dedicated team"
+      },
+      "economics": {
+        "cac": "$500",
+        "ltv": "$24000",
+        "ltvCac": "48:1",
+        "margin": "60%"
+      },
+      "competitors": "DesignJoy, Penji, traditional agencies",
+      "moat": "AI + human hybrid model, predictable pricing",
+      "mvp": "2 недели, $2K",
+      "tech": "Midjourney, Figma, Claude for briefs",
+      "whyNow": "AI image/design tools mature, remote work normalized",
+      "risks": "AI quality perception, talent management",
+      "suitableFor": "Design background + ops skills"
+    },
+    {
+      "id": 7,
+      "name": "AI Email Management",
+      "codename": "InboxZero",
+      "score": "6.5/10",
+      "verdict": "CROWDED, NICHE DOWN",
+      "what": "AI email assistant: prioritizes, drafts replies, schedules follow-ups автоматически",
+      "problem": "Professionals тратят 28% рабочего времени на email (McKinsey). Inbox overwhelm = missed opportunities",
+      "market": {
+        "tam": "$10B — email productivity",
+        "sam": "$3B — AI email tools",
+        "som": "$30M за 3 года",
+        "cagr": "18%"
+      },
+      "audience": "Busy professionals, sales people, executives",
+      "pricing": {
+        "personal": "$15/мес",
+        "pro": "$30/мес",
+        "team": "$25/user/мес"
+      },
+      "economics": {
+        "cac": "$50",
+        "ltv": "$400",
+        "ltvCac": "8:1",
+        "margin": "85%"
+      },
+      "competitors": "Superhuman, SaneBox, many AI tools",
+      "moat": "Deep Gmail/Outlook integration, learning from behavior",
+      "mvp": "8 недель, $8K",
+      "tech": "Gmail/Outlook APIs, LLM fine-tuning",
+      "whyNow": "LLMs can understand context, remote work = more email",
+      "risks": "Very crowded, Gmail/Microsoft could add features",
+      "suitableFor": "Strong product sense, email power user"
+    },
+    {
+      "id": 8,
+      "name": "Vertical SaaS для Real Estate",
+      "codename": "AgentFlow",
+      "score": "7.5/10",
+      "verdict": "CLEAR NICHE, FRAGMENTED MARKET",
+      "what": "All-in-one platform для real estate agents: CRM + marketing + transactions + AI assistant",
+      "problem": "Agents используют 10+ tools, теряют leads, no automation. Incumbents (Zillow) дорогие и generic",
+      "market": {
+        "tam": "$15B — real estate software",
+        "sam": "$5B — agent tools",
+        "som": "$50M за 3 года",
+        "cagr": "10%"
+      },
+      "audience": "Independent real estate agents и small brokerages",
+      "pricing": {
+        "solo": "$79/мес",
+        "team": "$49/agent/мес",
+        "brokerage": "custom"
+      },
+      "economics": {
+        "cac": "$200",
+        "ltv": "$2000",
+        "ltvCac": "10:1",
+        "margin": "75%"
+      },
+      "competitors": "Follow Up Boss, kvCORE, BoomTown",
+      "moat": "AI-native from start, modern UX, integrated marketing",
+      "mvp": "10 недель, $12K",
+      "tech": "CRM, marketing automation, MLS integrations",
+      "whyNow": "Real estate tech underinvested, agents looking for modern tools",
+      "risks": "Long sales cycle, relationship-based industry",
+      "suitableFor": "Real estate experience or strong vertical SaaS background"
+    },
+    {
+      "id": 9,
+      "name": "AI Meeting Notes",
+      "codename": "MeetingMind",
+      "score": "6/10",
+      "verdict": "VERY CROWDED",
+      "what": "AI записывает meetings, генерирует notes, action items, отслеживает follow-ups",
+      "problem": "Professionals тратят 31 час/месяц на meetings. Notes теряются, action items забываются",
+      "market": {
+        "tam": "$8B — meeting productivity",
+        "sam": "$2B — AI meeting tools",
+        "som": "$20M за 3 года",
+        "cagr": "25%"
+      },
+      "audience": "Remote teams, sales teams, consultants",
+      "pricing": {
+        "free": "5 meetings/мес",
+        "pro": "$20/мес",
+        "team": "$15/user/мес"
+      },
+      "economics": {
+        "cac": "$40",
+        "ltv": "$300",
+        "ltvCac": "7.5:1",
+        "margin": "80%"
+      },
+      "competitors": "Otter.ai, Fireflies, Grain, Read.ai, Fathom",
+      "moat": "Hard to differentiate, need unique angle",
+      "mvp": "6 недель, $5K",
+      "tech": "Whisper API, Zoom/Meet/Teams integrations",
+      "whyNow": "Remote work permanent, AI transcription commoditized",
+      "risks": "Crowded, Zoom/Google/MS adding features",
+      "suitableFor": "Only if you have unique distribution or niche"
+    },
+    {
+      "id": 10,
+      "name": "B2B Data Enrichment API",
+      "codename": "DataMint",
+      "score": "7/10",
+      "verdict": "DEVELOPER PLAY",
+      "what": "API для обогащения B2B данных: email → company info, tech stack, funding, intent signals",
+      "problem": "Sales teams тратят 20%+ времени на research. Clearbit дорогой ($99-999/мес). Data часто outdated",
+      "market": {
+        "tam": "$12B — sales intelligence",
+        "sam": "$4B — data enrichment",
+        "som": "$40M за 3 года",
+        "cagr": "15%"
+      },
+      "audience": "Sales teams, marketing ops, developers building tools",
+      "pricing": {
+        "starter": "$99/мес — 1K credits",
+        "growth": "$299/мес — 5K credits",
+        "scale": "$799/мес — 20K credits"
+      },
+      "economics": {
+        "cac": "$300",
+        "ltv": "$4000",
+        "ltvCac": "13:1",
+        "margin": "70%"
+      },
+      "competitors": "Clearbit (acquired), ZoomInfo, Apollo, Clay",
+      "moat": "Fresh data (AI scraping), developer-first API, affordable",
+      "mvp": "8 недель, $10K",
+      "tech": "Web scraping, AI extraction, REST API",
+      "whyNow": "Clearbit acquired by HubSpot, market fragmented",
+      "risks": "Data quality, scraping legal issues",
+      "suitableFor": "Technical founders with data/scraping experience"
+    }
+  ]
 }
