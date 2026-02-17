@@ -1,6 +1,6 @@
 {
-  "version": "2.5.0",
-  "lastUpdated": "2026-02-17T03:36:00.000Z",
+  "version": "3.0.0",
+  "lastUpdated": "2026-02-17T03:50:00.000Z",
   "updatedBy": "atlas",
   
   "kpis": {
@@ -9,236 +9,152 @@
     "frozenCards": 2,
     "totalDeposits": 49263.54,
     "totalVolume": 262254.54,
-    "dau": 3,
-    "wau": 6,
-    "mau": 8,
-    "churnRate": 46.7,
-    "avgDeposit": 1296.41,
-    "avgTransaction": 801.53,
-    "avgTxnPerUser": 8.6,
-    "repeatDepositRate": 58.3,
     "transactions": 327,
     "goal": 1000,
     "dayOfGoal": 16,
-    "totalDays": 90,
-    "requiredPace": 13.0,
-    "actualPace": 2.4,
-    "velocityRatio": 0.18
+    "totalDays": 90
   },
   
   "funnel": {
-    "period": "30d",
     "stages": [
       { "stage": "registered", "count": 28 },
       { "stage": "email_verified", "count": 15, "conversion": "53.6%" },
       { "stage": "first_deposit", "count": 6, "conversion": "40.0%" },
       { "stage": "card_created", "count": 8, "conversion": "133.3%" },
-      { "stage": "card_funded", "count": 0, "conversion": "0.0%" },
-      { "stage": "first_transaction", "count": 8, "conversion": "100%" },
       { "stage": "active_7d", "count": 6 },
       { "stage": "active_30d", "count": 8 }
-    ],
-    "bottlenecks": [
-      { "stage": "email_verified", "target": 70, "actual": 53.6, "gap": -16.4 },
-      { "stage": "first_deposit", "target": 50, "actual": 40.0, "gap": -10.0 }
     ]
   },
   
-  "alerts": {
-    "active": [
-      {
-        "type": "velocity_critical",
-        "message": "Growth velocity 0.18x — need 13.0/day, getting 2.4/day",
-        "severity": "critical"
-      },
-      {
-        "type": "email_oauth_blocked",
-        "message": "Cold email OAuth disabled — 12 emails blocked, 23 HNWI contacts waiting",
-        "severity": "critical"
-      },
-      {
-        "type": "funnel_bottleneck",
-        "message": "Email verification 53.6% (target >70%) — biggest drop-off point",
-        "severity": "warning"
-      },
-      {
-        "type": "multi_device_fraud",
-        "message": "7 users on same device hash (IDs: 11, 45, 38, 43, 54, 42, 47)",
-        "severity": "warning"
-      },
-      {
-        "type": "group_loss",
-        "message": "8 groups FORBIDDEN — 11 active remain",
-        "severity": "warning"
-      }
-    ]
-  },
+  "alerts": [
+    { "type": "critical", "message": "Growth velocity 0.18x — need 13.0/day, getting 2.4/day" },
+    { "type": "critical", "message": "Cold email OAuth disabled — 35 contacts waiting" },
+    { "type": "warning", "message": "Email verification 53.6% (target >70%)" },
+    { "type": "warning", "message": "7 users on same device hash (fraud risk)" },
+    { "type": "warning", "message": "8 TG groups FORBIDDEN — 11 active remain" }
+  ],
   
   "leads": {
     "hot": 7,
     "warm": 5,
     "cold": 20,
     "converted": 0,
-    "lastHunt": "2026-02-16T16:30:00.000Z",
     "list": [
-      {
-        "name": "Калгари URGENT #2",
-        "handle": "8494549313",
-        "platform": "TG Калгари",
-        "topic": "продать юсдт, желательно сегодня",
-        "status": "replied",
-        "date": "2026-02-16",
-        "priority": "hot",
-        "daysSinceContact": 0,
-        "notes": "URGENT — replied 11:30 with CTA"
-      },
-      {
-        "name": "Калгари USDT #15",
-        "handle": "7255771489",
-        "platform": "TG Калгари",
-        "topic": "Ищу покупку USDT",
-        "status": "replied",
-        "date": "2026-02-16",
-        "priority": "hot",
-        "daysSinceContact": 0,
-        "notes": "Replied 11:30 — криптокарта без P2P рисков"
-      },
-      {
-        "name": "Тулуза USDT #3",
-        "handle": "8372101794",
-        "platform": "TG Тулуза",
-        "topic": "Нужно купить юсдт, у меня наличные",
-        "status": "replied",
-        "date": "2026-02-16",
-        "priority": "hot",
-        "daysSinceContact": 0,
-        "notes": "Replied 05:30 — криптокарта + @mybankly_bot"
-      },
-      {
-        "name": "Тулуза USDT #2",
-        "handle": "8311720189",
-        "platform": "TG Тулуза",
-        "topic": "Ищу USDT для покупки",
-        "status": "replied",
-        "date": "2026-02-16",
-        "priority": "hot",
-        "daysSinceContact": 0,
-        "notes": "Replied 03:30 — криптокарта + @mybankly_bot"
-      },
-      {
-        "name": "Калгари USDT #13",
-        "handle": "8341317889",
-        "platform": "TG Калгари",
-        "topic": "Ищу продавца USDT за наличные",
-        "status": "replied",
-        "date": "2026-02-16",
-        "priority": "hot",
-        "daysSinceContact": 0,
-        "notes": "Replied 03:30 — HK jurisdiction pitch"
-      },
-      {
-        "name": "Тулуза USDT buyer",
-        "handle": "8519938140",
-        "platform": "TG Тулуза",
-        "topic": "Кто продает тезер? юздт",
-        "status": "replied",
-        "date": "2026-02-15",
-        "priority": "hot",
-        "daysSinceContact": 1,
-        "notes": "Replied 19:30 — waiting response"
-      },
-      {
-        "name": "DM exchanger expert",
-        "handle": "1069362030",
-        "platform": "TG DM",
-        "topic": "Обменники, криптоботы, 200m",
-        "status": "replied",
-        "date": "2026-02-14",
-        "priority": "warm",
-        "daysSinceContact": 2,
-        "notes": "Networking/B2B potential"
-      },
-      {
-        "name": "Андрей (@Andrei_M0)",
-        "handle": "Andrei_M0",
-        "platform": "TG DM",
-        "topic": "Черногорская карта для Netflix",
-        "status": "cta_delivered",
-        "date": "2026-02-12",
-        "priority": "warm",
-        "daysSinceContact": 4,
-        "notes": "CTA @mybankly_bot delivered, no response"
-      }
+      { "name": "Калгари URGENT", "platform": "TG", "topic": "продать юсдт сегодня", "status": "replied", "days": 0 },
+      { "name": "Калгари USDT #15", "platform": "TG", "topic": "Ищу покупку USDT", "status": "replied", "days": 0 },
+      { "name": "Тулуза USDT #3", "platform": "TG", "topic": "Нужно купить юсдт", "status": "replied", "days": 0 },
+      { "name": "Тулуза USDT #2", "platform": "TG", "topic": "Ищу USDT для покупки", "status": "replied", "days": 0 },
+      { "name": "Калгари USDT #13", "platform": "TG", "topic": "Ищу продавца USDT", "status": "replied", "days": 0 },
+      { "name": "DM exchanger expert", "platform": "TG DM", "topic": "Обменники, криптоботы", "status": "warm", "days": 2 },
+      { "name": "Андрей (@Andrei_M0)", "platform": "TG DM", "topic": "Карта для Netflix", "status": "cta_sent", "days": 4 }
     ]
   },
   
   "groups": {
     "active": 11,
     "forbidden": 8,
-    "pending": 1,
-    "total": 20,
     "list": [
-      { "name": "Все русские в Черногории", "status": "best", "lang": "RU" },
-      { "name": "Украинцы в Калгари", "status": "hot", "lang": "RU/UA" },
-      { "name": "Русские в Нидерландах", "status": "active", "lang": "RU" },
-      { "name": "Digital Nomads", "status": "active", "lang": "EN" },
-      { "name": "Русские в Мексике", "status": "active", "lang": "RU" },
-      { "name": "Русские в Лос Анджелесе", "status": "ok", "lang": "RU" },
-      { "name": "Русские в Чикаго", "status": "ok", "lang": "RU" },
-      { "name": "Українці в Лондоні", "status": "ok", "lang": "UA" },
-      { "name": "Украинцы в Тулузе", "status": "ok", "lang": "RU/UA" },
-      { "name": "Українці в Торрев'єсі", "status": "ok", "lang": "UA" },
-      { "name": "Українська Варшава", "status": "spam", "lang": "UA" },
-      { "name": "No-KYC Cards", "status": "active", "lang": "EN" },
-      { "name": "Українці в Швейцарії", "status": "active", "lang": "UA" },
-      { "name": "Русские в Майами", "status": "active", "lang": "RU" },
-      { "name": "Русские в Аргентине", "status": "active", "lang": "RU" }
-    ],
-    "newJoined": [
-      { "name": "No-KYC Cards", "handle": "@no_kyc_cards", "date": "2026-02-15" },
-      { "name": "Українці в Швейцарії", "handle": "@SwissUA", "date": "2026-02-15" },
-      { "name": "Русские в Майами", "handle": "@miami_rus", "date": "2026-02-15" },
-      { "name": "Русские в Аргентине", "handle": "@rus_argentina", "date": "2026-02-15" }
+      { "name": "Все русские в Черногории", "lang": "RU", "status": "best" },
+      { "name": "Украинцы в Калгари", "lang": "RU/UA", "status": "hot" },
+      { "name": "Digital Nomads", "lang": "EN", "status": "active" },
+      { "name": "No-KYC Cards", "lang": "EN", "status": "active" },
+      { "name": "Русские в Нидерландах", "lang": "RU", "status": "active" },
+      { "name": "Русские в Мексике", "lang": "RU", "status": "active" },
+      { "name": "Русские в Майами", "lang": "RU", "status": "active" },
+      { "name": "Русские в Лос Анджелесе", "lang": "RU", "status": "ok" },
+      { "name": "Русские в Чикаго", "lang": "RU", "status": "ok" },
+      { "name": "Українці в Лондоні", "lang": "UA", "status": "ok" },
+      { "name": "Украинцы в Тулузе", "lang": "RU/UA", "status": "ok" }
     ]
   },
   
   "hnwi": {
     "total": 78,
     "target": 500,
-    "progress": 15.6,
-    "segments": {
-      "yachts": { "count": 78, "status": "in_progress" },
-      "poker": { "count": 0, "status": "scheduled" },
-      "watches": { "count": 0, "status": "pending" },
-      "cars": { "count": 0, "status": "pending" }
-    },
-    "lastHunt": "2026-02-16T19:00:00.000Z"
+    "segments": [
+      { "name": "Yachts", "count": 78, "status": "active" },
+      { "name": "Poker", "count": 0, "status": "next" },
+      { "name": "Watches", "count": 0, "status": "pending" },
+      { "name": "Cars", "count": 0, "status": "pending" }
+    ],
+    "contacts": [
+      { "company": "Burgess Yachts", "location": "Miami", "phone": "+1 305 672 0150", "type": "yacht" },
+      { "company": "Camper & Nicholsons", "location": "Antibes", "phone": "+33 4 92 91 29 12", "type": "yacht" },
+      { "company": "Fraser Yachts", "location": "Dubai", "phone": "+971 4 453 6999", "type": "yacht" },
+      { "company": "IYC Dubai", "location": "Dubai", "phone": "+971 4 423 9900", "type": "yacht" },
+      { "company": "Phoenix Yacht", "location": "Dubai", "phone": "+971 4 368 1234", "type": "yacht" },
+      { "company": "Northrop & Johnson", "location": "Monaco", "phone": "+377 97 97 20 40", "type": "yacht" },
+      { "company": "HMY Yacht Sales", "location": "Miami Beach", "phone": "305-856-8486", "type": "yacht" },
+      { "company": "MarineMax", "location": "Miami", "phone": "(305) 758-5786", "type": "yacht" }
+    ]
+  },
+  
+  "providers": {
+    "verified": [
+      { "name": "Rain", "type": "Full-Stack Issuer", "region": "Global", "funding": "$338M+", "notes": "Visa principal member" },
+      { "name": "Reap", "type": "Full-Stack Issuer", "region": "Asia/ME/US", "funding": "$60M", "notes": "Visa principal, $6B volume" },
+      { "name": "Kulipa", "type": "B2B API", "region": "Global", "funding": "$3M", "notes": "Self-custodial card API" },
+      { "name": "Baanx", "type": "Issuer", "region": "UK/EU", "funding": "$175M acq", "notes": "EMI licensed" },
+      { "name": "Striga", "type": "Issuer", "region": "Europe", "funding": "-", "notes": "Powers Bitrefill" },
+      { "name": "Gnosis Pay", "type": "Non-Custodial", "region": "EU/UK", "funding": "-", "notes": "2% cashback, white-label" },
+      { "name": "Immersve", "type": "BIN Sponsor", "region": "Global", "funding": "-", "notes": "MC principal, 70M merchants" },
+      { "name": "Zero Hash", "type": "Infrastructure", "region": "Global", "funding": "$65B vol", "notes": "MC acquisition talks" }
+    ],
+    "redFlags": [
+      { "name": "Vault.ist", "reason": "Crypterium/Choise связь — FinTelegram warning" },
+      { "name": "LBM Solutions", "reason": "Dev shop, not issuer, scam reviews" },
+      { "name": "KazePay", "reason": "Zero company registration" }
+    ],
+    "whiteLabel": [
+      { "name": "ChainUp", "service": "Full PaaS", "pricing": "Custom" },
+      { "name": "Zypto", "service": "Cards + Wallets", "pricing": "Custom" },
+      { "name": "Kripicard", "service": "USDT Virtual Cards", "pricing": "Custom" },
+      { "name": "Buvei", "service": "Virtual Card API", "pricing": "Custom" },
+      { "name": "FinLego", "service": "Card Issuing + Core Banking", "pricing": "License" },
+      { "name": "Unlimit", "service": "90-day Launch", "pricing": "Custom" }
+    ],
+    "binSponsors": [
+      { "name": "Moorwand", "region": "UK/EEA", "cards": "Mastercard" },
+      { "name": "Treezor", "region": "France/EU", "cards": "Visa/MC" },
+      { "name": "Enfuce", "region": "EU/UK", "cards": "Visa/MC" },
+      { "name": "Transact Payments", "region": "UK/EEA", "cards": "All" }
+    ]
+  },
+  
+  "competitors": {
+    "list": [
+      { "name": "Kolo.xyz", "tg": "1M+", "ig": "100", "twitter": "-", "strength": "TG mini-app" },
+      { "name": "KAST", "tg": "Active", "ig": "1K", "twitter": "47.2K", "strength": "CT native" },
+      { "name": "Wirex", "tg": "Active", "ig": "44K", "twitter": "25K", "strength": "IG + TikTok" },
+      { "name": "Trustee Plus", "tg": "21.3K", "ig": "12K", "twitter": "-", "strength": "YouTube UA" },
+      { "name": "MaxSwap", "tg": "2.3K", "ig": "2.2K", "twitter": "1.4K", "strength": "30-50% referral" },
+      { "name": "Cryptopay", "tg": "Active", "ig": "2K", "twitter": "Suspended", "strength": "EU focus" }
+    ],
+    "insights": [
+      "Kolo = TG king — mini-app + gamification = 1M subs",
+      "KAST = Twitter king — CT native, $10M funding",
+      "Wirex = IG + TikTok leader — 44K + 10.7K",
+      "MaxSwap = Referral machine — 30-50% lifetime",
+      "TikTok underutilized across all competitors",
+      "No bilingual EN/RU content leader"
+    ]
   },
   
   "outreach": {
     "emailsReady": 12,
     "emailsSent": 0,
     "status": "blocked",
-    "blocker": "OAuth client disabled",
+    "blocker": "OAuth disabled",
+    "hnwiQueue": 23,
     "followUpsDue": 6
   },
   
-  "competitors": [
-    { "name": "kolo.xyz", "strength": "1M TG via mini-app" },
-    { "name": "KAST", "strength": "47K Twitter, CT native" },
-    { "name": "Wirex", "strength": "44K IG, 10.7K TikTok" },
-    { "name": "Trustee", "strength": "8K YT Ukrainian" },
-    { "name": "MaxSwap", "strength": "30-50% referral" }
-  ],
-
-  "dailyLog": {
-    "date": "2026-02-16",
-    "usersAdded": 1,
-    "leadsContacted": 7,
-    "leadsEngaged": 0,
-    "ctaDelivered": 5,
-    "converted": 0,
-    "groupsPosted": 0,
-    "hnwiContacts": 23
+  "businessIdeas": {
+    "top3": [
+      { "name": "AI Voice Agent для SMB", "score": "9/10", "tam": "$47.5B", "notes": "CAGR 34.8%" },
+      { "name": "AI Compliance Autopilot", "score": "8/10", "tam": "-", "notes": "Vanta validated" },
+      { "name": "AI-Native Design Agency", "score": "8/10", "tam": "-", "notes": "YC RFS, fast cash" }
+    ],
+    "fullReportPath": "memory/BUSINESS_IDEAS.md"
   }
 }
