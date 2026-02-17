@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bankly CRM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --bg2: #12121a;
+            --card: #1a1a24;
+            --border: rgba(255,255,255,0.08);
+            --text: #ffffff;
+            --text2: #8b8b9e;
+            --accent: #6366f1;
+            --green: #22c55e;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 1rem;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg2);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text2); }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+        .card {
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            padding: 1.25rem;
+        }
+        .card-title { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; margin-bottom: 0.5rem; }
+        .big-num { font-size: 2.5rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub { font-size: 0.85rem; color: var(--text2); margin-top: 0.25rem; }
+        .progress-bar { height: 8px; background: var(--bg); border-radius: 4px; margin-top: 0.75rem; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #a855f7); border-radius: 4px; transition: width 0.5s; }
+        .alert { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.85rem; }
+        .alert-critical { background: rgba(239,68,68,0.15); border-left: 3px solid var(--red); }
+        .alert-warning { background: rgba(245,158,11,0.15); border-left: 3px solid var(--yellow); }
+        .section { margin-bottom: 1.5rem; }
+        .section-title { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text2); font-size: 0.7rem; text-transform: uppercase; font-weight: 500; }
+        tr:hover { background: rgba(255,255,255,0.02); }
+        .badge { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+        .badge-hot { background: rgba(239,68,68,0.2); color: var(--red); }
+        .badge-warm { background: rgba(245,158,11,0.2); color: var(--yellow); }
+        .badge-cold { background: rgba(99,102,241,0.2); color: var(--accent); }
+        .badge-ok { background: rgba(34,197,94,0.2); color: var(--green); }
+        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .tab { padding: 0.5rem 1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 0.85rem; color: var(--text2); }
+        .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .funnel { display: flex; flex-direction: column; gap: 0.5rem; }
+        .funnel-stage { display: flex; align-items: center; gap: 1rem; padding: 0.75rem; background: var(--bg); border-radius: 8px; }
+        .funnel-name { flex: 1; font-size: 0.85rem; }
+        .funnel-count { font-weight: 600; min-width: 40px; }
+        .funnel-conv { font-size: 0.75rem; color: var(--text2); min-width: 50px; }
+        .funnel-bar { flex: 2; height: 6px; background: var(--card); border-radius: 3px; overflow: hidden; }
+        .funnel-bar-fill { height: 100%; background: var(--accent); }
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .big-num { font-size: 2rem; }
+            body { padding: 0.5rem; }
+        }
+        .error-state { text-align: center; padding: 3rem; color: var(--text2); }
+        .loading { text-align: center; padding: 2rem; color: var(--text2); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Bankly CRM</div>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span id="lastUpdate">Loading...</span>
+        </div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
+        <div class="tab" onclick="showTab('leads')">🔥 Leads</div>
+        <div class="tab" onclick="showTab('funnel')">📈 Funnel</div>
+        <div class="tab" onclick="showTab('groups')">💬 Groups</div>
+        <div class="tab" onclick="showTab('alerts')">⚠️ Alerts</div>
+    </div>
+
+    <div id="overview" class="tab-content active">
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Goal Progress</div>
+                <div class="big-num"><span id="users">-</span><span style="font-size:1rem;color:var(--text2)">/1000</span></div>
+                <div class="sub">Day <span id="day">-</span> of 90</div>
+                <div class="progress-bar"><div class="progress-fill" id="goalProgress" style="width:0%"></div></div>
+            </div>
+            <div class="card">
+                <div class="card-title">Velocity</div>
+                <div class="big-num" id="velocity">-</div>
+                <div class="sub"><span id="actualPace">-</span>/day vs <span id="requiredPace">-</span> required</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Active Cards</div>
+                <div class="big-num" id="cards">-</div>
+                <div class="sub"><span id="frozen">-</span> frozen</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Volume</div>
+                <div class="big-num">$<span id="volume">-</span></div>
+                <div class="sub"><span id="txns">-</span> transactions</div>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <div class="card-title">Deposits</div>
+                <div class="big-num">$<span id="deposits">-</span></div>
+                <div class="sub"><span id="depositCount">-</span> confirmed</div>
+            </div>
+            <div class="card">
+                <div class="card-title">DAU / MAU</div>
+                <div class="big-num"><span id="dau">-</span>/<span id="mau">-</span></div>
+                <div class="sub"><span id="dauMau">-</span>% ratio</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Leads</div>
+                <div class="big-num" id="hotLeads">-</div>
+                <div class="sub"><span id="warmLeads">-</span> warm, <span id="converted">-</span> converted</div>
+            </div>
+            <div class="card">
+                <div class="card-title">HNWI Contacts</div>
+                <div class="big-num"><span id="hnwi">-</span><span style="font-size:1rem;color:var(--text2)">/500</span></div>
+                <div class="progress-bar"><div class="progress-fill" id="hnwiProgress" style="width:0%"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leads" class="tab-content">
+        <div class="section">
+            <div class="section-title">🔥 Hot Leads</div>
+            <div class="card">
+                <table>
+                    <thead><tr><th>Lead</th><th>Platform</th><th>Topic</th><th>Status</th><th>Days</th></tr></thead>
+                    <tbody id="leadsTable"><tr><td colspan="5" class="loading">Loading...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="funnel" class="tab-content">
+        <div class="section">
+            <div class="section-title">📈 Conversion Funnel (30d)</div>
+            <div class="card">
+                <div class="funnel" id="funnelChart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="groups" class="tab-content">
+        <div class="section">
+            <div class="section-title">💬 Telegram Groups</div>
+            <div class="card">
+                <table>
+                    <thead><tr><th>Group</th><th>Language</th><th>Status</th></tr></thead>
+                    <tbody id="groupsTable"><tr><td colspan="3" class="loading">Loading...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="alerts" class="tab-content">
+        <div class="section">
+            <div class="section-title">⚠️ Active Alerts</div>
+            <div id="alertsList"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'https://mybankly.org/api/system';
+        const API_KEY = 'sk-bankly-ce015eb6b293534a266c9003e829a7f68ce7249f7be12cff14c61805c359c1b6';
+        const DATA_URL = 'https://raw.githubusercontent.com/bankly-crm/data/main/data.json';
+        
+        let data = null;
+
+        function showTab(name) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${name}')"]`).classList.add('active');
+            document.getElementById(name).classList.add('active');
+        }
+
+        async function fetchAPI(endpoint) {
+            try {
+                const res = await fetch(`${API_BASE}${endpoint}`, {
+                    headers: { 'Authorization': `Bearer ${API_KEY}` }
+                });
+                return await res.json();
+            } catch (e) {
+                console.error('API error:', e);
+                return null;
+            }
+        }
+
+        async function fetchData() {
+            try {
+                // Try to fetch from GitHub first (for leads, groups, alerts)
+                const res = await fetch(DATA_URL + '?t=' + Date.now());
+                if (res.ok) {
+                    data = await res.json();
+                }
+            } catch (e) {
+                console.log('Using fallback data');
+            }
+
+            // Fetch live metrics from API
+            const status = await fetchAPI('/status');
+            const funnel = await fetchAPI('/funnel');
+            
+            if (status?.success) {
+                updateOverview(status, funnel);
+            }
+            
+            if (data) {
+                updateLeads(data.leads);
+                updateGroups(data.groups);
+                updateAlerts(data.alerts);
+                updateHNWI(data.hnwi);
+            }
+            
+            if (funnel?.success) {
+                updateFunnel(funnel.stages);
+            }
+
+            document.getElementById('lastUpdate').textContent = 'Updated ' + new Date().toLocaleTimeString();
+        }
+
+        function updateOverview(status, funnel) {
+            const db = status.database;
+            const day = Math.ceil((Date.now() - new Date('2026-02-01').getTime()) / (1000*60*60*24));
+            const users = db.users.total;
+            const progress = (users / 1000 * 100).toFixed(1);
+            const requiredPace = ((1000 - users) / (90 - day)).toFixed(1);
+            const actualPace = (users / day).toFixed(1);
+            const velocity = (actualPace / requiredPace).toFixed(2);
+
+            document.getElementById('users').textContent = users;
+            document.getElementById('day').textContent = day;
+            document.getElementById('goalProgress').style.width = progress + '%';
+            document.getElementById('velocity').textContent = velocity + 'x';
+            document.getElementById('velocity').style.color = velocity < 0.5 ? 'var(--red)' : velocity < 1 ? 'var(--yellow)' : 'var(--green)';
+            document.getElementById('actualPace').textContent = actualPace;
+            document.getElementById('requiredPace').textContent = requiredPace;
+            document.getElementById('cards').textContent = db.cards.active;
+            document.getElementById('frozen').textContent = db.cards.frozen;
+            document.getElementById('volume').textContent = Math.round(db.deposits.totalVolume / 1000) + 'K';
+            document.getElementById('txns').textContent = db.transactions.total;
+            document.getElementById('deposits').textContent = Math.round(db.deposits.confirmedVolume / 1000) + 'K';
+            document.getElementById('depositCount').textContent = db.deposits.confirmed;
+            
+            // DAU/MAU from funnel if available
+            if (funnel?.stages) {
+                const active7d = funnel.stages.find(s => s.stage === 'active_7d')?.count || 0;
+                const active30d = funnel.stages.find(s => s.stage === 'active_30d')?.count || 0;
+                const dau = Math.round(active7d / 7);
+                document.getElementById('dau').textContent = dau;
+                document.getElementById('mau').textContent = active30d;
+                document.getElementById('dauMau').textContent = active30d > 0 ? Math.round(dau / active30d * 100) : 0;
+            }
+        }
+
+        function updateLeads(leads) {
+            if (!leads?.list) return;
+            const tbody = document.getElementById('leadsTable');
+            tbody.innerHTML = leads.list.slice(0, 15).map(l => `
+                <tr>
+                    <td><strong>${l.name}</strong></td>
+                    <td>${l.platform}</td>
+                    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis">${l.topic}</td>
+                    <td><span class="badge badge-${l.priority}">${l.status}</span></td>
+                    <td>${l.daysSinceContact}d</td>
+                </tr>
+            `).join('');
+        }
+
+        function updateFunnel(stages) {
+            if (!stages) return;
+            const container = document.getElementById('funnelChart');
+            const maxCount = Math.max(...stages.map(s => s.count));
+            container.innerHTML = stages.map(s => `
+                <div class="funnel-stage">
+                    <div class="funnel-name">${s.stage.replace(/_/g, ' ')}</div>
+                    <div class="funnel-count">${s.count}</div>
+                    <div class="funnel-bar"><div class="funnel-bar-fill" style="width:${(s.count/maxCount*100)}%"></div></div>
+                    <div class="funnel-conv">${s.conversion || ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function updateGroups(groups) {
+            if (!groups?.list) return;
+            const tbody = document.getElementById('groupsTable');
+            tbody.innerHTML = groups.list.map(g => `
+                <tr>
+                    <td>${g.name}</td>
+                    <td>${g.lang}</td>
+                    <td><span class="badge badge-${g.status === 'best' || g.status === 'hot' ? 'hot' : g.status === 'active' || g.status === 'ok' ? 'ok' : 'cold'}">${g.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        function updateAlerts(alerts) {
+            if (!alerts?.active) return;
+            const container = document.getElementById('alertsList');
+            container.innerHTML = alerts.active.map(a => `
+                <div class="alert alert-${a.severity}">${a.message}</div>
+            `).join('');
+        }
+
+        function updateHNWI(hnwi) {
+            if (!hnwi) return;
+            document.getElementById('hnwi').textContent = hnwi.total;
+            document.getElementById('hnwiProgress').style.width = hnwi.progress + '%';
+            document.getElementById('hotLeads').textContent = data?.leads?.hot || '-';
+            document.getElementById('warmLeads').textContent = data?.leads?.warm || '-';
+            document.getElementById('converted').textContent = data?.leads?.converted || '0';
+        }
+
+        // Initial load
+        fetchData();
+        
+        // Refresh every 5 minutes
+        setInterval(fetchData, 5 * 60 * 1000);
+    </script>
+</body>
+</html>
