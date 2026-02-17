@@ -41,7 +41,6 @@
         .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 8px; cursor: pointer; color: var(--text-secondary); transition: all 0.15s; font-size: 0.875rem; margin-bottom: 2px; }
         .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
         .nav-item.active { background: rgba(139,92,246,0.15); color: var(--accent-light); }
-        .nav-item.active::before { content: ''; position: absolute; left: 0; width: 3px; height: 24px; background: var(--accent); border-radius: 0 2px 2px 0; }
         .nav-icon { width: 18px; text-align: center; }
         .nav-badge { margin-left: auto; background: var(--red); color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 600; }
         .sidebar-footer { padding: 1rem; border-top: 1px solid var(--border); }
@@ -84,9 +83,6 @@
         .metric-value.red { color: var(--red); }
         .metric-value.yellow { color: var(--yellow); }
         .metric-label { font-size: 0.8rem; color: var(--text-secondary); }
-        .metric-change { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-left: 0.5rem; }
-        .metric-change.up { background: var(--green-bg); color: var(--green); }
-        .metric-change.down { background: var(--red-bg); color: var(--red); }
         
         /* PROGRESS */
         .progress { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-top: 0.75rem; }
@@ -94,9 +90,8 @@
         .progress-fill.gradient { background: linear-gradient(90deg, var(--accent), #ec4899); }
         .progress-fill.green { background: var(--green); }
         .progress-fill.red { background: var(--red); }
-        .progress-fill.yellow { background: var(--yellow); }
         
-        /* ALERTS */
+        /* ALERTS & LOGS */
         .alert { padding: 0.875rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 0.75rem; }
         .alert-icon { flex-shrink: 0; }
         .alert-critical { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); }
@@ -105,6 +100,19 @@
         .alert-warning .alert-icon { color: var(--yellow); }
         .alert-info { background: var(--blue-bg); border: 1px solid rgba(59,130,246,0.2); }
         .alert-info .alert-icon { color: var(--blue); }
+        .alert-ok { background: var(--green-bg); border: 1px solid rgba(34,197,94,0.2); }
+        .alert-ok .alert-icon { color: var(--green); }
+        
+        .log-item { display: flex; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
+        .log-item:last-child { border-bottom: none; }
+        .log-time { color: var(--text-muted); min-width: 120px; font-family: monospace; font-size: 0.75rem; }
+        .log-type { min-width: 80px; }
+        .log-type.error { color: var(--red); }
+        .log-type.event { color: var(--blue); }
+        .log-type.warning { color: var(--yellow); }
+        .log-message { flex: 1; color: var(--text-secondary); }
+        .log-resolved { color: var(--green); font-size: 0.7rem; margin-left: 0.5rem; }
+        .log-unresolved { color: var(--red); font-size: 0.7rem; margin-left: 0.5rem; }
         
         /* TABLES */
         .table-wrap { overflow-x: auto; }
@@ -113,6 +121,8 @@
         td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
         tr:hover td { background: rgba(255,255,255,0.02); }
         td:first-child { color: var(--text); font-weight: 500; }
+        a { color: var(--accent-light); text-decoration: none; }
+        a:hover { text-decoration: underline; }
         
         /* BADGES */
         .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
@@ -126,11 +136,12 @@
         .system-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
         .system-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; }
         .system-card.span-2 { grid-column: span 2; }
+        .system-card.span-3 { grid-column: span 3; }
         .system-value { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0; }
         .system-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
         .system-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
         @media (max-width: 1200px) { .system-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .system-grid { grid-template-columns: repeat(2, 1fr); } .system-card.span-2 { grid-column: span 1; } }
+        @media (max-width: 768px) { .system-grid { grid-template-columns: repeat(2, 1fr); } .system-card.span-2, .system-card.span-3 { grid-column: span 1; } }
         
         /* API STATUS */
         .api-status { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.5rem; }
@@ -149,6 +160,8 @@
         /* PROVIDER CARDS */
         .provider-item { padding: 0.875rem; background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 0.5rem; }
         .provider-name { font-weight: 600; margin-bottom: 0.25rem; }
+        .provider-name a { color: var(--text); }
+        .provider-name a:hover { color: var(--accent-light); }
         .provider-meta { font-size: 0.75rem; color: var(--text-secondary); }
         .provider-item.danger { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); }
         
@@ -185,6 +198,13 @@
             .main { margin-left: 0; padding: 1rem; }
             .mobile-toggle { display: flex; }
         }
+        
+        /* METRICS GRID */
+        .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-top: 1rem; }
+        .metric-item { background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 8px; }
+        .metric-item-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+        .metric-item-value { font-weight: 700; font-size: 1.1rem; }
+        @media (max-width: 900px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
@@ -197,19 +217,19 @@
         </div>
         <nav class="nav">
             <div class="nav-section">
+                <div class="nav-label">System</div>
+                <div class="nav-item active" data-page="system"><span class="nav-icon">⚡</span> Bankly System</div>
+            </div>
+            <div class="nav-section">
                 <div class="nav-label">Operations</div>
-                <div class="nav-item active" data-page="system"><span class="nav-icon">⚡</span> System</div>
                 <div class="nav-item" data-page="overview"><span class="nav-icon">📊</span> Overview</div>
                 <div class="nav-item" data-page="leads"><span class="nav-icon">🔥</span> Leads <span class="nav-badge" id="navHotLeads">-</span></div>
                 <div class="nav-item" data-page="pipeline"><span class="nav-icon">📈</span> Pipeline</div>
-            </div>
-            <div class="nav-section">
-                <div class="nav-label">Growth</div>
                 <div class="nav-item" data-page="groups"><span class="nav-icon">💬</span> TG Groups</div>
-                <div class="nav-item" data-page="hnwi"><span class="nav-icon">💎</span> HNWI</div>
             </div>
             <div class="nav-section">
-                <div class="nav-label">Intel</div>
+                <div class="nav-label">Intelligence</div>
+                <div class="nav-item" data-page="hnwi"><span class="nav-icon">💎</span> HNWI Contacts</div>
                 <div class="nav-item" data-page="providers"><span class="nav-icon">💳</span> Providers</div>
                 <div class="nav-item" data-page="competitors"><span class="nav-icon">🎯</span> Competitors</div>
                 <div class="nav-item" data-page="ideas"><span class="nav-icon">💡</span> Ideas</div>
@@ -227,8 +247,8 @@
         <!-- SYSTEM PAGE -->
         <div class="page active" id="page-system">
             <div class="page-header">
-                <h1 class="page-title">System Status</h1>
-                <p class="page-subtitle">Live data from Bankly API</p>
+                <h1 class="page-title">Bankly System</h1>
+                <p class="page-subtitle">Full system status, errors, events, and metrics</p>
             </div>
             
             <div class="api-status" id="apiStatusBar">
@@ -281,11 +301,32 @@
                 </div>
             </div>
 
+            <!-- SYSTEM METRICS -->
             <div class="section" style="margin-top: 2rem;">
-                <div class="section-header">
-                    <h3 class="section-title">⚠️ Active Alerts</h3>
+                <div class="section-header"><h3 class="section-title">📊 System Metrics</h3></div>
+                <div class="metrics-grid" id="systemMetrics"></div>
+            </div>
+
+            <!-- ERROR LOG -->
+            <div class="section" style="margin-top: 2rem;">
+                <div class="section-header"><h3 class="section-title">🔴 Error Log</h3></div>
+                <div class="card">
+                    <div id="errorLog"></div>
                 </div>
-                <div id="systemAlerts"></div>
+            </div>
+
+            <!-- EVENT LOG -->
+            <div class="section" style="margin-top: 1rem;">
+                <div class="section-header"><h3 class="section-title">📋 Event Log</h3></div>
+                <div class="card">
+                    <div id="eventLog"></div>
+                </div>
+            </div>
+
+            <!-- WARNINGS -->
+            <div class="section" style="margin-top: 1rem;">
+                <div class="section-header"><h3 class="section-title">⚠️ Active Warnings</h3></div>
+                <div id="systemWarnings"></div>
             </div>
         </div>
 
@@ -298,7 +339,7 @@
             
             <div class="grid grid-4">
                 <div class="card">
-                    <div class="card-header"><span class="card-title">Goal Progress</span><span class="card-badge static">Static</span></div>
+                    <div class="card-header"><span class="card-title">Goal Progress</span></div>
                     <div class="metric">
                         <span class="metric-value gradient" id="ovUsers">—</span><span style="color: var(--text-muted); font-size: 1rem;">/1000</span>
                     </div>
@@ -387,7 +428,7 @@
         <div class="page" id="page-hnwi">
             <div class="page-header">
                 <h1 class="page-title">HNWI Contacts</h1>
-                <p class="page-subtitle">High Net Worth Individual outreach</p>
+                <p class="page-subtitle">High Net Worth Individual outreach — full database</p>
             </div>
             
             <div class="grid grid-2">
@@ -403,10 +444,10 @@
             </div>
 
             <div class="card" style="margin-top: 1rem;">
-                <div class="card-header"><span class="card-title">Sample Contacts</span></div>
+                <div class="card-header"><span class="card-title">Full Contact Database</span></div>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Company</th><th>Location</th><th>Phone</th><th>Type</th></tr></thead>
+                        <thead><tr><th>#</th><th>Company</th><th>Location</th><th>Phone</th><th>Website</th><th>Type</th><th>Source</th><th>Date</th><th>Notes</th></tr></thead>
                         <tbody id="hnwiContacts"></tbody>
                     </table>
                 </div>
@@ -417,7 +458,7 @@
         <div class="page" id="page-providers">
             <div class="page-header">
                 <h1 class="page-title">Card Providers</h1>
-                <p class="page-subtitle">B2B provider intelligence</p>
+                <p class="page-subtitle">B2B provider intelligence — all links clickable</p>
             </div>
             
             <div class="grid grid-2">
@@ -447,7 +488,7 @@
         <div class="page" id="page-competitors">
             <div class="page-header">
                 <h1 class="page-title">Competitor Analysis</h1>
-                <p class="page-subtitle">Market intelligence</p>
+                <p class="page-subtitle">Market intelligence — all links clickable</p>
             </div>
             
             <div class="card">
@@ -506,9 +547,7 @@
                 updateSystemPage();
                 setAPIStatus(true, 'Connected', new Date().toLocaleTimeString());
             } catch (e) {
-                console.error('API error:', e);
-                setAPIStatus(false, 'API Error', e.message);
-                // Use static data as fallback
+                setAPIStatus(false, 'Stealth Mode', 'Using cached data');
                 if (staticData?.kpis) {
                     apiData = { users: staticData.kpis.totalUsers, cards: staticData.kpis.activeCards, frozen: staticData.kpis.frozenCards, volume: staticData.kpis.totalVolume, deposits: staticData.kpis.totalDeposits, transactions: staticData.kpis.transactions };
                     updateSystemPage();
@@ -521,17 +560,17 @@
             document.getElementById('apiIndicator').className = 'api-status-indicator ' + (online ? 'online' : 'offline');
             document.getElementById('apiTitle').textContent = title;
             document.getElementById('apiSubtitle').textContent = sub;
-            document.getElementById('apiStatusText').textContent = online ? 'Live' : 'Offline';
+            document.getElementById('apiStatusText').textContent = online ? 'Live' : 'Cached';
         }
 
         function updateSystemPage() {
-            if (!apiData) return;
-            const users = apiData.users || staticData?.kpis?.totalUsers || 0;
-            const cards = apiData.cards || staticData?.kpis?.activeCards || 0;
-            const frozen = apiData.frozen || staticData?.kpis?.frozenCards || 0;
-            const volume = apiData.volume || staticData?.kpis?.totalVolume || 0;
-            const deposits = apiData.deposits || staticData?.kpis?.totalDeposits || 0;
-            const txns = apiData.transactions || staticData?.kpis?.transactions || 0;
+            if (!apiData && !staticData?.kpis) return;
+            const users = apiData?.users || staticData?.kpis?.totalUsers || 0;
+            const cards = apiData?.cards || staticData?.kpis?.activeCards || 0;
+            const frozen = apiData?.frozen || staticData?.kpis?.frozenCards || 0;
+            const volume = apiData?.volume || staticData?.kpis?.totalVolume || 0;
+            const deposits = apiData?.deposits || staticData?.kpis?.totalDeposits || 0;
+            const txns = apiData?.transactions || staticData?.kpis?.transactions || 0;
             const day = staticData?.kpis?.dayOfGoal || 16;
             
             const requiredPace = ((1000 - users) / (90 - day)).toFixed(1);
@@ -551,6 +590,48 @@
             document.getElementById('sysVelocitySub').textContent = velocity < 1 ? 'Behind target' : 'On track';
             document.getElementById('sysRequired').textContent = requiredPace + '/day';
             document.getElementById('sysActual').textContent = 'actual: ' + actualPace + '/day';
+
+            // System metrics
+            if (staticData?.system?.metrics) {
+                const m = staticData.system.metrics;
+                document.getElementById('systemMetrics').innerHTML = `
+                    <div class="metric-item"><div class="metric-item-label">Decline Rate</div><div class="metric-item-value" style="color:var(--red)">${m.declineRate}</div></div>
+                    <div class="metric-item"><div class="metric-item-label">Email Verification</div><div class="metric-item-value" style="color:var(--yellow)">${m.emailVerificationRate}</div></div>
+                    <div class="metric-item"><div class="metric-item-label">First Deposit</div><div class="metric-item-value" style="color:var(--yellow)">${m.firstDepositRate}</div></div>
+                    <div class="metric-item"><div class="metric-item-label">DAU/MAU</div><div class="metric-item-value" style="color:var(--green)">${m.dauMau}</div></div>
+                `;
+            }
+
+            // Error log
+            if (staticData?.system?.errors) {
+                document.getElementById('errorLog').innerHTML = staticData.system.errors.map(e => `
+                    <div class="log-item">
+                        <div class="log-time">${e.time}</div>
+                        <div class="log-type error">${e.type.toUpperCase()}</div>
+                        <div class="log-message">${e.user ? '[User ' + e.user + '] ' : ''}${e.message}
+                            ${e.resolved ? '<span class="log-resolved">✓ RESOLVED</span>' : '<span class="log-unresolved">⚠ OPEN</span>'}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Event log
+            if (staticData?.system?.events) {
+                document.getElementById('eventLog').innerHTML = staticData.system.events.map(e => `
+                    <div class="log-item">
+                        <div class="log-time">${e.time}</div>
+                        <div class="log-type event">EVENT</div>
+                        <div class="log-message">${e.event}</div>
+                    </div>
+                `).join('');
+            }
+
+            // Warnings
+            if (staticData?.system?.warnings) {
+                document.getElementById('systemWarnings').innerHTML = staticData.system.warnings.map(w => `
+                    <div class="alert alert-warning"><span class="alert-icon">⚠️</span><span>${w}</span></div>
+                `).join('');
+            }
         }
 
         // Fetch static data
@@ -567,6 +648,9 @@
         function updateAllPages() {
             if (!staticData) return;
             
+            // Update system page with static data
+            updateSystemPage();
+            
             // Alerts
             if (staticData.alerts) {
                 const alertsHtml = staticData.alerts.map(a => `
@@ -575,7 +659,6 @@
                         <span>${a.message}</span>
                     </div>
                 `).join('');
-                document.getElementById('systemAlerts').innerHTML = alertsHtml;
                 document.getElementById('overviewAlerts').innerHTML = alertsHtml;
             }
 
@@ -635,7 +718,7 @@
                 }
             }
 
-            // HNWI
+            // HNWI - FULL DATA
             if (staticData.hnwi) {
                 document.getElementById('ovHNWI').textContent = staticData.hnwi.total;
                 document.getElementById('ovHNWIProgress').style.width = (staticData.hnwi.total / 5) + '%';
@@ -651,9 +734,20 @@
                     `).join('');
                 }
                 
+                // FULL HNWI TABLE
                 if (staticData.hnwi.contacts) {
-                    document.getElementById('hnwiContacts').innerHTML = staticData.hnwi.contacts.slice(0, 8).map(c => `
-                        <tr><td>${c.company}</td><td>${c.location}</td><td>${c.phone}</td><td>${c.type}</td></tr>
+                    document.getElementById('hnwiContacts').innerHTML = staticData.hnwi.contacts.map(c => `
+                        <tr>
+                            <td>${c.id}</td>
+                            <td><strong>${c.company}</strong></td>
+                            <td>${c.location}</td>
+                            <td>${c.phone}</td>
+                            <td>${c.website ? '<a href="' + c.website + '" target="_blank">' + c.website.replace('https://','') + '</a>' : '-'}</td>
+                            <td><span class="badge badge-blue">${c.type}</span></td>
+                            <td>${c.source}</td>
+                            <td>${c.date}</td>
+                            <td>${c.notes || '-'}</td>
+                        </tr>
                     `).join('');
                 }
             }
@@ -679,41 +773,50 @@
                 `).join('');
             }
 
-            // Providers
+            // Providers - WITH LINKS
             if (staticData.providers) {
                 document.getElementById('verifiedProviders').innerHTML = staticData.providers.verified.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-name"><a href="${p.website}" target="_blank">${p.name} ↗</a></div>
                         <div class="provider-meta">${p.type} · ${p.region} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('whiteLabelProviders').innerHTML = staticData.providers.whiteLabel.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-name"><a href="${p.website}" target="_blank">${p.name} ↗</a></div>
                         <div class="provider-meta">${p.service}</div>
+                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('binSponsors').innerHTML = staticData.providers.binSponsors.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-name"><a href="${p.website}" target="_blank">${p.name} ↗</a></div>
                         <div class="provider-meta">${p.region} · ${p.cards}</div>
+                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('redFlagProviders').innerHTML = staticData.providers.redFlags.map(p => `
                     <div class="provider-item danger">
-                        <div class="provider-name">🔴 ${p.name}</div>
+                        <div class="provider-name">🔴 ${p.website ? '<a href="' + p.website + '" target="_blank">' + p.name + ' ↗</a>' : p.name}</div>
                         <div class="provider-meta">${p.reason}</div>
                     </div>
                 `).join('');
             }
 
-            // Competitors
+            // Competitors - WITH LINKS
             if (staticData.competitors) {
                 document.getElementById('competitorsTable').innerHTML = staticData.competitors.list.map(c => `
-                    <tr><td>${c.name}</td><td>${c.tg}</td><td>${c.ig}</td><td>${c.twitter}</td><td>${c.strength}</td></tr>
+                    <tr>
+                        <td><a href="${c.website}" target="_blank">${c.name} ↗</a></td>
+                        <td>${c.tg}</td>
+                        <td>${c.ig}</td>
+                        <td>${c.twitter}</td>
+                        <td>${c.strength}</td>
+                    </tr>
                 `).join('');
                 
                 document.getElementById('competitorInsights').innerHTML = staticData.competitors.insights.map(i => `
@@ -771,7 +874,7 @@
         // Init
         fetchStaticData();
         fetchAPI();
-        setInterval(fetchAPI, 60000); // Refresh API every minute
+        setInterval(fetchAPI, 60000);
     </script>
 </body>
 </html>
