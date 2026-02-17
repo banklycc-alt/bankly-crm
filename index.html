@@ -3,452 +3,775 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bankly CRM</title>
+    <title>Bankly Command Center</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --bg: #0a0a0f; --bg2: #12121a; --card: #1a1a24; --border: rgba(255,255,255,0.08);
-            --text: #fff; --text2: #8b8b9e; --accent: #6366f1;
-            --green: #22c55e; --yellow: #f59e0b; --red: #ef4444; --blue: #3b82f6;
+            --bg-dark: #0c0c10;
+            --bg-main: #111116;
+            --bg-card: #18181f;
+            --bg-card-hover: #1e1e26;
+            --border: rgba(255,255,255,0.06);
+            --border-light: rgba(255,255,255,0.1);
+            --text: #ffffff;
+            --text-secondary: #71717a;
+            --text-muted: #52525b;
+            --accent: #8b5cf6;
+            --accent-light: #a78bfa;
+            --green: #22c55e;
+            --green-bg: rgba(34,197,94,0.12);
+            --yellow: #eab308;
+            --yellow-bg: rgba(234,179,8,0.12);
+            --red: #ef4444;
+            --red-bg: rgba(239,68,68,0.12);
+            --blue: #3b82f6;
+            --blue-bg: rgba(59,130,246,0.12);
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 1rem; }
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg2); border-radius: 12px; margin-bottom: 1rem; flex-wrap: wrap; gap: 1rem; }
-        .logo { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .status { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--text2); }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg-main); color: var(--text); min-height: 100vh; display: flex; }
+        
+        /* SIDEBAR */
+        .sidebar { width: 240px; background: var(--bg-dark); border-right: 1px solid var(--border); display: flex; flex-direction: column; position: fixed; height: 100vh; z-index: 100; }
+        .sidebar-header { padding: 1.5rem; border-bottom: 1px solid var(--border); }
+        .logo { display: flex; align-items: center; gap: 0.75rem; }
+        .logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--accent), #ec4899); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .logo-text { font-size: 1.25rem; font-weight: 700; }
+        .nav { flex: 1; padding: 1rem 0.75rem; overflow-y: auto; }
+        .nav-section { margin-bottom: 1.5rem; }
+        .nav-label { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); padding: 0 0.75rem; margin-bottom: 0.5rem; }
+        .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 0.75rem; border-radius: 8px; cursor: pointer; color: var(--text-secondary); transition: all 0.15s; font-size: 0.875rem; margin-bottom: 2px; }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+        .nav-item.active { background: rgba(139,92,246,0.15); color: var(--accent-light); }
+        .nav-item.active::before { content: ''; position: absolute; left: 0; width: 3px; height: 24px; background: var(--accent); border-radius: 0 2px 2px 0; }
+        .nav-icon { width: 18px; text-align: center; }
+        .nav-badge { margin-left: auto; background: var(--red); color: white; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; font-weight: 600; }
+        .sidebar-footer { padding: 1rem; border-top: 1px solid var(--border); }
+        .status-pill { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); }
         .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+        .status-dot.error { background: var(--red); }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
-        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
-        .card { background: var(--card); border-radius: 12px; border: 1px solid var(--border); padding: 1.25rem; }
-        .card-title { font-size: 0.75rem; color: var(--text2); text-transform: uppercase; margin-bottom: 0.75rem; display: flex; justify-content: space-between; align-items: center; }
-        .big-num { font-size: 2.25rem; font-weight: 700; background: linear-gradient(135deg, var(--accent), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .sub { font-size: 0.85rem; color: var(--text2); margin-top: 0.25rem; }
-        .progress-bar { height: 8px; background: var(--bg); border-radius: 4px; margin-top: 0.75rem; overflow: hidden; }
-        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #a855f7); border-radius: 4px; }
-        .alert { padding: 0.75rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.85rem; }
-        .alert-critical { background: rgba(239,68,68,0.15); border-left: 3px solid var(--red); color: var(--red); }
-        .alert-warning { background: rgba(245,158,11,0.15); border-left: 3px solid var(--yellow); color: var(--yellow); }
-        .section { margin-bottom: 1.5rem; }
-        .section-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        th, td { padding: 0.6rem; text-align: left; border-bottom: 1px solid var(--border); }
-        th { color: var(--text2); font-size: 0.7rem; text-transform: uppercase; font-weight: 500; }
-        tr:hover { background: rgba(255,255,255,0.02); }
-        .badge { display: inline-block; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.65rem; font-weight: 600; }
-        .badge-hot { background: rgba(239,68,68,0.2); color: var(--red); }
-        .badge-warm { background: rgba(245,158,11,0.2); color: var(--yellow); }
-        .badge-ok { background: rgba(34,197,94,0.2); color: var(--green); }
-        .badge-blue { background: rgba(59,130,246,0.2); color: var(--blue); }
-        .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; overflow-x: auto; }
-        .tab { padding: 0.5rem 1rem; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-size: 0.8rem; color: var(--text2); white-space: nowrap; }
-        .tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-        .funnel-stage { display: flex; align-items: center; gap: 0.75rem; padding: 0.6rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.5rem; }
-        .funnel-name { flex: 1; font-size: 0.85rem; }
-        .funnel-count { font-weight: 600; min-width: 35px; }
-        .funnel-bar { flex: 2; height: 6px; background: var(--card); border-radius: 3px; overflow: hidden; }
-        .funnel-bar-fill { height: 100%; background: var(--accent); }
-        .funnel-conv { font-size: 0.7rem; color: var(--text2); min-width: 45px; }
-        .provider-card { padding: 0.75rem; background: var(--bg); border-radius: 8px; margin-bottom: 0.5rem; }
+        
+        /* MAIN */
+        .main { flex: 1; margin-left: 240px; padding: 2rem; min-height: 100vh; }
+        .page { display: none; }
+        .page.active { display: block; }
+        
+        /* HEADER */
+        .page-header { margin-bottom: 2rem; }
+        .page-title { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .page-subtitle { color: var(--text-secondary); font-size: 0.875rem; }
+        
+        /* GRID */
+        .grid { display: grid; gap: 1rem; }
+        .grid-4 { grid-template-columns: repeat(4, 1fr); }
+        .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        @media (max-width: 1400px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 900px) { .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+        
+        /* CARDS */
+        .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; }
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+        .card-title { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+        .card-badge { font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; font-weight: 500; }
+        .card-badge.live { background: var(--green-bg); color: var(--green); }
+        .card-badge.static { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+        
+        /* METRICS */
+        .metric { margin-bottom: 0.5rem; }
+        .metric-value { font-size: 2rem; font-weight: 700; line-height: 1.1; }
+        .metric-value.gradient { background: linear-gradient(135deg, var(--accent), #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .metric-value.green { color: var(--green); }
+        .metric-value.red { color: var(--red); }
+        .metric-value.yellow { color: var(--yellow); }
+        .metric-label { font-size: 0.8rem; color: var(--text-secondary); }
+        .metric-change { display: inline-flex; align-items: center; gap: 4px; font-size: 0.75rem; padding: 2px 6px; border-radius: 4px; margin-left: 0.5rem; }
+        .metric-change.up { background: var(--green-bg); color: var(--green); }
+        .metric-change.down { background: var(--red-bg); color: var(--red); }
+        
+        /* PROGRESS */
+        .progress { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-top: 0.75rem; }
+        .progress-fill { height: 100%; border-radius: 3px; transition: width 0.5s ease; }
+        .progress-fill.gradient { background: linear-gradient(90deg, var(--accent), #ec4899); }
+        .progress-fill.green { background: var(--green); }
+        .progress-fill.red { background: var(--red); }
+        .progress-fill.yellow { background: var(--yellow); }
+        
+        /* ALERTS */
+        .alert { padding: 0.875rem 1rem; border-radius: 8px; margin-bottom: 0.5rem; font-size: 0.85rem; display: flex; align-items: flex-start; gap: 0.75rem; }
+        .alert-icon { flex-shrink: 0; }
+        .alert-critical { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); }
+        .alert-critical .alert-icon { color: var(--red); }
+        .alert-warning { background: var(--yellow-bg); border: 1px solid rgba(234,179,8,0.2); }
+        .alert-warning .alert-icon { color: var(--yellow); }
+        .alert-info { background: var(--blue-bg); border: 1px solid rgba(59,130,246,0.2); }
+        .alert-info .alert-icon { color: var(--blue); }
+        
+        /* TABLES */
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+        th { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); text-align: left; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); }
+        td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+        tr:hover td { background: rgba(255,255,255,0.02); }
+        td:first-child { color: var(--text); font-weight: 500; }
+        
+        /* BADGES */
+        .badge { display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; }
+        .badge-hot { background: var(--red-bg); color: var(--red); }
+        .badge-warm { background: var(--yellow-bg); color: var(--yellow); }
+        .badge-ok { background: var(--green-bg); color: var(--green); }
+        .badge-blue { background: var(--blue-bg); color: var(--blue); }
+        .badge-muted { background: rgba(255,255,255,0.08); color: var(--text-secondary); }
+        
+        /* SYSTEM PAGE */
+        .system-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+        .system-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; }
+        .system-card.span-2 { grid-column: span 2; }
+        .system-value { font-size: 2.5rem; font-weight: 800; margin: 0.5rem 0; }
+        .system-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+        .system-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 0.25rem; }
+        @media (max-width: 1200px) { .system-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 768px) { .system-grid { grid-template-columns: repeat(2, 1fr); } .system-card.span-2 { grid-column: span 1; } }
+        
+        /* API STATUS */
+        .api-status { display: flex; align-items: center; gap: 1rem; padding: 1rem 1.25rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.5rem; }
+        .api-status-indicator { width: 10px; height: 10px; border-radius: 50%; }
+        .api-status-indicator.online { background: var(--green); box-shadow: 0 0 10px var(--green); }
+        .api-status-indicator.offline { background: var(--red); box-shadow: 0 0 10px var(--red); }
+        .api-status-text { flex: 1; }
+        .api-status-title { font-weight: 600; font-size: 0.9rem; }
+        .api-status-sub { font-size: 0.75rem; color: var(--text-secondary); }
+        
+        /* SECTIONS */
+        .section { margin-bottom: 2rem; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .section-title { font-size: 1rem; font-weight: 600; }
+        
+        /* PROVIDER CARDS */
+        .provider-item { padding: 0.875rem; background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 0.5rem; }
         .provider-name { font-weight: 600; margin-bottom: 0.25rem; }
-        .provider-meta { font-size: 0.75rem; color: var(--text2); }
-        .red-flag { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); }
-        .insight-item { padding: 0.5rem 0.75rem; background: var(--bg); border-radius: 6px; margin-bottom: 0.5rem; font-size: 0.85rem; border-left: 3px solid var(--accent); }
-        @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } .big-num { font-size: 1.8rem; } body { padding: 0.5rem; } .tab { font-size: 0.75rem; padding: 0.4rem 0.75rem; } }
+        .provider-meta { font-size: 0.75rem; color: var(--text-secondary); }
+        .provider-item.danger { background: var(--red-bg); border: 1px solid rgba(239,68,68,0.2); }
+        
+        /* FUNNEL */
+        .funnel-item { display: flex; align-items: center; gap: 1rem; padding: 0.75rem 0; border-bottom: 1px solid var(--border); }
+        .funnel-item:last-child { border-bottom: none; }
+        .funnel-stage { width: 120px; font-size: 0.85rem; }
+        .funnel-count { width: 60px; font-weight: 700; font-size: 1.1rem; }
+        .funnel-bar { flex: 1; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
+        .funnel-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent), #ec4899); border-radius: 4px; }
+        .funnel-conv { width: 60px; font-size: 0.75rem; color: var(--text-secondary); text-align: right; }
+        
+        /* IDEAS */
+        .idea-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem; margin-bottom: 1rem; }
+        .idea-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+        .idea-title { font-size: 1.1rem; font-weight: 700; }
+        .idea-codename { font-size: 0.75rem; color: var(--text-muted); }
+        .idea-score { font-size: 1.5rem; font-weight: 800; }
+        .idea-verdict { font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; }
+        .idea-desc { background: rgba(255,255,255,0.03); padding: 0.875rem; border-radius: 8px; margin-bottom: 1rem; }
+        .idea-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin-bottom: 1rem; }
+        .idea-stat { background: rgba(255,255,255,0.03); padding: 0.75rem; border-radius: 6px; }
+        .idea-stat-label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.25rem; }
+        .idea-stat-value { font-weight: 600; font-size: 0.9rem; }
+        .idea-meta { font-size: 0.8rem; line-height: 1.6; }
+        .idea-meta span { color: var(--text-muted); }
+        @media (max-width: 900px) { .idea-grid { grid-template-columns: repeat(2, 1fr); } }
+        
+        /* MOBILE SIDEBAR */
+        .mobile-toggle { display: none; position: fixed; bottom: 1rem; right: 1rem; width: 50px; height: 50px; background: var(--accent); border-radius: 50%; z-index: 200; cursor: pointer; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 4px 20px rgba(139,92,246,0.4); }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; padding: 1rem; }
+            .mobile-toggle { display: flex; }
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">🏦 Bankly CRM</div>
-        <div class="status"><div class="status-dot"></div><span id="lastUpdate">Loading...</span></div>
-    </div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">🏦</div>
+                <div class="logo-text">Bankly</div>
+            </div>
+        </div>
+        <nav class="nav">
+            <div class="nav-section">
+                <div class="nav-label">Operations</div>
+                <div class="nav-item active" data-page="system"><span class="nav-icon">⚡</span> System</div>
+                <div class="nav-item" data-page="overview"><span class="nav-icon">📊</span> Overview</div>
+                <div class="nav-item" data-page="leads"><span class="nav-icon">🔥</span> Leads <span class="nav-badge" id="navHotLeads">-</span></div>
+                <div class="nav-item" data-page="pipeline"><span class="nav-icon">📈</span> Pipeline</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-label">Growth</div>
+                <div class="nav-item" data-page="groups"><span class="nav-icon">💬</span> TG Groups</div>
+                <div class="nav-item" data-page="hnwi"><span class="nav-icon">💎</span> HNWI</div>
+            </div>
+            <div class="nav-section">
+                <div class="nav-label">Intel</div>
+                <div class="nav-item" data-page="providers"><span class="nav-icon">💳</span> Providers</div>
+                <div class="nav-item" data-page="competitors"><span class="nav-icon">🎯</span> Competitors</div>
+                <div class="nav-item" data-page="ideas"><span class="nav-icon">💡</span> Ideas</div>
+            </div>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="status-pill">
+                <div class="status-dot" id="apiDot"></div>
+                <span id="apiStatusText">Connecting...</span>
+            </div>
+        </div>
+    </aside>
 
-    <div class="tabs">
-        <div class="tab active" onclick="showTab('overview')">📊 Overview</div>
-        <div class="tab" onclick="showTab('leads')">🔥 Leads</div>
-        <div class="tab" onclick="showTab('funnel')">📈 Funnel</div>
-        <div class="tab" onclick="showTab('groups')">💬 Groups</div>
-        <div class="tab" onclick="showTab('providers')">💳 Providers</div>
-        <div class="tab" onclick="showTab('competitors')">🎯 Competitors</div>
-        <div class="tab" onclick="showTab('hnwi')">💎 HNWI</div>
-        <div class="tab" onclick="showTab('ideas')">💡 Ideas</div>
-        <div class="tab" onclick="showTab('alerts')">⚠️ Alerts</div>
-    </div>
+    <main class="main">
+        <!-- SYSTEM PAGE -->
+        <div class="page active" id="page-system">
+            <div class="page-header">
+                <h1 class="page-title">System Status</h1>
+                <p class="page-subtitle">Live data from Bankly API</p>
+            </div>
+            
+            <div class="api-status" id="apiStatusBar">
+                <div class="api-status-indicator" id="apiIndicator"></div>
+                <div class="api-status-text">
+                    <div class="api-status-title" id="apiTitle">Checking API...</div>
+                    <div class="api-status-sub" id="apiSubtitle">mybankly.org</div>
+                </div>
+                <span class="card-badge live">LIVE</span>
+            </div>
 
-    <!-- OVERVIEW -->
-    <div id="overview" class="tab-content active">
-        <div class="grid">
-            <div class="card">
-                <div class="card-title">Goal Progress</div>
-                <div class="big-num"><span id="users">-</span><span style="font-size:1rem;color:var(--text2)">/1000</span></div>
-                <div class="sub">Day <span id="day">-</span> of 90</div>
-                <div class="progress-bar"><div class="progress-fill" id="goalProgress" style="width:0%"></div></div>
+            <div class="system-grid">
+                <div class="system-card span-2">
+                    <div class="system-label">Total Users</div>
+                    <div class="system-value" id="sysUsers" style="color: var(--accent)">—</div>
+                    <div class="system-sub">of 1,000 goal</div>
+                    <div class="progress" style="margin-top: 1rem;"><div class="progress-fill gradient" id="sysUsersProgress" style="width: 0%"></div></div>
+                </div>
+                <div class="system-card">
+                    <div class="system-label">Active Cards</div>
+                    <div class="system-value" id="sysCards" style="color: var(--green)">—</div>
+                </div>
+                <div class="system-card">
+                    <div class="system-label">Frozen Cards</div>
+                    <div class="system-value" id="sysFrozen" style="color: var(--red)">—</div>
+                </div>
+                <div class="system-card span-2">
+                    <div class="system-label">Total Volume</div>
+                    <div class="system-value" id="sysVolume" style="color: var(--text)">—</div>
+                    <div class="system-sub" id="sysTxns">— transactions</div>
+                </div>
+                <div class="system-card span-2">
+                    <div class="system-label">Total Deposits</div>
+                    <div class="system-value" id="sysDeposits" style="color: var(--green)">—</div>
+                </div>
+                <div class="system-card">
+                    <div class="system-label">Velocity</div>
+                    <div class="system-value" id="sysVelocity">—</div>
+                    <div class="system-sub" id="sysVelocitySub">—</div>
+                </div>
+                <div class="system-card">
+                    <div class="system-label">Day</div>
+                    <div class="system-value" id="sysDay">—</div>
+                    <div class="system-sub">of 90</div>
+                </div>
+                <div class="system-card span-2">
+                    <div class="system-label">Required Pace</div>
+                    <div class="system-value" id="sysRequired">—</div>
+                    <div class="system-sub" id="sysActual">actual: —/day</div>
+                </div>
             </div>
-            <div class="card">
-                <div class="card-title">Velocity</div>
-                <div class="big-num" id="velocity">-</div>
-                <div class="sub"><span id="actualPace">-</span>/day vs <span id="requiredPace">-</span> required</div>
-            </div>
-            <div class="card">
-                <div class="card-title">Cards</div>
-                <div class="big-num" id="cards">-</div>
-                <div class="sub"><span id="frozen">-</span> frozen</div>
-            </div>
-            <div class="card">
-                <div class="card-title">Volume</div>
-                <div class="big-num">$<span id="volume">-</span></div>
-                <div class="sub"><span id="txns">-</span> transactions</div>
-            </div>
-        </div>
-        <div class="grid">
-            <div class="card">
-                <div class="card-title">Deposits</div>
-                <div class="big-num">$<span id="deposits">-</span></div>
-            </div>
-            <div class="card">
-                <div class="card-title">Hot Leads</div>
-                <div class="big-num" id="hotLeads">-</div>
-                <div class="sub"><span id="warmLeads">-</span> warm · <span id="converted">-</span> converted</div>
-            </div>
-            <div class="card">
-                <div class="card-title">HNWI Contacts</div>
-                <div class="big-num"><span id="hnwi">-</span><span style="font-size:1rem;color:var(--text2)">/500</span></div>
-                <div class="progress-bar"><div class="progress-fill" id="hnwiProgress" style="width:0%"></div></div>
-            </div>
-            <div class="card">
-                <div class="card-title">TG Groups</div>
-                <div class="big-num" id="activeGroups">-</div>
-                <div class="sub"><span id="forbiddenGroups">-</span> forbidden</div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="section-title">⚠️ Active Alerts</div>
-            <div id="alertsOverview"></div>
-        </div>
-    </div>
 
-    <!-- LEADS -->
-    <div id="leads" class="tab-content">
-        <div class="card">
-            <div class="card-title">Lead Pipeline <span class="badge badge-hot" id="leadStats">-</span></div>
-            <table>
-                <thead><tr><th>Lead</th><th>Platform</th><th>Topic</th><th>Status</th><th>Days</th></tr></thead>
-                <tbody id="leadsTable"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- FUNNEL -->
-    <div id="funnel" class="tab-content">
-        <div class="card">
-            <div class="card-title">Conversion Funnel (30d)</div>
-            <div id="funnelChart"></div>
-        </div>
-    </div>
-
-    <!-- GROUPS -->
-    <div id="groups" class="tab-content">
-        <div class="card">
-            <div class="card-title">Telegram Groups</div>
-            <table>
-                <thead><tr><th>Group</th><th>Language</th><th>Status</th></tr></thead>
-                <tbody id="groupsTable"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- PROVIDERS -->
-    <div id="providers" class="tab-content">
-        <div class="grid grid-2">
-            <div class="card">
-                <div class="card-title">✅ Verified Providers</div>
-                <div id="verifiedProviders"></div>
-            </div>
-            <div class="card">
-                <div class="card-title">🏷️ White-Label Options</div>
-                <div id="whiteLabelProviders"></div>
+            <div class="section" style="margin-top: 2rem;">
+                <div class="section-header">
+                    <h3 class="section-title">⚠️ Active Alerts</h3>
+                </div>
+                <div id="systemAlerts"></div>
             </div>
         </div>
-        <div class="grid grid-2">
-            <div class="card">
-                <div class="card-title">🏦 BIN Sponsors (Europe)</div>
-                <div id="binSponsors"></div>
+
+        <!-- OVERVIEW PAGE -->
+        <div class="page" id="page-overview">
+            <div class="page-header">
+                <h1 class="page-title">Overview</h1>
+                <p class="page-subtitle">Key performance indicators</p>
+            </div>
+            
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">Goal Progress</span><span class="card-badge static">Static</span></div>
+                    <div class="metric">
+                        <span class="metric-value gradient" id="ovUsers">—</span><span style="color: var(--text-muted); font-size: 1rem;">/1000</span>
+                    </div>
+                    <div class="metric-label">Day <span id="ovDay">—</span> of 90</div>
+                    <div class="progress"><div class="progress-fill gradient" id="ovProgress" style="width: 0%"></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">Velocity</span></div>
+                    <div class="metric"><span class="metric-value" id="ovVelocity">—</span></div>
+                    <div class="metric-label"><span id="ovActual">—</span>/day vs <span id="ovRequired">—</span> required</div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">Hot Leads</span></div>
+                    <div class="metric"><span class="metric-value red" id="ovHotLeads">—</span></div>
+                    <div class="metric-label"><span id="ovWarmLeads">—</span> warm · <span id="ovConverted">—</span> converted</div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">HNWI Contacts</span></div>
+                    <div class="metric"><span class="metric-value gradient" id="ovHNWI">—</span><span style="color: var(--text-muted); font-size: 1rem;">/500</span></div>
+                    <div class="progress"><div class="progress-fill gradient" id="ovHNWIProgress" style="width: 0%"></div></div>
+                </div>
+            </div>
+
+            <div class="grid grid-2" style="margin-top: 1rem;">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">TG Groups</span></div>
+                    <div class="metric"><span class="metric-value green" id="ovActiveGroups">—</span></div>
+                    <div class="metric-label"><span id="ovForbiddenGroups">—</span> forbidden</div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">Outreach Status</span></div>
+                    <div id="ovOutreach"></div>
+                </div>
+            </div>
+
+            <div class="section" style="margin-top: 2rem;">
+                <div class="section-header"><h3 class="section-title">Alerts</h3></div>
+                <div id="overviewAlerts"></div>
+            </div>
+        </div>
+
+        <!-- LEADS PAGE -->
+        <div class="page" id="page-leads">
+            <div class="page-header">
+                <h1 class="page-title">Lead Pipeline</h1>
+                <p class="page-subtitle" id="leadsSummary">— hot · — warm · — cold</p>
             </div>
             <div class="card">
-                <div class="card-title">🔴 Red Flags — DO NOT USE</div>
-                <div id="redFlagProviders"></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Lead</th><th>Platform</th><th>Topic</th><th>Status</th><th>Age</th></tr></thead>
+                        <tbody id="leadsTable"></tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- COMPETITORS -->
-    <div id="competitors" class="tab-content">
-        <div class="card">
-            <div class="card-title">Competitor Analysis</div>
-            <table>
-                <thead><tr><th>Name</th><th>Telegram</th><th>Instagram</th><th>Twitter</th><th>Strength</th></tr></thead>
-                <tbody id="competitorsTable"></tbody>
-            </table>
-        </div>
-        <div class="card" style="margin-top:1rem">
-            <div class="card-title">Key Insights</div>
-            <div id="competitorInsights"></div>
-        </div>
-    </div>
-
-    <!-- HNWI -->
-    <div id="hnwi" class="tab-content">
-        <div class="grid">
-            <div class="card">
-                <div class="card-title">Progress</div>
-                <div class="big-num"><span id="hnwiTotal">-</span><span style="font-size:1rem;color:var(--text2)">/500</span></div>
-                <div class="progress-bar"><div class="progress-fill" id="hnwiProgressBar" style="width:0%"></div></div>
+        <!-- PIPELINE PAGE -->
+        <div class="page" id="page-pipeline">
+            <div class="page-header">
+                <h1 class="page-title">Conversion Pipeline</h1>
+                <p class="page-subtitle">User journey funnel</p>
             </div>
             <div class="card">
-                <div class="card-title">Segments</div>
-                <div id="hnwiSegments"></div>
+                <div id="funnelChart"></div>
             </div>
         </div>
-        <div class="card" style="margin-top:1rem">
-            <div class="card-title">Sample Contacts</div>
-            <table>
-                <thead><tr><th>Company</th><th>Location</th><th>Phone</th><th>Type</th></tr></thead>
-                <tbody id="hnwiContacts"></tbody>
-            </table>
-        </div>
-    </div>
 
-    <!-- IDEAS -->
-    <div id="ideas" class="tab-content">
-        <div class="card" style="margin-bottom:1rem">
-            <div class="card-title">📊 10 Startup Ideas — Full Analysis</div>
-            <p style="color:var(--text2);font-size:0.85rem;margin-bottom:1rem">Sorted by score. Click to expand details.</p>
+        <!-- GROUPS PAGE -->
+        <div class="page" id="page-groups">
+            <div class="page-header">
+                <h1 class="page-title">Telegram Groups</h1>
+                <p class="page-subtitle" id="groupsSummary">— active · — forbidden</p>
+            </div>
+            <div class="card">
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Group</th><th>Language</th><th>Status</th></tr></thead>
+                        <tbody id="groupsTable"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div id="allIdeas"></div>
-    </div>
 
-    <!-- ALERTS -->
-    <div id="alerts" class="tab-content">
-        <div class="card">
-            <div class="card-title">All Alerts</div>
-            <div id="allAlerts"></div>
+        <!-- HNWI PAGE -->
+        <div class="page" id="page-hnwi">
+            <div class="page-header">
+                <h1 class="page-title">HNWI Contacts</h1>
+                <p class="page-subtitle">High Net Worth Individual outreach</p>
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">Progress</span></div>
+                    <div class="metric"><span class="metric-value gradient" id="hnwiTotal">—</span><span style="color: var(--text-muted); font-size: 1rem;">/500</span></div>
+                    <div class="progress"><div class="progress-fill gradient" id="hnwiProgress" style="width: 0%"></div></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">Segments</span></div>
+                    <div id="hnwiSegments"></div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1rem;">
+                <div class="card-header"><span class="card-title">Sample Contacts</span></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Company</th><th>Location</th><th>Phone</th><th>Type</th></tr></thead>
+                        <tbody id="hnwiContacts"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="card" style="margin-top:1rem">
-            <div class="card-title">Outreach Status</div>
-            <div id="outreachStatus"></div>
+
+        <!-- PROVIDERS PAGE -->
+        <div class="page" id="page-providers">
+            <div class="page-header">
+                <h1 class="page-title">Card Providers</h1>
+                <p class="page-subtitle">B2B provider intelligence</p>
+            </div>
+            
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">✅ Verified Providers</span></div>
+                    <div id="verifiedProviders"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">🏷️ White-Label Options</span></div>
+                    <div id="whiteLabelProviders"></div>
+                </div>
+            </div>
+            
+            <div class="grid grid-2" style="margin-top: 1rem;">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">🏦 BIN Sponsors</span></div>
+                    <div id="binSponsors"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">🔴 Red Flags — DO NOT USE</span></div>
+                    <div id="redFlagProviders"></div>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <!-- COMPETITORS PAGE -->
+        <div class="page" id="page-competitors">
+            <div class="page-header">
+                <h1 class="page-title">Competitor Analysis</h1>
+                <p class="page-subtitle">Market intelligence</p>
+            </div>
+            
+            <div class="card">
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Name</th><th>Telegram</th><th>Instagram</th><th>Twitter</th><th>Strength</th></tr></thead>
+                        <tbody id="competitorsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 1rem;">
+                <div class="card-header"><span class="card-title">Key Insights</span></div>
+                <div id="competitorInsights"></div>
+            </div>
+        </div>
+
+        <!-- IDEAS PAGE -->
+        <div class="page" id="page-ideas">
+            <div class="page-header">
+                <h1 class="page-title">Startup Ideas</h1>
+                <p class="page-subtitle">Scalable business opportunities</p>
+            </div>
+            <div id="ideasList"></div>
+        </div>
+    </main>
+
+    <div class="mobile-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</div>
 
     <script>
-        const API_BASE = 'https://mybankly.org/api/system';
+        const API_URL = 'https://mybankly.org/api/system';
         const API_KEY = 'sk-bankly-ce015eb6b293534a266c9003e829a7f68ce7249f7be12cff14c61805c359c1b6';
-        const DATA_URL = 'https://banklycc-alt.github.io/bankly-crm/data.json';
+        const DATA_URL = 'data.json';
         
-        let data = null;
+        let apiData = null;
+        let staticData = null;
 
-        function showTab(name) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelector(`.tab[onclick="showTab('${name}')"]`).classList.add('active');
-            document.getElementById(name).classList.add('active');
-        }
+        // Navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const page = item.dataset.page;
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                item.classList.add('active');
+                document.getElementById('page-' + page).classList.add('active');
+                document.getElementById('sidebar').classList.remove('open');
+            });
+        });
 
-        // API fetch removed - using data.json only (CORS issue with external API)
-
-        async function fetchData() {
+        // Fetch live API data
+        async function fetchAPI() {
             try {
-                const res = await fetch(DATA_URL + '?t=' + Date.now());
-                if (res.ok) data = await res.json();
-            } catch (e) { console.log('Data fetch error'); }
-
-            if (data) {
-                updateOverviewFromData();
-                updateLeads(); updateGroups(); updateAlerts(); updateProviders();
-                updateCompetitors(); updateHNWI(); updateIdeas();
-                if (data.funnel?.stages) updateFunnel(data.funnel.stages);
+                const res = await fetch(API_URL, { headers: { 'Authorization': 'Bearer ' + API_KEY } });
+                if (!res.ok) throw new Error('API ' + res.status);
+                apiData = await res.json();
+                updateSystemPage();
+                setAPIStatus(true, 'Connected', new Date().toLocaleTimeString());
+            } catch (e) {
+                console.error('API error:', e);
+                setAPIStatus(false, 'API Error', e.message);
+                // Use static data as fallback
+                if (staticData?.kpis) {
+                    apiData = { users: staticData.kpis.totalUsers, cards: staticData.kpis.activeCards, frozen: staticData.kpis.frozenCards, volume: staticData.kpis.totalVolume, deposits: staticData.kpis.totalDeposits, transactions: staticData.kpis.transactions };
+                    updateSystemPage();
+                }
             }
-            document.getElementById('lastUpdate').textContent = 'Updated ' + new Date().toLocaleTimeString();
         }
-        
-        function updateOverviewFromData() {
-            if (!data?.kpis) return;
-            const k = data.kpis;
-            const day = k.dayOfGoal || 16;
-            const users = k.totalUsers || 0;
+
+        function setAPIStatus(online, title, sub) {
+            document.getElementById('apiDot').className = 'status-dot' + (online ? '' : ' error');
+            document.getElementById('apiIndicator').className = 'api-status-indicator ' + (online ? 'online' : 'offline');
+            document.getElementById('apiTitle').textContent = title;
+            document.getElementById('apiSubtitle').textContent = sub;
+            document.getElementById('apiStatusText').textContent = online ? 'Live' : 'Offline';
+        }
+
+        function updateSystemPage() {
+            if (!apiData) return;
+            const users = apiData.users || staticData?.kpis?.totalUsers || 0;
+            const cards = apiData.cards || staticData?.kpis?.activeCards || 0;
+            const frozen = apiData.frozen || staticData?.kpis?.frozenCards || 0;
+            const volume = apiData.volume || staticData?.kpis?.totalVolume || 0;
+            const deposits = apiData.deposits || staticData?.kpis?.totalDeposits || 0;
+            const txns = apiData.transactions || staticData?.kpis?.transactions || 0;
+            const day = staticData?.kpis?.dayOfGoal || 16;
+            
             const requiredPace = ((1000 - users) / (90 - day)).toFixed(1);
             const actualPace = (users / day).toFixed(1);
             const velocity = (actualPace / requiredPace).toFixed(2);
 
-            document.getElementById('users').textContent = users;
-            document.getElementById('day').textContent = day;
-            document.getElementById('goalProgress').style.width = (users/10) + '%';
-            document.getElementById('velocity').textContent = velocity + 'x';
-            document.getElementById('velocity').style.color = velocity < 0.5 ? 'var(--red)' : velocity < 1 ? 'var(--yellow)' : 'var(--green)';
-            document.getElementById('actualPace').textContent = actualPace;
-            document.getElementById('requiredPace').textContent = requiredPace;
-            document.getElementById('cards').textContent = k.activeCards || 0;
-            document.getElementById('frozen').textContent = k.frozenCards || 0;
-            document.getElementById('volume').textContent = Math.round((k.totalVolume || 0)/1000) + 'K';
-            document.getElementById('txns').textContent = k.transactions || 0;
-            document.getElementById('deposits').textContent = Math.round((k.totalDeposits || 0)/1000) + 'K';
-            document.getElementById('hotLeads').textContent = data.leads?.hot || '-';
-            document.getElementById('warmLeads').textContent = data.leads?.warm || '-';
-            document.getElementById('converted').textContent = data.leads?.converted || '0';
-            document.getElementById('hnwi').textContent = data.hnwi?.total || '-';
-            document.getElementById('hnwiProgress').style.width = ((data.hnwi?.total || 0) / 5) + '%';
-            document.getElementById('activeGroups').textContent = data.groups?.active || '-';
-            document.getElementById('forbiddenGroups').textContent = data.groups?.forbidden || '-';
+            document.getElementById('sysUsers').textContent = users;
+            document.getElementById('sysUsersProgress').style.width = (users / 10) + '%';
+            document.getElementById('sysCards').textContent = cards;
+            document.getElementById('sysFrozen').textContent = frozen;
+            document.getElementById('sysVolume').textContent = '$' + (volume / 1000).toFixed(0) + 'K';
+            document.getElementById('sysTxns').textContent = txns + ' transactions';
+            document.getElementById('sysDeposits').textContent = '$' + (deposits / 1000).toFixed(0) + 'K';
+            document.getElementById('sysDay').textContent = day;
+            document.getElementById('sysVelocity').textContent = velocity + 'x';
+            document.getElementById('sysVelocity').style.color = velocity < 0.5 ? 'var(--red)' : velocity < 1 ? 'var(--yellow)' : 'var(--green)';
+            document.getElementById('sysVelocitySub').textContent = velocity < 1 ? 'Behind target' : 'On track';
+            document.getElementById('sysRequired').textContent = requiredPace + '/day';
+            document.getElementById('sysActual').textContent = 'actual: ' + actualPace + '/day';
         }
 
-        // Old API-based updateOverview removed - now using updateOverviewFromData
-
-        function updateLeads() {
-            if (!data?.leads?.list) return;
-            document.getElementById('leadStats').textContent = `${data.leads.hot} hot · ${data.leads.warm} warm`;
-            document.getElementById('leadsTable').innerHTML = data.leads.list.map(l => `
-                <tr><td><strong>${l.name}</strong></td><td>${l.platform}</td><td>${l.topic}</td>
-                <td><span class="badge badge-${l.status === 'replied' ? 'ok' : l.status === 'cta_sent' ? 'blue' : 'warm'}">${l.status}</span></td>
-                <td>${l.days}d</td></tr>
-            `).join('');
+        // Fetch static data
+        async function fetchStaticData() {
+            try {
+                const res = await fetch(DATA_URL + '?t=' + Date.now());
+                if (res.ok) {
+                    staticData = await res.json();
+                    updateAllPages();
+                }
+            } catch (e) { console.error('Static data error:', e); }
         }
 
-        function updateFunnel(stages) {
-            if (!stages) return;
-            const max = Math.max(...stages.map(s => s.count));
-            document.getElementById('funnelChart').innerHTML = stages.map(s => `
-                <div class="funnel-stage"><div class="funnel-name">${s.stage.replace(/_/g, ' ')}</div>
-                <div class="funnel-count">${s.count}</div>
-                <div class="funnel-bar"><div class="funnel-bar-fill" style="width:${(s.count/max*100)}%"></div></div>
-                <div class="funnel-conv">${s.conversion || ''}</div></div>
-            `).join('');
-        }
-
-        function updateGroups() {
-            if (!data?.groups?.list) return;
-            document.getElementById('groupsTable').innerHTML = data.groups.list.map(g => `
-                <tr><td>${g.name}</td><td>${g.lang}</td>
-                <td><span class="badge badge-${g.status === 'best' || g.status === 'hot' ? 'hot' : g.status === 'active' || g.status === 'ok' ? 'ok' : 'warm'}">${g.status}</span></td></tr>
-            `).join('');
-        }
-
-        function updateAlerts() {
-            if (!data?.alerts) return;
-            const html = data.alerts.map(a => `<div class="alert alert-${a.type}">${a.message}</div>`).join('');
-            document.getElementById('alertsOverview').innerHTML = html;
-            document.getElementById('allAlerts').innerHTML = html;
+        function updateAllPages() {
+            if (!staticData) return;
             
-            if (data.outreach) {
-                document.getElementById('outreachStatus').innerHTML = `
-                    <div class="alert alert-${data.outreach.status === 'blocked' ? 'critical' : 'warning'}">
-                        Status: <strong>${data.outreach.status.toUpperCase()}</strong> — ${data.outreach.blocker || 'OK'}<br>
-                        Emails ready: ${data.outreach.emailsReady} · HNWI queue: ${data.outreach.hnwiQueue} · Follow-ups due: ${data.outreach.followUpsDue}
-                    </div>`;
+            // Alerts
+            if (staticData.alerts) {
+                const alertsHtml = staticData.alerts.map(a => `
+                    <div class="alert alert-${a.type}">
+                        <span class="alert-icon">${a.type === 'critical' ? '🔴' : '⚠️'}</span>
+                        <span>${a.message}</span>
+                    </div>
+                `).join('');
+                document.getElementById('systemAlerts').innerHTML = alertsHtml;
+                document.getElementById('overviewAlerts').innerHTML = alertsHtml;
+            }
+
+            // Overview
+            const k = staticData.kpis;
+            if (k) {
+                const day = k.dayOfGoal || 16;
+                const users = k.totalUsers || 0;
+                const requiredPace = ((1000 - users) / (90 - day)).toFixed(1);
+                const actualPace = (users / day).toFixed(1);
+                const velocity = (actualPace / requiredPace).toFixed(2);
+
+                document.getElementById('ovUsers').textContent = users;
+                document.getElementById('ovDay').textContent = day;
+                document.getElementById('ovProgress').style.width = (users / 10) + '%';
+                document.getElementById('ovVelocity').textContent = velocity + 'x';
+                document.getElementById('ovVelocity').style.color = velocity < 0.5 ? 'var(--red)' : velocity < 1 ? 'var(--yellow)' : 'var(--green)';
+                document.getElementById('ovActual').textContent = actualPace;
+                document.getElementById('ovRequired').textContent = requiredPace;
+            }
+
+            // Leads
+            if (staticData.leads) {
+                document.getElementById('navHotLeads').textContent = staticData.leads.hot;
+                document.getElementById('ovHotLeads').textContent = staticData.leads.hot;
+                document.getElementById('ovWarmLeads').textContent = staticData.leads.warm;
+                document.getElementById('ovConverted').textContent = staticData.leads.converted || 0;
+                document.getElementById('leadsSummary').textContent = `${staticData.leads.hot} hot · ${staticData.leads.warm} warm · ${staticData.leads.cold} cold`;
+                
+                if (staticData.leads.list) {
+                    document.getElementById('leadsTable').innerHTML = staticData.leads.list.map(l => `
+                        <tr>
+                            <td>${l.name}</td>
+                            <td>${l.platform}</td>
+                            <td>${l.topic}</td>
+                            <td><span class="badge badge-${l.status === 'replied' ? 'ok' : l.status === 'cta_sent' ? 'blue' : 'warm'}">${l.status}</span></td>
+                            <td>${l.days}d</td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            // Groups
+            if (staticData.groups) {
+                document.getElementById('ovActiveGroups').textContent = staticData.groups.active;
+                document.getElementById('ovForbiddenGroups').textContent = staticData.groups.forbidden;
+                document.getElementById('groupsSummary').textContent = `${staticData.groups.active} active · ${staticData.groups.forbidden} forbidden`;
+                
+                if (staticData.groups.list) {
+                    document.getElementById('groupsTable').innerHTML = staticData.groups.list.map(g => `
+                        <tr>
+                            <td>${g.name}</td>
+                            <td>${g.lang}</td>
+                            <td><span class="badge badge-${g.status === 'best' || g.status === 'hot' ? 'hot' : g.status === 'active' || g.status === 'ok' ? 'ok' : 'muted'}">${g.status}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            }
+
+            // HNWI
+            if (staticData.hnwi) {
+                document.getElementById('ovHNWI').textContent = staticData.hnwi.total;
+                document.getElementById('ovHNWIProgress').style.width = (staticData.hnwi.total / 5) + '%';
+                document.getElementById('hnwiTotal').textContent = staticData.hnwi.total;
+                document.getElementById('hnwiProgress').style.width = (staticData.hnwi.total / 5) + '%';
+                
+                if (staticData.hnwi.segments) {
+                    document.getElementById('hnwiSegments').innerHTML = staticData.hnwi.segments.map(s => `
+                        <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border)">
+                            <span>${s.name}</span>
+                            <span><strong>${s.count}</strong> <span class="badge badge-${s.status === 'active' ? 'ok' : s.status === 'next' ? 'blue' : 'muted'}">${s.status}</span></span>
+                        </div>
+                    `).join('');
+                }
+                
+                if (staticData.hnwi.contacts) {
+                    document.getElementById('hnwiContacts').innerHTML = staticData.hnwi.contacts.slice(0, 8).map(c => `
+                        <tr><td>${c.company}</td><td>${c.location}</td><td>${c.phone}</td><td>${c.type}</td></tr>
+                    `).join('');
+                }
+            }
+
+            // Outreach
+            if (staticData.outreach) {
+                document.getElementById('ovOutreach').innerHTML = `
+                    <div class="metric"><span class="metric-value ${staticData.outreach.status === 'blocked' ? 'red' : 'green'}">${staticData.outreach.status.toUpperCase()}</span></div>
+                    <div class="metric-label">${staticData.outreach.blocker || 'OK'} · ${staticData.outreach.emailsReady} emails ready · ${staticData.outreach.hnwiQueue} HNWI in queue</div>
+                `;
+            }
+
+            // Funnel
+            if (staticData.funnel?.stages) {
+                const max = Math.max(...staticData.funnel.stages.map(s => s.count));
+                document.getElementById('funnelChart').innerHTML = staticData.funnel.stages.map(s => `
+                    <div class="funnel-item">
+                        <div class="funnel-stage">${s.stage.replace(/_/g, ' ')}</div>
+                        <div class="funnel-count">${s.count}</div>
+                        <div class="funnel-bar"><div class="funnel-bar-fill" style="width:${(s.count/max*100)}%"></div></div>
+                        <div class="funnel-conv">${s.conversion || ''}</div>
+                    </div>
+                `).join('');
+            }
+
+            // Providers
+            if (staticData.providers) {
+                document.getElementById('verifiedProviders').innerHTML = staticData.providers.verified.map(p => `
+                    <div class="provider-item">
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.type} · ${p.region} ${p.funding ? '· ' + p.funding : ''}</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('whiteLabelProviders').innerHTML = staticData.providers.whiteLabel.map(p => `
+                    <div class="provider-item">
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.service}</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('binSponsors').innerHTML = staticData.providers.binSponsors.map(p => `
+                    <div class="provider-item">
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.region} · ${p.cards}</div>
+                    </div>
+                `).join('');
+                
+                document.getElementById('redFlagProviders').innerHTML = staticData.providers.redFlags.map(p => `
+                    <div class="provider-item danger">
+                        <div class="provider-name">🔴 ${p.name}</div>
+                        <div class="provider-meta">${p.reason}</div>
+                    </div>
+                `).join('');
+            }
+
+            // Competitors
+            if (staticData.competitors) {
+                document.getElementById('competitorsTable').innerHTML = staticData.competitors.list.map(c => `
+                    <tr><td>${c.name}</td><td>${c.tg}</td><td>${c.ig}</td><td>${c.twitter}</td><td>${c.strength}</td></tr>
+                `).join('');
+                
+                document.getElementById('competitorInsights').innerHTML = staticData.competitors.insights.map(i => `
+                    <div class="alert alert-info"><span class="alert-icon">💡</span><span>${i}</span></div>
+                `).join('');
+            }
+
+            // Ideas
+            if (staticData.businessIdeas) {
+                document.getElementById('ideasList').innerHTML = staticData.businessIdeas.map(idea => `
+                    <div class="idea-card">
+                        <div class="idea-header">
+                            <div>
+                                <div class="idea-title">#${idea.id} ${idea.name}</div>
+                                <div class="idea-codename">${idea.codename}</div>
+                            </div>
+                            <div style="text-align:right">
+                                <div class="idea-score" style="color: ${idea.score.startsWith('9') ? 'var(--green)' : idea.score.startsWith('8') ? 'var(--accent)' : 'var(--yellow)'}">${idea.score}</div>
+                                <div class="idea-verdict">${idea.verdict}</div>
+                            </div>
+                        </div>
+                        <div class="idea-desc">
+                            <div style="font-weight:600;margin-bottom:0.5rem">💡 ${idea.what}</div>
+                            <div style="color:var(--text-secondary)">🎯 ${idea.problem}</div>
+                        </div>
+                        <div class="idea-grid">
+                            <div class="idea-stat">
+                                <div class="idea-stat-label">TAM</div>
+                                <div class="idea-stat-value">${idea.market.tam}</div>
+                            </div>
+                            <div class="idea-stat">
+                                <div class="idea-stat-label">LTV/CAC</div>
+                                <div class="idea-stat-value" style="color:var(--green)">${idea.economics.ltvCac}</div>
+                            </div>
+                            <div class="idea-stat">
+                                <div class="idea-stat-label">MVP</div>
+                                <div class="idea-stat-value">${idea.mvp}</div>
+                            </div>
+                            <div class="idea-stat">
+                                <div class="idea-stat-label">Margin</div>
+                                <div class="idea-stat-value">${idea.economics.margin}</div>
+                            </div>
+                        </div>
+                        <div class="idea-meta">
+                            <div><span>Audience:</span> ${idea.audience}</div>
+                            <div><span>Competitors:</span> ${idea.competitors}</div>
+                            <div><span>Moat:</span> ${idea.moat}</div>
+                            <div style="color:var(--accent);margin-top:0.5rem">👤 ${idea.suitableFor}</div>
+                        </div>
+                    </div>
+                `).join('');
             }
         }
 
-        function updateProviders() {
-            if (!data?.providers) return;
-            document.getElementById('verifiedProviders').innerHTML = data.providers.verified.map(p => `
-                <div class="provider-card"><div class="provider-name">${p.name}</div>
-                <div class="provider-meta">${p.type} · ${p.region} · ${p.funding || ''} · ${p.notes}</div></div>
-            `).join('');
-            document.getElementById('whiteLabelProviders').innerHTML = data.providers.whiteLabel.map(p => `
-                <div class="provider-card"><div class="provider-name">${p.name}</div>
-                <div class="provider-meta">${p.service} · ${p.pricing}</div></div>
-            `).join('');
-            document.getElementById('binSponsors').innerHTML = data.providers.binSponsors.map(p => `
-                <div class="provider-card"><div class="provider-name">${p.name}</div>
-                <div class="provider-meta">${p.region} · ${p.cards}</div></div>
-            `).join('');
-            document.getElementById('redFlagProviders').innerHTML = data.providers.redFlags.map(p => `
-                <div class="provider-card red-flag"><div class="provider-name">🔴 ${p.name}</div>
-                <div class="provider-meta">${p.reason}</div></div>
-            `).join('');
-        }
-
-        function updateCompetitors() {
-            if (!data?.competitors) return;
-            document.getElementById('competitorsTable').innerHTML = data.competitors.list.map(c => `
-                <tr><td><strong>${c.name}</strong></td><td>${c.tg}</td><td>${c.ig}</td><td>${c.twitter}</td><td>${c.strength}</td></tr>
-            `).join('');
-            document.getElementById('competitorInsights').innerHTML = data.competitors.insights.map(i => `
-                <div class="insight-item">${i}</div>
-            `).join('');
-        }
-
-        function updateHNWI() {
-            if (!data?.hnwi) return;
-            document.getElementById('hnwiTotal').textContent = data.hnwi.total;
-            document.getElementById('hnwiProgressBar').style.width = (data.hnwi.total / 5) + '%';
-            document.getElementById('hnwiSegments').innerHTML = data.hnwi.segments.map(s => `
-                <div style="display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border)">
-                    <span>${s.name}</span>
-                    <span><strong>${s.count}</strong> <span class="badge badge-${s.status === 'active' ? 'ok' : s.status === 'next' ? 'blue' : 'warm'}">${s.status}</span></span>
-                </div>
-            `).join('');
-            document.getElementById('hnwiContacts').innerHTML = data.hnwi.contacts.slice(0,8).map(c => `
-                <tr><td>${c.company}</td><td>${c.location}</td><td>${c.phone}</td><td>${c.type}</td></tr>
-            `).join('');
-        }
-
-        function updateIdeas() {
-            if (!data?.businessIdeas || !Array.isArray(data.businessIdeas)) return;
-            document.getElementById('allIdeas').innerHTML = data.businessIdeas.map(idea => `
-                <div class="card" style="margin-bottom:1rem">
-                    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem">
-                        <div>
-                            <div style="font-size:1.1rem;font-weight:700;margin-bottom:0.25rem">#${idea.id} ${idea.name}</div>
-                            <div style="color:var(--text2);font-size:0.8rem">${idea.codename}</div>
-                        </div>
-                        <div style="text-align:right">
-                            <span class="badge ${idea.score.startsWith('9') ? 'badge-hot' : idea.score.startsWith('8') ? 'badge-ok' : 'badge-warm'}" style="font-size:0.9rem;padding:0.3rem 0.6rem">${idea.score}</span>
-                            <div style="color:var(--accent);font-size:0.7rem;margin-top:0.25rem">${idea.verdict}</div>
-                        </div>
-                    </div>
-                    <div style="background:var(--bg);padding:0.75rem;border-radius:8px;margin-bottom:0.75rem">
-                        <div style="font-weight:600;margin-bottom:0.5rem">💡 ${idea.what}</div>
-                        <div style="color:var(--text2);font-size:0.85rem">🎯 ${idea.problem}</div>
-                    </div>
-                    <div class="grid" style="gap:0.75rem">
-                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
-                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">MARKET</div>
-                            <div style="font-weight:600">${idea.market.tam}</div>
-                            <div style="font-size:0.8rem;color:var(--text2)">SAM: ${idea.market.sam}</div>
-                            <div style="font-size:0.8rem;color:var(--green)">CAGR: ${idea.market.cagr}</div>
-                        </div>
-                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
-                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">UNIT ECONOMICS</div>
-                            <div style="font-size:0.85rem">CAC: ${idea.economics.cac} · LTV: ${idea.economics.ltv}</div>
-                            <div style="font-size:0.85rem;color:var(--green)">LTV/CAC: ${idea.economics.ltvCac}</div>
-                            <div style="font-size:0.85rem">Margin: ${idea.economics.margin}</div>
-                        </div>
-                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
-                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">PRICING</div>
-                            ${Object.entries(idea.pricing).map(([k,v]) => `<div style="font-size:0.8rem">${k}: ${v}</div>`).join('')}
-                        </div>
-                        <div style="background:var(--bg);padding:0.6rem;border-radius:6px">
-                            <div style="font-size:0.7rem;color:var(--text2);margin-bottom:0.25rem">MVP</div>
-                            <div style="font-size:0.85rem">${idea.mvp}</div>
-                            <div style="font-size:0.8rem;color:var(--text2)">${idea.tech}</div>
-                        </div>
-                    </div>
-                    <div style="margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid var(--border)">
-                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Audience:</span> ${idea.audience}</div>
-                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Competitors:</span> ${idea.competitors}</div>
-                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Moat:</span> ${idea.moat}</div>
-                        <div style="font-size:0.8rem"><span style="color:var(--text2)">Why Now:</span> ${idea.whyNow}</div>
-                        <div style="font-size:0.8rem"><span style="color:var(--red)">Risks:</span> ${idea.risks}</div>
-                        <div style="font-size:0.8rem;margin-top:0.5rem;color:var(--accent)">👤 ${idea.suitableFor}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        fetchData();
-        setInterval(fetchData, 5 * 60 * 1000);
+        // Init
+        fetchStaticData();
+        fetchAPI();
+        setInterval(fetchAPI, 60000); // Refresh API every minute
     </script>
 </body>
 </html>
-<!-- v3 -->
-<!-- cache-bust-v5 -->
