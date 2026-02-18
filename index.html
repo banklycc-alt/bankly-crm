@@ -387,13 +387,31 @@
                 <h1 class="page-title">Lead Pipeline</h1>
                 <p class="page-subtitle" id="leadsSummary">— hot · — warm · — cold</p>
             </div>
+            
+            <!-- Lead Search -->
+            <div class="card" style="margin-bottom: 1rem; padding: 1rem;">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="color: var(--text-muted);">🔍</span>
+                    <input type="text" id="leadSearch" placeholder="Search leads by name, platform, topic, tags..." 
+                           style="flex: 1; background: var(--bg-main); border: 1px solid var(--border); border-radius: 8px; padding: 0.75rem 1rem; color: var(--text); font-size: 0.9rem; outline: none;"
+                           oninput="filterLeads(this.value)">
+                    <span id="leadCount" style="color: var(--text-muted); font-size: 0.85rem;">—</span>
+                </div>
+            </div>
+            
             <div class="card">
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Lead</th><th>Platform</th><th>Topic</th><th>Status</th><th>Age</th></tr></thead>
+                        <thead><tr><th>Lead</th><th>Platform</th><th>Topic</th><th>Status</th><th>Age</th><th>Tags</th></tr></thead>
                         <tbody id="leadsTable"></tbody>
                     </table>
                 </div>
+            </div>
+            
+            <!-- SCAM Alerts Section -->
+            <div class="section" style="margin-top: 2rem;">
+                <div class="section-header"><h3 class="section-title">🚨 SCAM Alerts</h3></div>
+                <div id="scamAlerts"></div>
             </div>
         </div>
 
@@ -689,16 +707,26 @@
                 document.getElementById('leadsSummary').textContent = `${staticData.leads.hot} hot · ${staticData.leads.warm} warm · ${staticData.leads.cold} cold`;
                 
                 if (staticData.leads.list) {
-                    document.getElementById('leadsTable').innerHTML = staticData.leads.list.map(l => `
-                        <tr>
-                            <td>${l.name}</td>
-                            <td>${l.platform}</td>
-                            <td>${l.topic}</td>
-                            <td><span class="badge badge-${l.status === 'replied' ? 'ok' : l.status === 'cta_sent' ? 'blue' : 'warm'}">${l.status}</span></td>
-                            <td>${l.days}d</td>
-                        </tr>
-                    `).join('');
+                    window.allLeads = staticData.leads.list;
+                    renderLeads(staticData.leads.list);
+                    document.getElementById('leadCount').textContent = staticData.leads.list.length + ' leads';
                 }
+            }
+            
+            // SCAM Alerts
+            if (staticData.scamAlerts) {
+                document.getElementById('scamAlerts').innerHTML = staticData.scamAlerts.map(s => `
+                    <div class="alert alert-critical">
+                        <span class="alert-icon">🚨</span>
+                        <div>
+                            <strong>${s.name}</strong> ${s.currentName ? '→ ' + s.currentName : ''}<br>
+                            <span style="color:var(--text-secondary)">${s.redFlags.join(' • ')}</span><br>
+                            <span class="badge badge-hot" style="margin-top:0.5rem">${s.action}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                document.getElementById('scamAlerts').innerHTML = '<div class="alert alert-ok"><span class="alert-icon">✓</span>No SCAM alerts</div>';
             }
 
             // Groups
@@ -869,6 +897,36 @@
                     </div>
                 `).join('');
             }
+        }
+
+        // Lead rendering function
+        function renderLeads(leads) {
+            document.getElementById('leadsTable').innerHTML = leads.map(l => `
+                <tr data-search="${(l.name + ' ' + l.platform + ' ' + l.topic + ' ' + (l.tags || []).join(' ')).toLowerCase()}">
+                    <td><strong>${l.name}</strong>${l.handle ? '<br><span style="color:var(--text-muted);font-size:0.75rem">' + l.handle + '</span>' : ''}</td>
+                    <td>${l.platform}</td>
+                    <td style="max-width:200px">${l.topic}</td>
+                    <td><span class="badge badge-${l.status === 'replied' || l.status === 'awaiting_reply' ? 'ok' : l.status === 'cta_sent' ? 'blue' : l.status === 'needs_reply' ? 'hot' : 'warm'}">${l.status.replace(/_/g, ' ')}</span></td>
+                    <td>${l.days}d</td>
+                    <td>${(l.tags || []).map(t => '<span class="badge badge-muted" style="margin:1px">' + t + '</span>').join('')}</td>
+                </tr>
+            `).join('');
+        }
+        
+        // Lead search filter
+        function filterLeads(query) {
+            if (!window.allLeads) return;
+            const q = query.toLowerCase().trim();
+            if (!q) {
+                renderLeads(window.allLeads);
+                document.getElementById('leadCount').textContent = window.allLeads.length + ' leads';
+                return;
+            }
+            const filtered = window.allLeads.filter(l => 
+                (l.name + ' ' + l.platform + ' ' + l.topic + ' ' + (l.tags || []).join(' ') + ' ' + l.status + ' ' + (l.handle || '')).toLowerCase().includes(q)
+            );
+            renderLeads(filtered);
+            document.getElementById('leadCount').textContent = filtered.length + '/' + window.allLeads.length + ' leads';
         }
 
         // Init

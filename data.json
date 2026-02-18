@@ -1,7 +1,8 @@
 {
-  "version": "5.0.0",
-  "lastUpdated": "2026-02-17T04:09:00.000Z",
+  "version": "5.1.0",
+  "lastUpdated": "2026-02-18T10:00:00.000Z",
   "updatedBy": "atlas",
+  "changelog": "v5.1.0: Lead search added, SCAM alerts section, new hot leads (Ярослав B2B, Улы)",
   
   "kpis": {
     "totalUsers": 38,
@@ -9,44 +10,45 @@
     "frozenCards": 2,
     "totalDeposits": 49263.54,
     "totalVolume": 262254.54,
-    "transactions": 327,
+    "transactions": 329,
     "goal": 1000,
-    "dayOfGoal": 16,
-    "totalDays": 90
+    "dayOfGoal": 18,
+    "totalDays": 90,
+    "requiredPace": 13.4,
+    "actualPace": 2.1,
+    "velocityRatio": 0.16
   },
   
   "system": {
     "status": "operational",
     "apiHealth": "stealth_mode",
-    "lastCheck": "2026-02-17T04:02:00.000Z",
+    "lastCheck": "2026-02-18T05:00:00.000Z",
     "uptime": "99.8%",
     "errors": [
-      { "time": "2026-02-16 21:30", "type": "api", "user": null, "message": "API returns stealth 404 (expected behavior)", "resolved": true },
+      { "time": "2026-02-18 04:45", "type": "browser", "user": null, "message": "CDP element refs unstable at 4:30 AM — scheduling DM replies for 6:00 AM", "resolved": false },
+      { "time": "2026-02-17 21:30", "type": "group", "user": null, "message": "Тулуза: антиспам-бот пометил @torolladice как spam", "resolved": false },
       { "time": "2026-02-16 15:20", "type": "transaction", "user": 9, "message": "Card decline - RENTSYST merchant blocked", "resolved": false },
-      { "time": "2026-02-16 12:45", "type": "fraud", "user": null, "message": "Multi-device alert: 7 users on same device hash (11,45,38,43,54,42,47)", "resolved": false },
-      { "time": "2026-02-15 18:30", "type": "verification", "user": 52, "message": "Email verification timeout - resent", "resolved": true },
-      { "time": "2026-02-15 14:15", "type": "deposit", "user": 48, "message": "Deposit pending >2h - network congestion", "resolved": true },
-      { "time": "2026-02-14 22:00", "type": "card", "user": 35, "message": "Card creation failed - retry successful", "resolved": true }
+      { "time": "2026-02-16 12:45", "type": "fraud", "user": null, "message": "Multi-device alert: 7 users on same device hash (11,45,38,43,54,42,47)", "resolved": false }
     ],
     "events": [
-      { "time": "2026-02-16 23:02", "event": "CRM v5 deployed - full redesign" },
-      { "time": "2026-02-16 21:00", "event": "Presidents Day - low activity" },
-      { "time": "2026-02-16 14:00", "event": "HNWI +23 contacts (yacht segment)" },
-      { "time": "2026-02-16 08:00", "event": "System report generated" },
-      { "time": "2026-02-15 22:00", "event": "Executive report sent" },
-      { "time": "2026-02-15 08:00", "event": "Group recovery sprint +6 groups" }
+      { "time": "2026-02-18 04:45", "event": "Heartbeat scan: Улы replied (hot lead!), No-KYC Cards = SCAM detected" },
+      { "time": "2026-02-17 22:30", "event": "DM follow-ups sent to Ярослав + Улы" },
+      { "time": "2026-02-17 21:00", "event": "Provider Research: 7+ new providers (Decta, Oobit, Solflare, Qivalis)" },
+      { "time": "2026-02-17 10:00", "event": "Community Discovery: 20+ new groups found" },
+      { "time": "2026-02-17 08:00", "event": "System Report: 38 users, $49K deposits" },
+      { "time": "2026-02-16 23:02", "event": "CRM v5 deployed - full redesign" }
     ],
     "metrics": {
-      "declineRate": "30%",
+      "declineRate": "20%",
       "emailVerificationRate": "53.6%",
       "firstDepositRate": "40%",
       "churnRate": "46.7%",
       "dauMau": "37.5%"
     },
     "warnings": [
-      "Decline rate 30% - RENTSYST merchant issues",
       "Email verification 53.6% (target >70%)",
-      "7 users flagged for multi-device (potential fraud)"
+      "7 users flagged for multi-device (potential fraud)",
+      "Тулуза group: spam flagged risk"
     ]
   },
   
@@ -62,210 +64,176 @@
   },
   
   "alerts": [
-    { "type": "critical", "message": "Growth velocity 0.18x — need 13.0/day, getting 2.4/day" },
-    { "type": "critical", "message": "Cold email OAuth disabled — 35 contacts waiting" },
+    { "type": "critical", "message": "Growth velocity 0.16x — need 13.4/day, getting 2.1/day" },
+    { "type": "critical", "message": "Zero conversions 8+ days — trust problem, not reach" },
     { "type": "warning", "message": "Email verification 53.6% (target >70%)" },
     { "type": "warning", "message": "7 users on same device hash (fraud risk)" },
-    { "type": "warning", "message": "8 TG groups FORBIDDEN — 11 active remain" }
+    { "type": "warning", "message": "8 TG groups FORBIDDEN — 11 active remain" },
+    { "type": "info", "message": "2 hot leads awaiting reply (Ярослав B2B, Улы)" }
+  ],
+  
+  "scamAlerts": [
+    {
+      "name": "No-KYC Cards (@no_kyc_cards)",
+      "currentName": "Pryvero.net",
+      "detected": "2026-02-18",
+      "status": "CONFIRMED SCAM",
+      "redFlags": [
+        "Renamed from @no_kyc_cards to Pryvero.net",
+        "Withdrawal issues reported",
+        "'Mercenaries' story circulating",
+        "Group dynamics suspicious"
+      ],
+      "action": "DO NOT ENGAGE — remove from active groups"
+    },
+    {
+      "name": "Vault.ist",
+      "detected": "2026-02-16",
+      "status": "RED FLAG",
+      "redFlags": [
+        "Crypterium/Choise ecosystem connection",
+        "Choise in liquidation Nov 2025",
+        "FinTelegram explicit warning"
+      ],
+      "action": "DO NOT USE as provider"
+    }
   ],
   
   "leads": {
-    "hot": 7,
+    "hot": 9,
     "warm": 5,
     "cold": 20,
     "converted": 0,
+    "searchEnabled": true,
     "list": [
-      { "name": "Калгари URGENT", "platform": "TG", "topic": "продать юсдт сегодня", "status": "replied", "days": 0 },
-      { "name": "Калгари USDT #15", "platform": "TG", "topic": "Ищу покупку USDT", "status": "replied", "days": 0 },
-      { "name": "Тулуза USDT #3", "platform": "TG", "topic": "Нужно купить юсдт", "status": "replied", "days": 0 },
-      { "name": "Тулуза USDT #2", "platform": "TG", "topic": "Ищу USDT для покупки", "status": "replied", "days": 0 },
-      { "name": "Калгари USDT #13", "platform": "TG", "topic": "Ищу продавца USDT", "status": "replied", "days": 0 },
-      { "name": "DM exchanger expert", "platform": "TG DM", "topic": "Обменники, криптоботы", "status": "warm", "days": 2 },
-      { "name": "Андрей (@Andrei_M0)", "platform": "TG DM", "topic": "Карта для Netflix", "status": "cta_sent", "days": 4 }
+      { "name": "Ярослав (@domamaster_com)", "handle": "@domamaster_com", "platform": "TG DM", "topic": "Обменник песо, B2B potential", "status": "awaiting_reply", "days": 1, "priority": "hot", "tags": ["B2B", "exchanger", "Mexico"] },
+      { "name": "Улы", "handle": null, "platform": "TG DM", "topic": "Replied: 'Вы же писали, что нуждаетесь в песо'", "status": "needs_reply", "days": 0, "priority": "hot", "tags": ["hot", "active"] },
+      { "name": "Калгари URGENT", "handle": "8494549313", "platform": "TG", "topic": "продать юсдт сегодня", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Calgary"] },
+      { "name": "Калгари USDT #15", "handle": "7255771489", "platform": "TG", "topic": "Ищу покупку USDT", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Calgary"] },
+      { "name": "Тулуза USDT #3", "handle": "8372101794", "platform": "TG", "topic": "Нужно купить юсдт", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Toulouse"] },
+      { "name": "Тулуза USDT #2", "handle": "8311720189", "platform": "TG", "topic": "Ищу USDT для покупки", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Toulouse"] },
+      { "name": "Калгари USDT #13", "handle": "8341317889", "platform": "TG", "topic": "Ищу продавца USDT", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Calgary"] },
+      { "name": "Тулуза USDT buyer", "handle": "8519938140", "platform": "TG", "topic": "Кто продает тезер?", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Toulouse"] },
+      { "name": "Пауки Хеллоуин", "handle": "8403779375", "platform": "TG DM", "topic": "Media/sticker sent", "status": "awaiting_reply", "days": 3, "priority": "hot", "tags": ["unknown"] },
+      { "name": "DM exchanger expert", "handle": "1069362030", "platform": "TG DM", "topic": "Обменники, криптоботы", "status": "warm", "days": 4, "priority": "warm", "tags": ["networking", "B2B"] },
+      { "name": "Андрей (@Andrei_M0)", "handle": "@Andrei_M0", "platform": "TG DM", "topic": "Карта для Netflix", "status": "cta_sent", "days": 6, "priority": "warm", "tags": ["streaming", "Montenegro"] }
     ]
   },
   
   "groups": {
     "active": 11,
     "forbidden": 8,
+    "scam": 1,
     "list": [
-      { "name": "Все русские в Черногории", "lang": "RU", "status": "best" },
-      { "name": "Украинцы в Калгари", "lang": "RU/UA", "status": "hot" },
-      { "name": "Digital Nomads", "lang": "EN", "status": "active" },
-      { "name": "No-KYC Cards", "lang": "EN", "status": "active" },
-      { "name": "Русские в Нидерландах", "lang": "RU", "status": "active" },
-      { "name": "Русские в Мексике", "lang": "RU", "status": "active" },
-      { "name": "Русские в Майами", "lang": "RU", "status": "active" },
-      { "name": "Русские в Лос Анджелесе", "lang": "RU", "status": "ok" },
-      { "name": "Русские в Чикаго", "lang": "RU", "status": "ok" },
-      { "name": "Українці в Лондоні", "lang": "UA", "status": "ok" },
-      { "name": "Украинцы в Тулузе", "lang": "RU/UA", "status": "ok" }
+      { "name": "Все русские в Черногории", "chatId": "-1002149696897", "lang": "RU", "status": "forbidden", "note": "Feb 17 FORBIDDEN" },
+      { "name": "Украинцы в Калгари", "chatId": "-1001471606428", "lang": "RU/UA", "status": "hot", "note": "USDT leads source" },
+      { "name": "Digital Nomads", "chatId": "-1001171215712", "lang": "EN", "status": "active", "note": "1 unread" },
+      { "name": "Русские в Нидерландах", "chatId": "-1001380905162", "lang": "RU", "status": "forbidden", "note": "Feb 17 FORBIDDEN" },
+      { "name": "Русские в Мексике", "chatId": "-1001487330086", "lang": "RU", "status": "active" },
+      { "name": "Русские в Лос Анджелесе", "chatId": "-1002063077650", "lang": "RU", "status": "banned", "note": "Feb 17 BANNED" },
+      { "name": "Русские в Чикаго", "chatId": "-1002107721378", "lang": "RU", "status": "banned", "note": "Feb 17 BANNED" },
+      { "name": "Українці в Лондоні", "chatId": "-1002031758550", "lang": "UA", "status": "active" },
+      { "name": "Украинцы в Тулузе", "chatId": "-1002662617488", "lang": "RU/UA", "status": "warning", "note": "Spam flagged risk" },
+      { "name": "Українці в Торрев'єсі", "chatId": "-1003428046508", "lang": "UA", "status": "active" },
+      { "name": "Українська Варшава", "chatId": "-1001584700982", "lang": "UA", "status": "spam" }
+    ],
+    "scamGroups": [
+      { "name": "No-KYC Cards", "handle": "@no_kyc_cards", "newName": "Pryvero.net", "status": "SCAM", "detected": "2026-02-18" }
+    ],
+    "newJoined": [
+      { "name": "Українці в Швейцарії", "handle": "@SwissUA", "status": "joined" },
+      { "name": "Русские в Майами", "handle": "@miami_rus", "status": "admin_required" },
+      { "name": "Русские в Аргентине", "handle": "@rus_argentina", "status": "joined" }
     ]
   },
   
   "hnwi": {
-    "total": 78,
+    "total": 92,
     "target": 500,
+    "progress": 18.4,
     "segments": [
-      { "name": "Yachts", "count": 78, "status": "active" },
-      { "name": "Poker", "count": 0, "status": "next" },
-      { "name": "Watches", "count": 0, "status": "pending" },
+      { "name": "Yachts", "count": 78, "status": "completed", "regions": "Dubai, French Riviera, Miami, Monaco" },
+      { "name": "Poker", "count": 14, "status": "completed", "topContacts": "Paul Phua ($400M-1B), Tony G ($300M), Phil Ivey ($125M)" },
+      { "name": "Watches", "count": 0, "status": "next" },
       { "name": "Cars", "count": 0, "status": "pending" }
     ],
-    "contacts": [
-      { "id": 1, "company": "Burgess Yachts", "location": "Miami, FL", "phone": "+1 305 672 0150", "website": "https://burgessyachts.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "Premium superyachts" },
-      { "id": 2, "company": "HMY Yacht Sales", "location": "Miami Beach, FL", "phone": "305-856-8486", "website": "https://hmy.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "Miami Beach Marina" },
-      { "id": 3, "company": "MarineMax Miami", "location": "Miami, FL", "phone": "(305) 758-5786", "website": "https://marinemax.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "" },
-      { "id": 4, "company": "Denison Yachting", "location": "Miami, FL", "phone": "305-676-9516", "website": "https://denisonyachting.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "" },
-      { "id": 5, "company": "Edmiston Miami", "location": "Miami Beach, FL", "phone": "786-977-4358", "website": "https://edmiston.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "Premium superyachts" },
-      { "id": 6, "company": "Camper & Nicholsons Monaco", "location": "Monte Carlo, MC", "phone": "+377 97 97 77 00", "website": "https://camperandnicholsons.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "Top-tier brokerage, est. 1782" },
-      { "id": 7, "company": "Sunseeker Monaco", "location": "Monte Carlo, MC", "phone": "+377 9777 5777", "website": "https://sunseekermonaco.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "" },
-      { "id": 8, "company": "Edmiston Monaco", "location": "Monte Carlo, MC", "phone": "+377 93 30 54 44", "website": "https://edmiston.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "Premium superyachts" },
-      { "id": 9, "company": "Northrop & Johnson Monaco", "location": "Monte Carlo, MC", "phone": "+377 97 77 27 20", "website": "https://northropandjohnson.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-15", "notes": "" },
-      { "id": 10, "company": "Burgess Dubai", "location": "Dubai Marina, UAE", "phone": "+971 4 425 5874", "website": "https://burgessyachts.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "Al Habtoor Business Tower" },
-      { "id": 11, "company": "Fraser Yachts Dubai", "location": "Al Seef, Dubai", "phone": "+971 4 513 5584", "website": "https://fraseryachts.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "Fair Winds Yachts" },
-      { "id": 12, "company": "IYC Dubai", "location": "Al Quoz, Dubai", "phone": "+971 4 513 5584", "website": "https://iyc.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "International Yacht Corp" },
-      { "id": 13, "company": "Phoenix Yacht Management", "location": "Mina Rashid, Dubai", "phone": "+971 4 303 1900", "website": "https://phoenix-yachts.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "Full yacht management" },
-      { "id": 14, "company": "Camper & Nicholsons Antibes", "location": "Antibes, France", "phone": "+33 4 92 91 29 12", "website": "https://camperandnicholsons.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "Est. 1782, elite" },
-      { "id": 15, "company": "Northrop & Johnson Antibes", "location": "Port Vauban, Antibes", "phone": "+33 4 97 21 27 27", "website": "https://northropandjohnson.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "Center of crew community" },
-      { "id": 16, "company": "Fraser Yachts Antibes", "location": "Antibes, France", "phone": "+33 4 97 21 13 13", "website": "https://fraseryachts.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "" },
-      { "id": 17, "company": "212 Yachts", "location": "Antibes, France", "phone": "+33 4 92 95 83 06", "website": "https://212-yachts.com", "type": "yacht", "source": "Web Search", "date": "2026-02-16", "notes": "Open 7 days" },
-      { "id": 18, "company": "Bluenose Yacht Sales", "location": "Boston, MA", "phone": "617-331-8140", "website": "https://yachtworld.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-14", "notes": "Constitution Marina" },
-      { "id": 19, "company": "MarineMax Boston", "location": "Quincy, MA", "phone": "(617) 288-1000", "website": "https://marinemax.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-14", "notes": "Bay Pointe Marina" },
-      { "id": 20, "company": "Boston Yacht Sales", "location": "N. Weymouth, MA", "phone": "781 331 2400", "website": "https://bostonyacht.com", "type": "yacht", "source": "YachtWorld", "date": "2026-02-14", "notes": "" }
+    "recentAdditions": [
+      { "name": "Paul Phua", "segment": "Poker", "netWorth": "$400M-$1B", "notes": "Triton co-founder" },
+      { "name": "Tony G", "segment": "Poker", "netWorth": "$300M", "notes": "Sol Strategies CEO" },
+      { "name": "Phil Ivey", "segment": "Poker", "netWorth": "$125M", "notes": "G.O.A.T." },
+      { "name": "Michael Mizrachi", "segment": "Poker", "netWorth": "$10M+", "notes": "2025 WSOP Main Event winner" }
     ]
   },
   
   "providers": {
+    "total": 102,
+    "lastResearch": "2026-02-17T09:00:00.000Z",
+    "newThisWeek": 7,
     "verified": [
-      { "name": "Rain", "type": "Full-Stack Issuer", "region": "Global (150+ countries)", "funding": "$338M+", "website": "https://rain.co", "notes": "Visa principal member, $1.95B valuation" },
-      { "name": "Reap", "type": "Full-Stack Issuer", "region": "Asia/ME/US", "funding": "$60M", "website": "https://reap.co", "notes": "Visa principal, $6B+ volume, YC backed" },
-      { "name": "Kulipa", "type": "B2B API", "region": "Global", "funding": "$3M seed", "website": "https://kulipa.com", "notes": "Self-custodial card API, ex-Mastercard VP team" },
-      { "name": "Baanx", "type": "Issuer", "region": "UK/EU", "funding": "$175M acq", "website": "https://baanx.com", "notes": "EMI licensed, powers MetaMask card" },
-      { "name": "Striga", "type": "Issuer", "region": "Europe", "funding": "-", "website": "https://striga.com", "notes": "Powers Bitrefill, joined Lightspark" },
-      { "name": "Gnosis Pay", "type": "Non-Custodial", "region": "EU/UK", "funding": "-", "website": "https://gnosispay.com", "notes": "Self-custody Safe wallet, 2% cashback, white-label" },
-      { "name": "Immersve", "type": "BIN Sponsor", "region": "Global", "funding": "-", "website": "https://immersve.com", "notes": "MC principal member, 70M+ merchants, Web3 native" },
-      { "name": "Zero Hash", "type": "Infrastructure", "region": "Global (200+ jur)", "funding": "$65B vol", "website": "https://zerohash.com", "notes": "MC acquisition talks $1.5-2B" }
+      { "name": "Rain", "type": "Full-Stack Issuer", "funding": "$338M+", "notes": "Visa principal, $1.95B valuation" },
+      { "name": "Reap", "type": "Full-Stack Issuer", "funding": "$60M", "notes": "Visa principal, $6B+ volume" },
+      { "name": "Kulipa", "type": "B2B API", "funding": "$3M seed", "notes": "Self-custodial API" },
+      { "name": "Baanx", "type": "Issuer", "funding": "$175M acq", "notes": "Powers MetaMask card" },
+      { "name": "Decta", "type": "BIN Sponsor", "funding": "-", "notes": "NEW: Fintech Fast Track program" },
+      { "name": "Immersve", "type": "BIN Sponsor", "funding": "-", "notes": "MC principal, 70M+ merchants" },
+      { "name": "Nuvei", "type": "Full Platform", "funding": "Public", "notes": "NEW: MiCAR licensed, 30 markets" }
     ],
-    "redFlags": [
-      { "name": "Vault.ist", "website": "https://vault.ist", "reason": "Crypterium/Choise связь — FinTelegram Nov 2025 warning, in liquidation" },
-      { "name": "LBM Solutions", "website": null, "reason": "Dev shop NOT card issuer, 'They do scam' reviews" },
-      { "name": "KazePay", "website": null, "reason": "Zero company registration, no accountability" },
-      { "name": "Simplify Labs", "website": null, "reason": "Main client Kyrrex in $10B ICIJ money laundering investigation" }
+    "newFindings": [
+      { "name": "Decta", "type": "BIN Sponsor EU/UK", "unique": "Fintech Fast Track = no setup fee" },
+      { "name": "Oobit/DePay", "type": "Non-custodial", "unique": "Phantom 15M users integration" },
+      { "name": "Solflare Card", "type": "Self-custody MC", "unique": "First Solana self-custody" },
+      { "name": "Solayer Emerald", "type": "Non-custodial", "unique": "sUSD stablecoin" },
+      { "name": "Qivalis", "type": "Euro stablecoin", "unique": "10 EU banks (BNP, ING), H2 2026" },
+      { "name": "Remittix", "type": "PayFi", "unique": "Crypto-to-bank, launched Feb 9" },
+      { "name": "Nuvei", "type": "Full platform", "unique": "MiCAR license, stablecoin B2B" }
     ],
-    "whiteLabel": [
-      { "name": "ChainUp", "service": "Full PaaS — cards, custody, exchange", "pricing": "Custom", "website": "https://chainup.com", "notes": "Enterprise-grade" },
-      { "name": "Zypto", "service": "Cards + Wallets + Gateway", "pricing": "Custom", "website": "https://zypto.com", "notes": "Fast launch (weeks)" },
-      { "name": "Kripicard", "service": "USDT Virtual Cards", "pricing": "Custom", "website": "https://kripicard.com", "notes": "Instant issuance, Q1 2026 mobile apps" },
-      { "name": "Buvei", "service": "Virtual Card API", "pricing": "Custom", "website": "https://buvei.com", "notes": "PCI-compliant, startup-focused" },
-      { "name": "FinLego", "service": "Card Issuing + Core Banking", "pricing": "License", "website": "https://finlego.com", "notes": "Web3 wallet integration" },
-      { "name": "Unlimit", "service": "90-day White-Label Launch", "pricing": "Custom", "website": "https://unlimit.com", "notes": "EU licensed, 200+ locations" },
-      { "name": "Mercuryo Spend", "service": "Branded Payment Cards", "pricing": "Custom", "website": "https://mercuryo.io", "notes": "70+ cryptos, plug-and-play" }
-    ],
-    "binSponsors": [
-      { "name": "Moorwand", "region": "UK/EEA", "cards": "Mastercard", "website": "https://moorwand.com", "notes": "FCA EMI, fast path" },
-      { "name": "Treezor", "region": "France/EU", "cards": "Visa/MC", "website": "https://treezor.com", "notes": "SocGen-backed, principal member" },
-      { "name": "Enfuce", "region": "EU/UK", "cards": "Visa/MC", "website": "https://enfuce.com", "notes": "EMI licensed" },
-      { "name": "Transact Payments", "region": "UK/EEA", "cards": "All", "website": "https://transactpaymentslimited.com", "notes": "Debit/credit/prepaid" }
-    ],
-    "pricing": {
-      "setup": "BaaS: $500-5K | Enterprise: $10-50K | White-label crypto: $15-100K+",
-      "perCard": "Virtual: $0.50-2 | Physical: $3-15 | Tokenization: $0.10-0.50",
-      "transaction": "Consumer EU: ~0.2% | Commercial: 1.5-2.95% | FX spread: 0.5-2%"
+    "regulatory": {
+      "geniusAct": "NCUA stablecoin issuer rules (Feb 11, 2026)",
+      "hongKong": "First stablecoin licenses March 2026",
+      "mastercard": "New BIN Sponsor Accreditation tightening (Feb 11)"
+    },
+    "market": {
+      "cryptoCardVolumes": "$1.5B/month (15x vs 2023)",
+      "visaCryptoSpending": "+525% in 2025",
+      "stablecoinMarket": "~$300B"
     }
   },
   
   "competitors": {
     "list": [
-      { "name": "Kolo.xyz", "tg": "1M+", "ig": "~100", "twitter": "-", "yt": "-", "website": "https://kolo.xyz", "strength": "TG mini-app + gamification" },
-      { "name": "KAST", "tg": "Active", "ig": "~1K", "twitter": "47.2K", "yt": "5+ reviews", "website": "https://kast.com", "strength": "CT native, $10M funding" },
-      { "name": "Wirex", "tg": "Active", "ig": "44K", "twitter": "~25K", "yt": "Own channel", "website": "https://wirex.com", "strength": "IG + TikTok 10.7K" },
-      { "name": "Trustee Plus", "tg": "21.3K", "ig": "12K", "twitter": "-", "yt": "8K", "website": "https://trustee.deals", "strength": "YouTube UA tutorials" },
-      { "name": "MaxSwap", "tg": "2.3K", "ig": "2.2K", "twitter": "1.4K", "yt": "Blogger reviews", "website": "https://maxswap.com", "strength": "30-50% lifetime referral" },
-      { "name": "Cryptopay", "tg": "Active", "ig": "2K", "twitter": "Suspended", "yt": "Present", "website": "https://cryptopay.me", "strength": "EU focus" }
-    ],
-    "insights": [
-      "Kolo = TG king — mini-app + gamification = 1M+ subscribers",
-      "KAST = Twitter king — CT native, user testimonials strategy",
-      "Wirex = IG + TikTok leader — 44K IG, 10.7K TikTok",
-      "MaxSwap = Referral machine — 30-50% lifetime commission aggressive",
-      "TikTok UNDERUTILIZED across ALL competitors (only Wirex at 10K)",
-      "No bilingual EN/RU content leader exists — OPPORTUNITY",
-      "Travel/lifestyle content weak everywhere",
-      "Reddit presence weak across all competitors"
-    ],
-    "contentStrategy": "Telegram-first → Twitter CT → TikTok → Instagram → YouTube"
+      { "name": "Kolo.xyz", "strength": "TG mini-app 1M+", "threat": "high" },
+      { "name": "KAST", "strength": "Twitter 47K, $10M funding", "threat": "high" },
+      { "name": "Wirex", "strength": "IG 44K, TikTok 10.7K", "threat": "medium" },
+      { "name": "Trustee Plus", "strength": "YouTube UA 8K", "threat": "medium" },
+      { "name": "MaxSwap", "strength": "30-50% lifetime referral", "threat": "medium" }
+    ]
   },
   
   "outreach": {
-    "emailsReady": 12,
+    "emailsReady": 14,
     "emailsSent": 0,
     "status": "blocked",
     "blocker": "OAuth disabled",
     "hnwiQueue": 23,
-    "followUpsDue": 6
+    "followUpsDue": 8
   },
   
-  "businessIdeas": [
-    {
-      "id": 1,
-      "name": "AI Voice Agent для SMB",
-      "codename": "VoiceFlow Pro",
-      "score": "9/10",
-      "verdict": "BEST OPPORTUNITY 2026",
-      "what": "Платформа AI голосовых агентов для SMB — отвечают на звонки 24/7, записывают на приём, принимают заказы",
-      "problem": "SMB теряют 30% звонков вне рабочего времени. Каждый пропущенный = $50-500 потерь",
-      "market": { "tam": "$47.5B к 2034", "sam": "$4.8B — SMB США/EU", "som": "$120M за 3 года", "cagr": "34.8%" },
-      "audience": "Рестораны, клиники, автосервисы, салоны — 15M бизнесов в США",
-      "pricing": { "starter": "$99/мес — 500 минут", "growth": "$299/мес — 2000 минут, CRM", "pro": "$799/мес — безлимит, кастом голос" },
-      "economics": { "cac": "$150", "ltv": "$3600", "ltvCac": "24:1", "margin": "75%" },
-      "competitors": "Vapi ($20M Series A), Bland.ai ($22M), Synthflow",
-      "moat": "Vertical templates, SMB pricing, local-first integrations",
-      "mvp": "4 недели, $5K",
-      "tech": "Twilio + OpenAI/Anthropic + ElevenLabs",
-      "whyNow": "OpenAI Realtime API, ElevenLabs low latency, post-COVID SMB automation demand",
-      "risks": "Big tech, AI quality issues",
-      "suitableFor": "Technical founder с SaaS опытом"
-    },
-    {
-      "id": 2,
-      "name": "AI Compliance Autopilot",
-      "codename": "ComplianceOS",
-      "score": "8/10",
-      "verdict": "VALIDATED MARKET",
-      "what": "Автоматизация SOC 2, ISO 27001, HIPAA сертификаций для стартапов — 2-4 недели вместо 6 месяцев",
-      "problem": "Enterprise требуют SOC 2. Без сертификации стартап теряет deals $500K+. Vanta стоит $25K+/год",
-      "market": { "tam": "$15B — GRC software", "sam": "$2.5B — compliance automation SMB", "som": "$50M за 3 года", "cagr": "14%" },
-      "audience": "Seed/Series A SaaS стартапы (5-50 человек)",
-      "pricing": { "bootstrap": "$199/мес — 1 framework", "startup": "$499/мес — multi-framework", "scale": "$999/мес — unlimited" },
-      "economics": { "cac": "$800", "ltv": "$9000", "ltvCac": "11:1", "margin": "85%" },
-      "competitors": "Vanta ($2.45B), Drata ($2B), Secureframe",
-      "moat": "AI-first docs (10x faster), startup pricing ($199 vs $2K+), auditor marketplace",
-      "mvp": "6 недель, $8K",
-      "tech": "GPT-4 для document generation, AWS/GitHub/Slack integrations",
-      "whyNow": "AI может генерировать policies quality, enterprise sales стали стандартом раньше",
-      "risks": "Vanta снизит цены, regulatory complexity",
-      "suitableFor": "Founders с security/compliance background"
-    },
-    {
-      "id": 3,
-      "name": "AI-Native Design Agency",
-      "codename": "DesignOS",
-      "score": "8/10",
-      "verdict": "FAST CASH, YC RFS",
-      "what": "Productized design service: AI делает 80% работы, humans polish. 10x дешевле традиционных агентств",
-      "problem": "Дизайн agencies дорого ($150-300/час), медленно (недели), inconsistent quality",
-      "market": { "tam": "$50B — design services", "sam": "$10B — SMB design needs", "som": "$20M за 3 года", "cagr": "15%" },
-      "audience": "Startups, SMB нужен дизайн без найма designer",
-      "pricing": { "starter": "$2K/мес — unlimited requests", "growth": "$4K/мес — priority + brand guidelines", "scale": "$8K/мес — dedicated team" },
-      "economics": { "cac": "$500", "ltv": "$24000", "ltvCac": "48:1", "margin": "60%" },
-      "competitors": "DesignJoy, Penji, traditional agencies",
-      "moat": "AI + human hybrid model, predictable pricing",
-      "mvp": "2 недели, $2K",
-      "tech": "Midjourney, Figma, Claude for briefs",
-      "whyNow": "AI image/design tools mature, remote work normalized",
-      "risks": "AI quality perception, talent management",
-      "suitableFor": "Design background + ops skills"
-    }
+  "dailyLog": {
+    "date": "2026-02-18",
+    "usersAdded": 0,
+    "leadsContacted": 0,
+    "leadsEngaged": 2,
+    "ctaDelivered": 0,
+    "converted": 0,
+    "groupsPosted": 0,
+    "hnwiContacts": 14,
+    "providersResearched": 0,
+    "notes": "Early AM: Heartbeat found hot leads (Улы, Ярослав), No-KYC Cards = SCAM detected"
+  },
+
+  "versionHistory": [
+    { "version": "5.1.0", "date": "2026-02-18", "changes": "Lead search, SCAM alerts section, new hot leads, group status updates" },
+    { "version": "5.0.0", "date": "2026-02-17", "changes": "Full v5 redesign with System page" },
+    { "version": "2.6.0", "date": "2026-02-17", "changes": "Providers section with research findings" }
   ]
 }
