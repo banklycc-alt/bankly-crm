@@ -500,6 +500,21 @@
                     <div id="redFlagProviders"></div>
                 </div>
             </div>
+            
+            <div class="grid grid-3" style="margin-top: 1rem;">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">🇷🇺 RU/CIS Providers</span></div>
+                    <div id="ruCisProviders"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">⚙️ Processors</span></div>
+                    <div id="processorsProviders"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">🏛️ BaaS Europe</span></div>
+                    <div id="baasProviders"></div>
+                </div>
+            </div>
         </div>
 
         <!-- COMPETITORS PAGE -->
@@ -842,38 +857,70 @@
                 `).join('');
             }
 
-            // Providers - WITH LINKS
+            // Providers - ALL CATEGORIES
             if (staticData.providers) {
                 document.getElementById('verifiedProviders').innerHTML = staticData.providers.verified.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name"><a href="${p.website}" target="_blank">${p.name} ↗</a></div>
-                        <div class="provider-meta">${p.type} · ${p.region} ${p.funding ? '· ' + p.funding : ''}</div>
-                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes}</div>
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.type || ''} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('whiteLabelProviders').innerHTML = staticData.providers.whiteLabel.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name"><a href="${p.website}" target="_blank">${p.name} ↗</a></div>
-                        <div class="provider-meta">${p.service}</div>
-                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes}</div>
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.type || ''} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('binSponsors').innerHTML = staticData.providers.binSponsors.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name"><a href="${p.website}" target="_blank">${p.name} ↗</a></div>
-                        <div class="provider-meta">${p.region} · ${p.cards}</div>
-                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes}</div>
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.type || ''} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('redFlagProviders').innerHTML = staticData.providers.redFlags.map(p => `
                     <div class="provider-item danger">
-                        <div class="provider-name">🔴 ${p.website ? '<a href="' + p.website + '" target="_blank">' + p.name + ' ↗</a>' : p.name}</div>
-                        <div class="provider-meta">${p.reason}</div>
+                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-meta">${p.reason || ''}</div>
                     </div>
                 `).join('');
+                
+                // RU/CIS Providers
+                if (staticData.providers.ruCis && document.getElementById('ruCisProviders')) {
+                    document.getElementById('ruCisProviders').innerHTML = staticData.providers.ruCis.map(p => `
+                        <div class="provider-item">
+                            <div class="provider-name">${p.name}</div>
+                            <div class="provider-meta">${p.type || ''}</div>
+                            <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
+                        </div>
+                    `).join('');
+                }
+                
+                // Processors
+                if (staticData.providers.processors && document.getElementById('processorsProviders')) {
+                    document.getElementById('processorsProviders').innerHTML = staticData.providers.processors.map(p => `
+                        <div class="provider-item">
+                            <div class="provider-name">${p.name}</div>
+                            <div class="provider-meta">${p.notes || ''}</div>
+                        </div>
+                    `).join('');
+                }
+                
+                // BaaS Europe
+                if (staticData.providers.baasEurope && document.getElementById('baasProviders')) {
+                    document.getElementById('baasProviders').innerHTML = staticData.providers.baasEurope.map(p => `
+                        <div class="provider-item">
+                            <div class="provider-name">${p.name}</div>
+                            <div class="provider-meta">${p.region || ''}</div>
+                            <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
+                        </div>
+                    `).join('');
+                }
             }
 
             // Competitors - Enhanced with Social Metrics
