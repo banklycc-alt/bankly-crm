@@ -857,35 +857,35 @@
                 `).join('');
             }
 
-            // Providers - ALL CATEGORIES
+            // Providers - ALL CATEGORIES WITH LINKS
             if (staticData.providers) {
                 document.getElementById('verifiedProviders').innerHTML = staticData.providers.verified.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name">${p.name}</div>
-                        <div class="provider-meta">${p.type || ''} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
+                        <div class="provider-meta">${p.type || ''} ${p.funding && p.funding !== '-' ? '· ' + p.funding : ''}</div>
                         <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('whiteLabelProviders').innerHTML = staticData.providers.whiteLabel.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name">${p.name}</div>
-                        <div class="provider-meta">${p.type || ''} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
+                        <div class="provider-meta">${p.type || ''} ${p.funding && p.funding !== '-' ? '· ' + p.funding : ''}</div>
                         <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('binSponsors').innerHTML = staticData.providers.binSponsors.map(p => `
                     <div class="provider-item">
-                        <div class="provider-name">${p.name}</div>
-                        <div class="provider-meta">${p.type || ''} ${p.funding ? '· ' + p.funding : ''}</div>
+                        <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
+                        <div class="provider-meta">${p.type || ''} ${p.funding && p.funding !== '-' ? '· ' + p.funding : ''}</div>
                         <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                     </div>
                 `).join('');
                 
                 document.getElementById('redFlagProviders').innerHTML = staticData.providers.redFlags.map(p => `
                     <div class="provider-item danger">
-                        <div class="provider-name">${p.name}</div>
+                        <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
                         <div class="provider-meta">${p.reason || ''}</div>
                     </div>
                 `).join('');
@@ -894,7 +894,7 @@
                 if (staticData.providers.ruCis && document.getElementById('ruCisProviders')) {
                     document.getElementById('ruCisProviders').innerHTML = staticData.providers.ruCis.map(p => `
                         <div class="provider-item">
-                            <div class="provider-name">${p.name}</div>
+                            <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
                             <div class="provider-meta">${p.type || ''}</div>
                             <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                         </div>
@@ -905,7 +905,7 @@
                 if (staticData.providers.processors && document.getElementById('processorsProviders')) {
                     document.getElementById('processorsProviders').innerHTML = staticData.providers.processors.map(p => `
                         <div class="provider-item">
-                            <div class="provider-name">${p.name}</div>
+                            <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
                             <div class="provider-meta">${p.notes || ''}</div>
                         </div>
                     `).join('');
@@ -915,7 +915,7 @@
                 if (staticData.providers.baasEurope && document.getElementById('baasProviders')) {
                     document.getElementById('baasProviders').innerHTML = staticData.providers.baasEurope.map(p => `
                         <div class="provider-item">
-                            <div class="provider-name">${p.name}</div>
+                            <div class="provider-name"><a href="${p.url}" target="_blank">${p.name} ↗</a></div>
                             <div class="provider-meta">${p.region || ''}</div>
                             <div class="provider-meta" style="margin-top:0.25rem">${p.notes || ''}</div>
                         </div>
