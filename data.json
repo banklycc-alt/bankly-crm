@@ -1,42 +1,42 @@
 {
-  "version": "5.1.0",
-  "lastUpdated": "2026-02-18T10:00:00.000Z",
+  "version": "5.2.0",
+  "lastUpdated": "2026-02-19T10:00:00.000Z",
   "updatedBy": "atlas",
-  "changelog": "v5.1.0: Lead search added, SCAM alerts section, new hot leads (Ярослав B2B, Улы)",
+  "changelog": "v5.2.0: Competitor Insights section with social metrics, new providers (Quantoz, Walletto), Милана hot lead added",
   
   "kpis": {
     "totalUsers": 38,
     "activeCards": 15,
     "frozenCards": 2,
-    "totalDeposits": 49263.54,
-    "totalVolume": 262254.54,
-    "transactions": 329,
+    "totalDeposits": 49264,
+    "totalVolume": 262254,
+    "transactions": 334,
     "goal": 1000,
-    "dayOfGoal": 18,
+    "dayOfGoal": 19,
     "totalDays": 90,
-    "requiredPace": 13.4,
-    "actualPace": 2.1,
-    "velocityRatio": 0.16
+    "requiredPace": 13.5,
+    "actualPace": 2.0,
+    "velocityRatio": 0.15
   },
   
   "system": {
     "status": "operational",
     "apiHealth": "stealth_mode",
-    "lastCheck": "2026-02-18T05:00:00.000Z",
+    "lastCheck": "2026-02-19T05:00:00.000Z",
     "uptime": "99.8%",
     "errors": [
-      { "time": "2026-02-18 04:45", "type": "browser", "user": null, "message": "CDP element refs unstable at 4:30 AM — scheduling DM replies for 6:00 AM", "resolved": false },
+      { "time": "2026-02-18 04:45", "type": "browser", "user": null, "message": "CDP element refs unstable — scheduling DM replies for morning", "resolved": true },
       { "time": "2026-02-17 21:30", "type": "group", "user": null, "message": "Тулуза: антиспам-бот пометил @torolladice как spam", "resolved": false },
       { "time": "2026-02-16 15:20", "type": "transaction", "user": 9, "message": "Card decline - RENTSYST merchant blocked", "resolved": false },
       { "time": "2026-02-16 12:45", "type": "fraud", "user": null, "message": "Multi-device alert: 7 users on same device hash (11,45,38,43,54,42,47)", "resolved": false }
     ],
     "events": [
-      { "time": "2026-02-18 04:45", "event": "Heartbeat scan: Улы replied (hot lead!), No-KYC Cards = SCAM detected" },
-      { "time": "2026-02-17 22:30", "event": "DM follow-ups sent to Ярослав + Улы" },
-      { "time": "2026-02-17 21:00", "event": "Provider Research: 7+ new providers (Decta, Oobit, Solflare, Qivalis)" },
-      { "time": "2026-02-17 10:00", "event": "Community Discovery: 20+ new groups found" },
-      { "time": "2026-02-17 08:00", "event": "System Report: 38 users, $49K deposits" },
-      { "time": "2026-02-16 23:02", "event": "CRM v5 deployed - full redesign" }
+      { "time": "2026-02-19 04:00", "event": "Provider Research: Quantoz (Visa PM!), Walletto BIN sponsor, 4+ new providers" },
+      { "time": "2026-02-19 03:00", "event": "Competitor Content Analysis: 7 competitors, social metrics collected" },
+      { "time": "2026-02-18 14:02", "event": "Hot lead Улы replied — explained crypto card project" },
+      { "time": "2026-02-18 08:05", "event": "Hot lead Милана replied — waiting for DM response" },
+      { "time": "2026-02-17 21:30", "event": "DM follow-ups sent to Ярослав + Улы" },
+      { "time": "2026-02-17 10:00", "event": "Community Discovery: 20+ new groups found" }
     ],
     "metrics": {
       "declineRate": "20%",
@@ -64,12 +64,12 @@
   },
   
   "alerts": [
-    { "type": "critical", "message": "Growth velocity 0.16x — need 13.4/day, getting 2.1/day" },
-    { "type": "critical", "message": "Zero conversions 8+ days — trust problem, not reach" },
+    { "type": "critical", "message": "Growth velocity 0.15x — need 13.5/day, getting 2.0/day" },
+    { "type": "critical", "message": "Zero conversions 9+ days — trust problem, not reach" },
     { "type": "warning", "message": "Email verification 53.6% (target >70%)" },
     { "type": "warning", "message": "7 users on same device hash (fraud risk)" },
     { "type": "warning", "message": "8 TG groups FORBIDDEN — 11 active remain" },
-    { "type": "info", "message": "2 hot leads awaiting reply (Ярослав B2B, Улы)" }
+    { "type": "info", "message": "3 hot leads awaiting reply (Ярослав B2B, Улы, Милана)" }
   ],
   
   "scamAlerts": [
@@ -81,42 +81,41 @@
       "redFlags": [
         "Renamed from @no_kyc_cards to Pryvero.net",
         "Withdrawal issues reported",
-        "'Mercenaries' story circulating",
-        "Group dynamics suspicious"
+        "'Mercenaries' story circulating"
       ],
-      "action": "DO NOT ENGAGE — remove from active groups"
+      "action": "DO NOT ENGAGE"
     },
     {
       "name": "Vault.ist",
       "detected": "2026-02-16",
       "status": "RED FLAG",
       "redFlags": [
-        "Crypterium/Choise ecosystem connection",
-        "Choise in liquidation Nov 2025",
-        "FinTelegram explicit warning"
+        "Crypterium/Choise ecosystem (in liquidation)",
+        "FinTelegram explicit warning Nov 2025"
       ],
       "action": "DO NOT USE as provider"
     }
   ],
   
   "leads": {
-    "hot": 9,
+    "hot": 10,
     "warm": 5,
     "cold": 20,
     "converted": 0,
     "searchEnabled": true,
     "list": [
-      { "name": "Ярослав (@domamaster_com)", "handle": "@domamaster_com", "platform": "TG DM", "topic": "Обменник песо, B2B potential", "status": "awaiting_reply", "days": 1, "priority": "hot", "tags": ["B2B", "exchanger", "Mexico"] },
-      { "name": "Улы", "handle": null, "platform": "TG DM", "topic": "Replied: 'Вы же писали, что нуждаетесь в песо'", "status": "needs_reply", "days": 0, "priority": "hot", "tags": ["hot", "active"] },
-      { "name": "Калгари URGENT", "handle": "8494549313", "platform": "TG", "topic": "продать юсдт сегодня", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Calgary"] },
-      { "name": "Калгари USDT #15", "handle": "7255771489", "platform": "TG", "topic": "Ищу покупку USDT", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Calgary"] },
-      { "name": "Тулуза USDT #3", "handle": "8372101794", "platform": "TG", "topic": "Нужно купить юсдт", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Toulouse"] },
-      { "name": "Тулуза USDT #2", "handle": "8311720189", "platform": "TG", "topic": "Ищу USDT для покупки", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Toulouse"] },
-      { "name": "Калгари USDT #13", "handle": "8341317889", "platform": "TG", "topic": "Ищу продавца USDT", "status": "replied", "days": 2, "priority": "hot", "tags": ["USDT", "Calgary"] },
-      { "name": "Тулуза USDT buyer", "handle": "8519938140", "platform": "TG", "topic": "Кто продает тезер?", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Toulouse"] },
-      { "name": "Пауки Хеллоуин", "handle": "8403779375", "platform": "TG DM", "topic": "Media/sticker sent", "status": "awaiting_reply", "days": 3, "priority": "hot", "tags": ["unknown"] },
-      { "name": "DM exchanger expert", "handle": "1069362030", "platform": "TG DM", "topic": "Обменники, криптоботы", "status": "warm", "days": 4, "priority": "warm", "tags": ["networking", "B2B"] },
-      { "name": "Андрей (@Andrei_M0)", "handle": "@Andrei_M0", "platform": "TG DM", "topic": "Карта для Netflix", "status": "cta_sent", "days": 6, "priority": "warm", "tags": ["streaming", "Montenegro"] }
+      { "name": "Милана", "handle": null, "platform": "TG Калгари", "topic": "Ищу продать юсдт сегодня", "status": "waiting_dm", "days": 1, "priority": "hot", "tags": ["USDT", "Calgary", "urgent"] },
+      { "name": "Улы", "handle": "8244910629", "platform": "TG DM", "topic": "Обмен крипта→песо", "status": "replied", "days": 1, "priority": "hot", "tags": ["hot", "active", "peso"] },
+      { "name": "Ярослав (@domamaster_com)", "handle": "@domamaster_com", "platform": "TG DM", "topic": "Обменник песо, B2B potential", "status": "awaiting_reply", "days": 2, "priority": "hot", "tags": ["B2B", "exchanger", "Mexico"] },
+      { "name": "Калгари URGENT", "handle": "8494549313", "platform": "TG", "topic": "продать юсдт сегодня", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Calgary"] },
+      { "name": "Калгари USDT #15", "handle": "7255771489", "platform": "TG", "topic": "Ищу покупку USDT", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Calgary"] },
+      { "name": "Тулуза USDT #3", "handle": "8372101794", "platform": "TG", "topic": "Нужно купить юсдт", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Toulouse"] },
+      { "name": "Тулуза USDT #2", "handle": "8311720189", "platform": "TG", "topic": "Ищу USDT для покупки", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Toulouse"] },
+      { "name": "Калгари USDT #13", "handle": "8341317889", "platform": "TG", "topic": "Ищу продавца USDT", "status": "replied", "days": 3, "priority": "hot", "tags": ["USDT", "Calgary"] },
+      { "name": "Тулуза USDT buyer", "handle": "8519938140", "platform": "TG", "topic": "Кто продает тезер?", "status": "replied", "days": 4, "priority": "hot", "tags": ["USDT", "Toulouse"] },
+      { "name": "Пауки Хеллоуин", "handle": "8403779375", "platform": "TG DM", "topic": "Media/sticker sent", "status": "awaiting_reply", "days": 4, "priority": "hot", "tags": ["unknown"] },
+      { "name": "DM exchanger expert", "handle": "1069362030", "platform": "TG DM", "topic": "Обменники, криптоботы", "status": "warm", "days": 5, "priority": "warm", "tags": ["networking", "B2B"] },
+      { "name": "Андрей (@Andrei_M0)", "handle": "@Andrei_M0", "platform": "TG DM", "topic": "Карта для Netflix", "status": "cta_sent", "days": 7, "priority": "warm", "tags": ["streaming", "Montenegro"] }
     ]
   },
   
@@ -125,25 +124,28 @@
     "forbidden": 8,
     "scam": 1,
     "list": [
-      { "name": "Все русские в Черногории", "chatId": "-1002149696897", "lang": "RU", "status": "forbidden", "note": "Feb 17 FORBIDDEN" },
+      { "name": "Digital Nomads", "chatId": "-1001171215712", "lang": "EN", "status": "active", "note": "Exact TA!" },
       { "name": "Украинцы в Калгари", "chatId": "-1001471606428", "lang": "RU/UA", "status": "hot", "note": "USDT leads source" },
-      { "name": "Digital Nomads", "chatId": "-1001171215712", "lang": "EN", "status": "active", "note": "1 unread" },
-      { "name": "Русские в Нидерландах", "chatId": "-1001380905162", "lang": "RU", "status": "forbidden", "note": "Feb 17 FORBIDDEN" },
       { "name": "Русские в Мексике", "chatId": "-1001487330086", "lang": "RU", "status": "active" },
-      { "name": "Русские в Лос Анджелесе", "chatId": "-1002063077650", "lang": "RU", "status": "banned", "note": "Feb 17 BANNED" },
-      { "name": "Русские в Чикаго", "chatId": "-1002107721378", "lang": "RU", "status": "banned", "note": "Feb 17 BANNED" },
       { "name": "Українці в Лондоні", "chatId": "-1002031758550", "lang": "UA", "status": "active" },
       { "name": "Украинцы в Тулузе", "chatId": "-1002662617488", "lang": "RU/UA", "status": "warning", "note": "Spam flagged risk" },
       { "name": "Українці в Торрев'єсі", "chatId": "-1003428046508", "lang": "UA", "status": "active" },
-      { "name": "Українська Варшава", "chatId": "-1001584700982", "lang": "UA", "status": "spam" }
+      { "name": "Українська Варшава", "chatId": "-1001584700982", "lang": "UA", "status": "spam" },
+      { "name": "Українці в Швейцарії", "handle": "@SwissUA", "lang": "UA", "status": "active" },
+      { "name": "Русские в Аргентине", "handle": "@rus_argentina", "lang": "RU", "status": "active" }
+    ],
+    "forbidden": [
+      { "name": "Все русские в Черногории", "reason": "FORBIDDEN Feb 17" },
+      { "name": "Русские в Нидерландах", "reason": "FORBIDDEN Feb 17" },
+      { "name": "Русские в Лос Анджелесе", "reason": "BANNED Feb 17" },
+      { "name": "Русские в Чикаго", "reason": "BANNED Feb 17" },
+      { "name": "Ірландія", "reason": "FORBIDDEN" },
+      { "name": "Singapore IT", "reason": "FORBIDDEN" },
+      { "name": "БАЗА Хʼюстон", "reason": "Admin required" },
+      { "name": "Цифровые кочевники", "reason": "Admin required" }
     ],
     "scamGroups": [
       { "name": "No-KYC Cards", "handle": "@no_kyc_cards", "newName": "Pryvero.net", "status": "SCAM", "detected": "2026-02-18" }
-    ],
-    "newJoined": [
-      { "name": "Українці в Швейцарії", "handle": "@SwissUA", "status": "joined" },
-      { "name": "Русские в Майами", "handle": "@miami_rus", "status": "admin_required" },
-      { "name": "Русские в Аргентине", "handle": "@rus_argentina", "status": "joined" }
     ]
   },
   
@@ -153,44 +155,40 @@
     "progress": 18.4,
     "segments": [
       { "name": "Yachts", "count": 78, "status": "completed", "regions": "Dubai, French Riviera, Miami, Monaco" },
-      { "name": "Poker", "count": 14, "status": "completed", "topContacts": "Paul Phua ($400M-1B), Tony G ($300M), Phil Ivey ($125M)" },
+      { "name": "Poker", "count": 14, "status": "completed", "topContacts": "Paul Phua, Tony G, Phil Ivey, Michael Mizrachi" },
       { "name": "Watches", "count": 0, "status": "next" },
       { "name": "Cars", "count": 0, "status": "pending" }
-    ],
-    "recentAdditions": [
-      { "name": "Paul Phua", "segment": "Poker", "netWorth": "$400M-$1B", "notes": "Triton co-founder" },
-      { "name": "Tony G", "segment": "Poker", "netWorth": "$300M", "notes": "Sol Strategies CEO" },
-      { "name": "Phil Ivey", "segment": "Poker", "netWorth": "$125M", "notes": "G.O.A.T." },
-      { "name": "Michael Mizrachi", "segment": "Poker", "netWorth": "$10M+", "notes": "2025 WSOP Main Event winner" }
     ]
   },
   
   "providers": {
-    "total": 102,
-    "lastResearch": "2026-02-17T09:00:00.000Z",
-    "newThisWeek": 7,
+    "total": 106,
+    "lastResearch": "2026-02-19T09:00:00.000Z",
+    "newThisWeek": 11,
     "verified": [
       { "name": "Rain", "type": "Full-Stack Issuer", "funding": "$338M+", "notes": "Visa principal, $1.95B valuation" },
       { "name": "Reap", "type": "Full-Stack Issuer", "funding": "$60M", "notes": "Visa principal, $6B+ volume" },
       { "name": "Kulipa", "type": "B2B API", "funding": "$3M seed", "notes": "Self-custodial API" },
       { "name": "Baanx", "type": "Issuer", "funding": "$175M acq", "notes": "Powers MetaMask card" },
-      { "name": "Decta", "type": "BIN Sponsor", "funding": "-", "notes": "NEW: Fintech Fast Track program" },
-      { "name": "Immersve", "type": "BIN Sponsor", "funding": "-", "notes": "MC principal, 70M+ merchants" },
-      { "name": "Nuvei", "type": "Full Platform", "funding": "Public", "notes": "NEW: MiCAR licensed, 30 markets" }
+      { "name": "Quantoz", "type": "BIN Sponsor", "funding": "-", "notes": "🆕 Visa PM Feb 17! MiCA stablecoins" },
+      { "name": "Walletto", "type": "BIN Sponsor", "funding": "-", "notes": "🆕 Lithuanian EMI, crypto focus" },
+      { "name": "Decta", "type": "BIN Sponsor", "funding": "-", "notes": "Fintech Fast Track program" },
+      { "name": "Immersve", "type": "BIN Sponsor", "funding": "-", "notes": "MC principal, 70M+ merchants" }
     ],
     "newFindings": [
+      { "name": "Quantoz", "type": "Visa Principal Member", "unique": "🔥 Got status Feb 17 2026! Dutch EMI, MiCA stablecoins (USDQ, EURQ)" },
+      { "name": "Walletto", "type": "EMI + BIN Sponsor", "unique": "Lithuanian EMI License #33, crypto company specialist" },
+      { "name": "Bitget Wallet Card", "type": "Consumer card", "unique": "Immersve partnership, USDT/USDC, zero-fee" },
+      { "name": "Tangem Pay", "type": "Non-custodial", "unique": "USDC on Polygon, self-custody at payment" },
       { "name": "Decta", "type": "BIN Sponsor EU/UK", "unique": "Fintech Fast Track = no setup fee" },
       { "name": "Oobit/DePay", "type": "Non-custodial", "unique": "Phantom 15M users integration" },
-      { "name": "Solflare Card", "type": "Self-custody MC", "unique": "First Solana self-custody" },
-      { "name": "Solayer Emerald", "type": "Non-custodial", "unique": "sUSD stablecoin" },
-      { "name": "Qivalis", "type": "Euro stablecoin", "unique": "10 EU banks (BNP, ING), H2 2026" },
-      { "name": "Remittix", "type": "PayFi", "unique": "Crypto-to-bank, launched Feb 9" },
-      { "name": "Nuvei", "type": "Full platform", "unique": "MiCAR license, stablecoin B2B" }
+      { "name": "Solflare Card", "type": "Self-custody MC", "unique": "First Solana self-custody" }
     ],
     "regulatory": {
-      "geniusAct": "NCUA stablecoin issuer rules (Feb 11, 2026)",
+      "quantozVisa": "🔥 Quantoz: Visa Principal Member (Feb 17 2026)",
+      "geniusAct": "NCUA stablecoin issuer rules (Feb 11 2026)",
       "hongKong": "First stablecoin licenses March 2026",
-      "mastercard": "New BIN Sponsor Accreditation tightening (Feb 11)"
+      "mastercard": "BIN Sponsor Accreditation tightening (Feb 11)"
     },
     "market": {
       "cryptoCardVolumes": "$1.5B/month (15x vs 2023)",
@@ -200,15 +198,42 @@
   },
   
   "competitors": {
+    "lastAnalysis": "2026-02-19T08:00:00.000Z",
     "list": [
       { "name": "Kolo.xyz", "strength": "TG mini-app 1M+", "threat": "high" },
       { "name": "KAST", "strength": "Twitter 47K, $10M funding", "threat": "high" },
-      { "name": "Wirex", "strength": "IG 44K, TikTok 10.7K", "threat": "medium" },
+      { "name": "Wirex", "strength": "Multi-platform leader", "threat": "medium" },
       { "name": "Trustee Plus", "strength": "YouTube UA 8K", "threat": "medium" },
-      { "name": "MaxSwap", "strength": "30-50% lifetime referral", "threat": "medium" }
+      { "name": "MaxSwap", "strength": "30-50% lifetime referral", "threat": "medium" },
+      { "name": "Cryptopay", "strength": "EU focused", "threat": "low" }
+    ],
+    "socialMetrics": {
+      "instagram": { "leader": "Wirex", "followers": 44000 },
+      "twitter": { "leader": "KAST", "followers": 47200 },
+      "tiktok": { "leader": "Wirex", "followers": 10700 },
+      "telegram": { "leader": "Kolo", "subscribers": 1011939 },
+      "youtube": { "leader": "Trustee", "subscribers": 8070 }
+    },
+    "weakPoints": [
+      { "competitor": "Cryptopay", "weakness": "Twitter SUSPENDED" },
+      { "competitor": "MaxSwap", "weakness": "Twitter abandoned (Feb 2024)" },
+      { "competitor": "Trustee", "weakness": "Service outages (Jan 2026)" },
+      { "competitor": "Kolo", "weakness": "Zero Twitter/IG presence" }
+    ],
+    "contentGaps": [
+      "EN+RU bilingual content — nobody does",
+      "Travel/lifestyle content — all product-focused",
+      "Reddit presence — weak everywhere",
+      "Comparison videos — rare format"
+    ],
+    "recommendations": [
+      "Telegram mini-app → copy Kolo model",
+      "Twitter → copy KAST CT engagement",
+      "TikTok → copy Wirex 60-sec format",
+      "Referral 30-50% → match MaxSwap"
     ]
   },
-  
+
   "outreach": {
     "emailsReady": 14,
     "emailsSent": 0,
@@ -217,23 +242,23 @@
     "hnwiQueue": 23,
     "followUpsDue": 8
   },
-  
+
   "dailyLog": {
-    "date": "2026-02-18",
+    "date": "2026-02-19",
     "usersAdded": 0,
     "leadsContacted": 0,
-    "leadsEngaged": 2,
+    "leadsEngaged": 3,
     "ctaDelivered": 0,
     "converted": 0,
     "groupsPosted": 0,
-    "hnwiContacts": 14,
-    "providersResearched": 0,
-    "notes": "Early AM: Heartbeat found hot leads (Улы, Ярослав), No-KYC Cards = SCAM detected"
+    "hnwiContacts": 0,
+    "providersResearched": 4,
+    "notes": "04:00 AM Provider Research (Quantoz Visa PM!), 03:00 AM Competitor Analysis (7 competitors)"
   },
 
   "versionHistory": [
-    { "version": "5.1.0", "date": "2026-02-18", "changes": "Lead search, SCAM alerts section, new hot leads, group status updates" },
-    { "version": "5.0.0", "date": "2026-02-17", "changes": "Full v5 redesign with System page" },
-    { "version": "2.6.0", "date": "2026-02-17", "changes": "Providers section with research findings" }
+    { "version": "5.2.0", "date": "2026-02-19", "changes": "Competitor Insights with social metrics, new providers (Quantoz, Walletto), Милана hot lead" },
+    { "version": "5.1.0", "date": "2026-02-18", "changes": "Lead search, SCAM alerts section, hot leads (Ярослав, Улы)" },
+    { "version": "5.0.0", "date": "2026-02-17", "changes": "Full v5 redesign with System page" }
   ]
 }

@@ -506,21 +506,62 @@
         <div class="page" id="page-competitors">
             <div class="page-header">
                 <h1 class="page-title">Competitor Analysis</h1>
-                <p class="page-subtitle">Market intelligence — all links clickable</p>
+                <p class="page-subtitle" id="competitorLastUpdate">Market intelligence</p>
             </div>
             
-            <div class="card">
+            <!-- Social Metrics Cards -->
+            <div class="grid grid-5" style="grid-template-columns: repeat(5, 1fr);">
+                <div class="card" style="text-align:center">
+                    <div class="card-title" style="margin-bottom:0.5rem">📷 Instagram</div>
+                    <div class="metric-value" style="font-size:1.5rem;color:var(--accent)" id="compIG">—</div>
+                    <div class="metric-label" id="compIGLeader">—</div>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div class="card-title" style="margin-bottom:0.5rem">𝕏 Twitter</div>
+                    <div class="metric-value" style="font-size:1.5rem;color:var(--blue)" id="compTW">—</div>
+                    <div class="metric-label" id="compTWLeader">—</div>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div class="card-title" style="margin-bottom:0.5rem">🎵 TikTok</div>
+                    <div class="metric-value" style="font-size:1.5rem;color:var(--green)" id="compTT">—</div>
+                    <div class="metric-label" id="compTTLeader">—</div>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div class="card-title" style="margin-bottom:0.5rem">✈️ Telegram</div>
+                    <div class="metric-value" style="font-size:1.5rem;color:var(--accent)" id="compTG">—</div>
+                    <div class="metric-label" id="compTGLeader">—</div>
+                </div>
+                <div class="card" style="text-align:center">
+                    <div class="card-title" style="margin-bottom:0.5rem">▶️ YouTube</div>
+                    <div class="metric-value" style="font-size:1.5rem;color:var(--red)" id="compYT">—</div>
+                    <div class="metric-label" id="compYTLeader">—</div>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 1rem;">
+                <div class="card-header"><span class="card-title">Competitor Overview</span></div>
                 <div class="table-wrap">
                     <table>
-                        <thead><tr><th>Name</th><th>Telegram</th><th>Instagram</th><th>Twitter</th><th>Strength</th></tr></thead>
+                        <thead><tr><th>Name</th><th>Strength</th><th>Threat</th></tr></thead>
                         <tbody id="competitorsTable"></tbody>
                     </table>
                 </div>
             </div>
 
+            <div class="grid grid-2" style="margin-top: 1rem;">
+                <div class="card">
+                    <div class="card-header"><span class="card-title">⚠️ Competitor Weak Points</span></div>
+                    <div id="competitorWeakPoints"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><span class="card-title">🎯 Content Gaps (Opportunities)</span></div>
+                    <div id="competitorContentGaps"></div>
+                </div>
+            </div>
+
             <div class="card" style="margin-top: 1rem;">
-                <div class="card-header"><span class="card-title">Key Insights</span></div>
-                <div id="competitorInsights"></div>
+                <div class="card-header"><span class="card-title">💡 Recommendations</span></div>
+                <div id="competitorRecommendations"></div>
             </div>
         </div>
 
@@ -835,21 +876,67 @@
                 `).join('');
             }
 
-            // Competitors - WITH LINKS
+            // Competitors - Enhanced with Social Metrics
             if (staticData.competitors) {
+                // Social Metrics Cards
+                if (staticData.competitors.socialMetrics) {
+                    const sm = staticData.competitors.socialMetrics;
+                    if (sm.instagram) {
+                        document.getElementById('compIG').textContent = (sm.instagram.followers/1000).toFixed(1) + 'K';
+                        document.getElementById('compIGLeader').textContent = sm.instagram.leader;
+                    }
+                    if (sm.twitter) {
+                        document.getElementById('compTW').textContent = (sm.twitter.followers/1000).toFixed(1) + 'K';
+                        document.getElementById('compTWLeader').textContent = sm.twitter.leader;
+                    }
+                    if (sm.tiktok) {
+                        document.getElementById('compTT').textContent = (sm.tiktok.followers/1000).toFixed(1) + 'K';
+                        document.getElementById('compTTLeader').textContent = sm.tiktok.leader;
+                    }
+                    if (sm.telegram) {
+                        document.getElementById('compTG').textContent = (sm.telegram.subscribers/1000000).toFixed(1) + 'M';
+                        document.getElementById('compTGLeader').textContent = sm.telegram.leader;
+                    }
+                    if (sm.youtube) {
+                        document.getElementById('compYT').textContent = (sm.youtube.subscribers/1000).toFixed(1) + 'K';
+                        document.getElementById('compYTLeader').textContent = sm.youtube.leader;
+                    }
+                }
+                
+                // Last Analysis Date
+                if (staticData.competitors.lastAnalysis) {
+                    document.getElementById('competitorLastUpdate').textContent = 'Last updated: ' + new Date(staticData.competitors.lastAnalysis).toLocaleDateString();
+                }
+                
+                // Competitors Table
                 document.getElementById('competitorsTable').innerHTML = staticData.competitors.list.map(c => `
                     <tr>
-                        <td><a href="${c.website}" target="_blank">${c.name} ↗</a></td>
-                        <td>${c.tg}</td>
-                        <td>${c.ig}</td>
-                        <td>${c.twitter}</td>
+                        <td><strong>${c.name}</strong></td>
                         <td>${c.strength}</td>
+                        <td><span class="badge badge-${c.threat === 'high' ? 'hot' : c.threat === 'medium' ? 'warm' : 'muted'}">${c.threat}</span></td>
                     </tr>
                 `).join('');
                 
-                document.getElementById('competitorInsights').innerHTML = staticData.competitors.insights.map(i => `
-                    <div class="alert alert-info"><span class="alert-icon">💡</span><span>${i}</span></div>
-                `).join('');
+                // Weak Points
+                if (staticData.competitors.weakPoints) {
+                    document.getElementById('competitorWeakPoints').innerHTML = staticData.competitors.weakPoints.map(w => `
+                        <div class="alert alert-warning" style="padding:0.75rem"><span class="alert-icon">⚠️</span><span><strong>${w.competitor}:</strong> ${w.weakness}</span></div>
+                    `).join('');
+                }
+                
+                // Content Gaps
+                if (staticData.competitors.contentGaps) {
+                    document.getElementById('competitorContentGaps').innerHTML = staticData.competitors.contentGaps.map(g => `
+                        <div class="alert alert-ok" style="padding:0.75rem"><span class="alert-icon">🎯</span><span>${g}</span></div>
+                    `).join('');
+                }
+                
+                // Recommendations
+                if (staticData.competitors.recommendations) {
+                    document.getElementById('competitorRecommendations').innerHTML = staticData.competitors.recommendations.map(r => `
+                        <div class="alert alert-info" style="padding:0.75rem"><span class="alert-icon">💡</span><span>${r}</span></div>
+                    `).join('');
+                }
             }
 
             // Ideas
