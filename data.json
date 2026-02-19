@@ -162,34 +162,141 @@
   },
   
   "providers": {
-    "total": 106,
+    "total": 102,
     "lastResearch": "2026-02-19T09:00:00.000Z",
     "newThisWeek": 11,
-    "verified": [
-      { "name": "Rain", "type": "Full-Stack Issuer", "funding": "$338M+", "notes": "Visa principal, $1.95B valuation" },
-      { "name": "Reap", "type": "Full-Stack Issuer", "funding": "$60M", "notes": "Visa principal, $6B+ volume" },
-      { "name": "Kulipa", "type": "B2B API", "funding": "$3M seed", "notes": "Self-custodial API" },
-      { "name": "Baanx", "type": "Issuer", "funding": "$175M acq", "notes": "Powers MetaMask card" },
-      { "name": "Quantoz", "type": "BIN Sponsor", "funding": "-", "notes": "🆕 Visa PM Feb 17! MiCA stablecoins" },
-      { "name": "Walletto", "type": "BIN Sponsor", "funding": "-", "notes": "🆕 Lithuanian EMI, crypto focus" },
-      { "name": "Decta", "type": "BIN Sponsor", "funding": "-", "notes": "Fintech Fast Track program" },
-      { "name": "Immersve", "type": "BIN Sponsor", "funding": "-", "notes": "MC principal, 70M+ merchants" }
+    
+    "issuers": [
+      { "name": "Rain", "url": "rain.xyz", "region": "Global", "cards": "Visa", "funding": "$338M+", "notes": "Visa principal, $1.95B valuation, stablecoin-native" },
+      { "name": "Reap", "url": "reap.com", "region": "Asia/ME/US", "cards": "Visa", "funding": "$60M", "notes": "Visa principal, $6B+ volume, corporate focus" },
+      { "name": "Striga", "url": "striga.com", "region": "Europe", "cards": "Visa", "funding": "-", "notes": "Powers Bitrefill, joined Lightspark" },
+      { "name": "Baanx", "url": "baanx.com", "region": "UK/EU", "cards": "Mastercard", "funding": "$175M acq", "notes": "Powers MetaMask card, EMI licensed" },
+      { "name": "Kulipa", "url": "kulipa.xyz", "region": "Global", "cards": "Visa/MC", "funding": "$3M seed", "notes": "Self-custodial API for wallets" },
+      { "name": "Gnosis Pay", "url": "gnosispay.com", "region": "EU/UK", "cards": "Visa", "funding": "-", "notes": "Safe wallet, 2%+ cashback, white-label" },
+      { "name": "Bleap", "url": "bleap.finance", "region": "EU", "cards": "Mastercard", "funding": "-", "notes": "2% USDC cashback, non-custodial" },
+      { "name": "Immersve", "url": "immersve.com", "region": "Global", "cards": "Mastercard", "funding": "-", "notes": "MC principal, BIN sponsor, 70M+ merchants" },
+      { "name": "Zero Hash", "url": "zerohash.com", "region": "Global", "cards": "Partners", "funding": "$65B+ vol", "notes": "MC acquisition talks $1.5-2B" }
     ],
-    "newFindings": [
-      { "name": "Quantoz", "type": "Visa Principal Member", "unique": "🔥 Got status Feb 17 2026! Dutch EMI, MiCA stablecoins (USDQ, EURQ)" },
-      { "name": "Walletto", "type": "EMI + BIN Sponsor", "unique": "Lithuanian EMI License #33, crypto company specialist" },
-      { "name": "Bitget Wallet Card", "type": "Consumer card", "unique": "Immersve partnership, USDT/USDC, zero-fee" },
-      { "name": "Tangem Pay", "type": "Non-custodial", "unique": "USDC on Polygon, self-custody at payment" },
-      { "name": "Decta", "type": "BIN Sponsor EU/UK", "unique": "Fintech Fast Track = no setup fee" },
-      { "name": "Oobit/DePay", "type": "Non-custodial", "unique": "Phantom 15M users integration" },
-      { "name": "Solflare Card", "type": "Self-custody MC", "unique": "First Solana self-custody" }
+    
+    "programManagers": [
+      { "name": "Marqeta", "url": "marqeta.com", "region": "US/EU/APAC", "notes": "Full platform, crypto solutions, major player" },
+      { "name": "Galileo", "url": "galileo-ft.com", "region": "US/Global", "notes": "#1 Digital Issuance 2025" },
+      { "name": "Adyen", "url": "adyen.com", "region": "Global", "notes": "End-to-end, instant virtual cards" },
+      { "name": "Qolo", "url": "qolo.io", "region": "US", "notes": "Embedded ledger, programmable" },
+      { "name": "Paymentology", "url": "paymentology.com", "region": "Global", "notes": "Visa/MC/UnionPay APIs" },
+      { "name": "Wallester", "url": "wallester.com", "region": "EU", "notes": "White-label Visa, 0% maintenance" },
+      { "name": "Crypto Life", "url": "withcl.com", "region": "Global", "notes": "Powers MetaMask, Baanx subsidiary" },
+      { "name": "Cardless", "url": "cardless.com", "region": "US", "notes": "Coinbase partner, embedded credit" },
+      { "name": "Nuvei", "url": "nuvei.com", "region": "Global", "notes": "MiCAR licensed, 30 markets" },
+      { "name": "FinLego", "url": "finlego.com", "region": "Global", "notes": "Fintech/crypto, Visa/MC, Web3" },
+      { "name": "StraitsX", "url": "straitsx.com", "region": "Singapore/Asia", "notes": "Powers RedotPay/Pionex/UPay" },
+      { "name": "Unlimit", "url": "unlimit.com", "region": "EU/Global", "notes": "90-day white-label launch" }
     ],
+    
+    "binSponsors": [
+      { "name": "Moorwand", "url": "moorwand.com", "region": "UK/EEA", "notes": "FCA EMI, Mastercard focus" },
+      { "name": "Treezor", "url": "treezor.com", "region": "France/EU", "notes": "SocGen-backed, Visa+MC principal" },
+      { "name": "Enfuce", "url": "enfuce.com", "region": "EU/UK", "notes": "EMI licensed" },
+      { "name": "Transact Payments", "url": "transactpayments.com", "region": "UK/EEA", "notes": "Debit/credit/prepaid" },
+      { "name": "Modulr", "url": "modulrfinance.com", "region": "UK", "notes": "EMI, payment infrastructure" },
+      { "name": "Decta", "url": "decta.com", "region": "EU/UK/APAC/MENA/LATAM", "notes": "🆕 Fintech Fast Track = no setup fee" },
+      { "name": "Quantoz", "url": "quantoz.com", "region": "Netherlands/EU", "notes": "🔥 Visa PM Feb 17! MiCA stablecoins" },
+      { "name": "Walletto", "url": "walletto.eu", "region": "Lithuania/EU", "notes": "🆕 EMI #33, crypto specialist" }
+    ],
+    
+    "whiteLabel": [
+      { "name": "ChainUp", "url": "chainup.com", "notes": "Full PaaS, custody included" },
+      { "name": "Zypto", "url": "zypto.com", "notes": "Cards+wallets+gateway, fast launch" },
+      { "name": "P100", "url": "p100.io", "notes": "Branded crypto banking" },
+      { "name": "CipherBC", "url": "cipherbc.com", "notes": "Institutional custody" },
+      { "name": "Antier", "url": "antiersolutions.com", "notes": "Full-stack dev" },
+      { "name": "Mercuryo Spend", "url": "mercuryo.io/spend", "notes": "70+ cryptos, plug-and-play" },
+      { "name": "UPay", "url": "-", "notes": "Prepaid Visa/MC, 55M+ merchants" },
+      { "name": "Suffescom", "url": "suffescom.com", "notes": "KYC/AML, multi-currency" },
+      { "name": "SDK.finance", "url": "sdk.finance", "notes": "🟡 Software only, not ready API" },
+      { "name": "Bastion", "url": "bastion.com", "notes": "Stablecoin ecosystem, NYDFS pending" },
+      { "name": "Vault.ist", "url": "vault.ist", "notes": "🔴 RED FLAG — Crypterium связь" },
+      { "name": "Buvei", "url": "buvei.com", "notes": "🆕 Virtual card API, crypto" },
+      { "name": "Kripicard", "url": "kripicard.com", "notes": "🆕 USDT virtual, B2B white-label" },
+      { "name": "Noone.io", "url": "noone.io", "notes": "🆕 Wallet + card solutions" }
+    ],
+    
+    "processors": [
+      { "name": "Bridge", "url": "bridge.xyz", "notes": "Stripe-acquired, stablecoin APIs" },
+      { "name": "Stripe Crypto", "url": "stripe.com", "notes": "Full ecosystem" },
+      { "name": "CoinsPaid", "url": "coinspaid.com", "notes": "B2B crypto processor" },
+      { "name": "BVNK", "url": "bvnk.com", "notes": "Enterprise stablecoin" },
+      { "name": "Rapyd", "url": "rapyd.net", "notes": "Global physical/virtual" },
+      { "name": "Airwallex", "url": "airwallex.com", "notes": "60+ countries, embedded" },
+      { "name": "Ripio", "url": "ripio.com", "notes": "LATAM focus" },
+      { "name": "Cybrid", "url": "cybrid.xyz", "notes": "Embedded finance, compliance" },
+      { "name": "MoonPay", "url": "moonpay.com", "notes": "On/off-ramp" },
+      { "name": "Transak", "url": "transak.com", "notes": "🟡 On-ramp only, NOT issuer" },
+      { "name": "Worldpay", "url": "worldpay.com", "notes": "Exodus partnership" },
+      { "name": "CPAY", "url": "cpay.world", "notes": "White-label wallet, USDT" },
+      { "name": "Remittix", "url": "remittix.io", "notes": "🆕 PayFi, launched Feb 9" },
+      { "name": "Request Tech", "url": "request.finance/tech", "notes": "🆕 Crypto-to-fiat API" }
+    ],
+    
+    "baasEurope": [
+      { "name": "Solaris", "url": "solarisbank.com", "region": "Germany/EU", "notes": "High-profile BaaS" },
+      { "name": "Paynetics", "url": "paynetics.eu", "region": "Bulgaria/EU+UK", "notes": "EMI, dual licenses" },
+      { "name": "Swan", "url": "swan.io", "region": "France/EU", "notes": "SME focus" },
+      { "name": "OpenPayd", "url": "openpayd.com", "region": "UK/EU", "notes": "Multi-currency" },
+      { "name": "Railsr", "url": "railsr.com", "region": "UK", "notes": "ex-Railsbank, embedded" },
+      { "name": "Vodeno", "url": "vodeno.com", "region": "Poland/Belgium", "notes": "UniCredit acquired" },
+      { "name": "Unit", "url": "unit.co", "region": "US", "notes": "Banking APIs" },
+      { "name": "Mambu", "url": "mambu.com", "region": "Global", "notes": "Cloud-native core" },
+      { "name": "Finxact", "url": "finxact.com", "region": "US", "notes": "Core banking API" },
+      { "name": "Temenos", "url": "temenos.com", "region": "Global", "notes": "Enterprise core" },
+      { "name": "Deblock", "url": "deblock.com", "region": "France/EU", "notes": "Non-custodial + account" }
+    ],
+    
+    "selfCustody": [
+      { "name": "Gnosis Pay", "url": "gnosispay.com", "cards": "Visa", "notes": "Safe wallet, 2%+ cashback" },
+      { "name": "Bleap", "url": "bleap.finance", "cards": "Mastercard", "notes": "2% USDC, zero FX" },
+      { "name": "MetaMask Card", "url": "metamask.io", "cards": "Visa", "notes": "Baanx/Crypto Life, $mUSD" },
+      { "name": "Phantom Cash", "url": "phantom.app", "cards": "-", "notes": "$CASH stablecoin" },
+      { "name": "Tangem Card", "url": "tangem.com", "cards": "Visa", "notes": "🆕 Polygon USDC, 42 countries" },
+      { "name": "Ether.fi Cash", "url": "ether.fi", "cards": "-", "notes": "DeFi credit, collateral" },
+      { "name": "COCA Wallet", "url": "coca.xyz", "cards": "Visa", "notes": "🆕 MPC, 8% cashback" },
+      { "name": "Cypher Protocol", "url": "cypher.com", "cards": "Visa", "notes": "🆕 YC + Coinbase backed" },
+      { "name": "Holyheld", "url": "holyheld.com", "cards": "Mastercard", "notes": "EEA, IBAN, 15+ chains" },
+      { "name": "Solayer Emerald", "url": "solayer.org", "cards": "Visa/MC", "notes": "🆕 Solana, InfiniSVM" },
+      { "name": "Solflare Card", "url": "solflare.com", "cards": "Mastercard", "notes": "🆕 First Solana self-custody" },
+      { "name": "Oobit/DePay", "url": "oobit.com", "cards": "Visa", "notes": "🆕 Phantom 15M users" }
+    ],
+    
+    "ruCis": [
+      { "name": "PST.NET", "url": "pst.net", "notes": "Virtual $€, USDT, 3% ads cashback" },
+      { "name": "Whitebird", "url": "whitebird.io", "notes": "Belarus, Alfa Bank, 200 BYN" },
+      { "name": "ZARUB", "url": "zarub.io", "notes": "Visa, Apple/Google Pay, crypto" },
+      { "name": "Wanttopay", "url": "wanttopay.net", "notes": "BTC/USDT/USDC/TON" },
+      { "name": "HyperPay", "url": "hyperpay.io", "notes": "20+ cryptos, prepaid" },
+      { "name": "Aifory Pro", "url": "aifory.pro", "notes": "Virtual, RUB + USDT" },
+      { "name": "Trastra", "url": "trastra.com", "notes": "EU Visa, crypto-to-EUR" },
+      { "name": "Volet", "url": "volet.com", "notes": "🆕 ex-Advcash, since 2014" }
+    ],
+    
+    "redFlags": [
+      { "name": "Vault.ist", "reason": "Crypterium/Choise (in liquidation), FinTelegram warning" },
+      { "name": "LBM Solutions", "reason": "Dev shop NOT issuer, scam reviews" },
+      { "name": "KazePay", "reason": "Zero registration, no accountability" }
+    ],
+    
+    "notRecommended": [
+      { "name": "Simplify Labs", "reason": "Client Kyrrex in $10B ICIJ investigation" },
+      { "name": "SDK.finance", "reason": "Software only, not ready API" },
+      { "name": "Transak", "reason": "On/off ramp ONLY, not card issuer" }
+    ],
+    
     "regulatory": {
       "quantozVisa": "🔥 Quantoz: Visa Principal Member (Feb 17 2026)",
       "geniusAct": "NCUA stablecoin issuer rules (Feb 11 2026)",
       "hongKong": "First stablecoin licenses March 2026",
       "mastercard": "BIN Sponsor Accreditation tightening (Feb 11)"
     },
+    
     "market": {
       "cryptoCardVolumes": "$1.5B/month (15x vs 2023)",
       "visaCryptoSpending": "+525% in 2025",
